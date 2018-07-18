@@ -29,20 +29,9 @@
 </div>
 </form>
 <button onclick="createGame()">Create Gaunlet!</button>
+<button onclick="clearGame()">Clear!</button>
 
 <table id="game-table">
-  <thead>
-    <td>Game Number</td>
-    <td>Blue Team</td>
-    <td>White Team</td>
-    <td>Benchwarmer</td>
-  </thead>
-  <tr>
-    <td>1</td>
-    <td>Jared and Dan</td>
-    <td>Carlos and Gerald</td>
-    <td>Jordan</td>
-  </tr>
 </table>
 
 
@@ -52,15 +41,70 @@ function createGame() {
 	var playerTwo = document.getElementById("2f").value + document.getElementById("2l").value;
   var playerThree = document.getElementById("3f").value + document.getElementById("3l").value;
   var playerFour = document.getElementById("4f").value + document.getElementById("4l").value;
-  var playerFive = document.value + document.getElementById("5l").value;
+  var playerFive = document.getElementById("5f").value + document.getElementById("5l").value;
   var table = document.getElementById("game-table");
-  var game1 = table.insertRow(0);
+  var header = table.insertRow(0);
+  var game1 = table.insertRow(1);
+  var game2 = table.insertRow(2);
+  var game3 = table.insertRow(3);
+  var game4 = table.insertRow(4);
+  var game5 = table.insertRow(5);
+  var headercell1 = header.insertCell(0);
+  var headercell2 = header.insertCell(1);
+  var headercell3 = header.insertCell(2);
   var game1cell1 = game1.insertCell(0);
   var game1cell2 = game1.insertCell(1);
   var game1cell3 = game1.insertCell(2);
+  var game2cell1 = game2.insertCell(0);
+  var game2cell2 = game2.insertCell(1);
+  var game2cell3 = game2.insertCell(2);
+  var game3cell1 = game3.insertCell(0);
+  var game3cell2 = game3.insertCell(1);
+  var game3cell3 = game3.insertCell(2);
+  var game4cell1 = game4.insertCell(0);
+  var game4cell2 = game4.insertCell(1);
+  var game4cell3 = game4.insertCell(2);
+  var game5cell1 = game5.insertCell(0);
+  var game5cell2 = game5.insertCell(1);
+  var game5cell3 = game5.insertCell(2);
+  
+  headercell1.innerHTML = "Blue Team";
+  headercell2.innerHTML = "White Team";
+  headercell3.innerHTML = "Bench Warmer";
+  
   game1cell1.innerHTML = playerOne + playerTwo;
   game1cell2.innerHTML = playerThree + playerFour;
   game1cell3.innerHTML = playerFive;
+  
+  game2cell1.innerHTML = playerFive + playerOne;
+  game2cell2.innerHTML = playerTwo + playerThree;
+  game2cell3.innerHTML = playerFour;
+  
+  game3cell1.innerHTML = playerTwo + playerFive;
+  game3cell2.innerHTML = playerFour + playerOne;
+  game3cell3.innerHTML = playerThree;
+  
+  game4cell1.innerHTML = playerFour + playerFive;
+  game4cell2.innerHTML = playerThree + playerOne;
+  game4cell3.innerHTML = playerTwo;
+  
+  game5cell1.innerHTML = playerFive + playerThree;
+  game5cell2.innerHTML = playerTwo + playerFour;
+  game5cell3.innerHTML = playerOne;
   table.insertRow(game1);
+  table.insertRow(game2);
+  table.insertRow(game3);
+  table.insertRow(game4);
+  table.insertRow(game5);
 }
+
+function clearGame() {
+  var table = document.getElementById("game-table");
+  table.deleteRow(1);
+  table.deleteRow(2);
+  table.deleteRow(3);
+  table.deleteRow(4);
+  table.deleteRow(0);
+}
+
 </script>
