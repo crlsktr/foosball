@@ -1,0 +1,66 @@
+<form>
+<h2>
+  THE GAUNTLET
+</h2>
+<div>
+  <label>Player One</label><br>
+  <input type=text id="1f" placeholder="First Name"/>
+  <input type=text id="1l" placeholder="Last Name"/>
+</div>
+<div>
+  <label>Player Two</label><br>
+  <input type=text id="2f" placeholder="First Name"/>
+  <input type=text id="2l" placeholder="Last Name"/>
+</div>
+<div>
+  <label>Player Three</label><br>
+  <input type=text id="3f" placeholder="First Name"/>
+  <input type=text id="3l" placeholder="Last Name"/>
+</div>
+<div>
+  <label>Player Four</label><br>
+  <input type=text id="4f" placeholder="First Name"/>
+  <input type=text id="4l" placeholder="Last Name"/>
+</div>
+<div>
+  <label>Player Five</label><br>
+  <input type=text id="5f" placeholder="First Name"/>
+  <input type=text id="5l" placeholder="Last Name"/>
+</div>
+</form>
+<button onclick="createGame()">Create Gaunlet!</button>
+
+<table id="game-table">
+  <thead>
+    <td>Game Number</td>
+    <td>Blue Team</td>
+    <td>White Team</td>
+    <td>Benchwarmer</td>
+  </thead>
+  <tr>
+    <td>1</td>
+    <td>Jared and Dan</td>
+    <td>Carlos and Gerald</td>
+    <td>Jordan</td>
+  </tr>
+</table>
+
+
+<script>
+function createGame() {
+	var playerOne = document.getElementById("1f").value + document.getElementById("1l").value;
+	var playerTwo = document.getElementById("2f").value + document.getElementById("2l").value;
+  var playerThree = document.getElementById("3f").value + document.getElementById("3l").value;
+  var playerFour = document.getElementById("4f").value + document.getElementById("4l").value;
+  var playerFive = document.value + document.getElementById("5l").value;
+  var table = document.getElementById("game-table");
+  var game1 = table.insertRow(0);
+  var game1cell1 = game1.insertCell(0);
+  var game1cell2 = game1.insertCell(1);
+  var game1cell3 = game1.insertCell(2);
+  game1cell1.innerHTML = playerOne + playerTwo;
+  game1cell2.innerHTML = playerThree + playerFour;
+  game1cell3.innerHTML = playerFive;
+  table.insertRow(game1);
+}
+</script>
