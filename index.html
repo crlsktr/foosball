@@ -72,24 +72,24 @@ function createGame() {
   headercell2.innerHTML = "White Team";
   headercell3.innerHTML = "Bench Warmer";
   
-  game1cell1.innerHTML = playerOne + playerTwo;
-  game1cell2.innerHTML = playerThree + playerFour;
+  game1cell1.innerHTML = playerOne + " and " + playerTwo;
+  game1cell2.innerHTML = playerThree + " and " + playerFour;
   game1cell3.innerHTML = playerFive;
   
-  game2cell1.innerHTML = playerFive + playerOne;
-  game2cell2.innerHTML = playerTwo + playerThree;
+  game2cell1.innerHTML = playerFive + " and " + playerOne;
+  game2cell2.innerHTML = playerTwo + " and " + playerThree;
   game2cell3.innerHTML = playerFour;
   
-  game3cell1.innerHTML = playerTwo + playerFive;
-  game3cell2.innerHTML = playerFour + playerOne;
+  game3cell1.innerHTML = playerTwo + " and " + playerFive;
+  game3cell2.innerHTML = playerFour + " and " + playerOne;
   game3cell3.innerHTML = playerThree;
   
-  game4cell1.innerHTML = playerFour + playerFive;
-  game4cell2.innerHTML = playerThree + playerOne;
+  game4cell1.innerHTML = playerFour + " and " + playerFive;
+  game4cell2.innerHTML = playerThree + " and " + playerOne;
   game4cell3.innerHTML = playerTwo;
   
-  game5cell1.innerHTML = playerFive + playerThree;
-  game5cell2.innerHTML = playerTwo + playerFour;
+  game5cell1.innerHTML = playerFive + " and " + playerThree;
+  game5cell2.innerHTML = playerTwo + " and " + playerFour;
   game5cell3.innerHTML = playerOne;
   table.insertRow(game1);
   table.insertRow(game2);
@@ -108,3 +108,9 @@ function clearGame() {
 }
 
 </script>
+
+<style>
+#game-table {
+  width: 100%;
+}
+</style>
