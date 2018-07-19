@@ -1,0 +1,5 @@
+/target
+**/*.rs.bk
+.env
+sqlite3.def
+sqlite3.dll
