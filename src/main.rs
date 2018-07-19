@@ -27,7 +27,7 @@ fn main() {
         Mutex::new(db.expect("Failed to connect to ./foosball.db"))
     };
 
-    rouille::start_server("localhost:12346", move |request| {
+    rouille::start_server("0.0.0.0:12346", move |request| {
         
         let connection = db.lock().expect("database in use");
         
