@@ -134,7 +134,17 @@ function clearGame() {
 }
 
 function submitScores() {
-	alert("'YOU WIN!!!'");
+
+ 
+  let gameRequest = new Request("localhost:12346/savegames",{method: 'POST', body:'[  {    number: 1,    round: "some string",    date: "String",    teamone: "String",    teamtwo: "String",    scoreone: 4,    scoretwo: 10,}]'});
+  fetch(gameRequest)
+    .then( response => {
+      if (response.status === 200)
+      {
+        alert("Submitted");
+      }
+    });
+	
 }
 
 </script>
