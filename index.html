@@ -136,7 +136,7 @@ function clearGame() {
 function submitScores() {
 
  
-  let gameRequest = new Request("10.6.114.79:12346/savegames",{method: 'POST', body:'[  {    number: 1,    round: "some string",    date: "String",    teamone: "String",    teamtwo: "String",    scoreone: 4,    scoretwo: 10,}]'});
+  let gameRequest = new Request("/savegames",{method: 'POST', body:'[  {    number: 1,    round: "some string",    date: "String",    teamone: "String",    teamtwo: "String",    scoreone: 4,    scoretwo: 10,}]'});
   fetch(gameRequest)
     .then( response => {
       if (response.status === 200)
