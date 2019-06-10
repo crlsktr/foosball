@@ -194,7 +194,7 @@ function submitScores() {
 	  "/api/savegames",
 	  {
 		  method: 'POST', 
-		  body:gauntlet,
+		  body:JSON.stringify(gauntlet),
 		  headers: {
                    'Content-Type': 'text/json'
                },
