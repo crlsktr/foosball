@@ -30,7 +30,10 @@ fn main() {
     rouille::start_server("0.0.0.0:12346", move |request| {
         
         let connection = db.lock().expect("database in use");
-        
+        let response = rouille::match_assets(&request, ".");
+        if response.is_success() {
+            return response;
+        }
         router!(request,
             (POST) (/api/savegames) => {
                 let games: Vec<Game> = try_or_400!(rouille::input::json_input(request));
