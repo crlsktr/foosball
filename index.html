@@ -36,6 +36,59 @@
 
 
 <script>
+var gauntlet = 
+[
+  {
+    "game": 1,
+    "white": {
+      "name1": "carlos",
+      "name2": "jared"
+    },
+    "blue": {
+      "name1": "gerald",
+      "name2": "daniel"
+    },
+    "score": [10, 8]
+  },
+  {
+    "game": 2,
+    "white": {
+      "name1": "carlos",
+      "name2": "daniel"
+    },
+    "blue": {
+      "name1": "tanner",
+      "name2": "gerald"
+    },
+    "score": [10, 8]
+  },
+  {
+    "game": 3,
+    "white": {
+      "name1": "carlos",
+      "name2": "gerald"
+    },
+    "blue": {
+      "name1": "jared",
+      "name2": "tanner"
+    },
+    "score": [10, 8]
+  },
+  {
+    "game": 4,
+    "white": {
+      "name1": "carlos",
+      "name2": "tanner"
+    },
+    "blue": {
+      "name1": "daniel",
+      "name2": "jared"
+    },
+    "score": [10, 8]
+  }
+];
+
+
 function createGame() {
 	var playerOne = document.getElementById("1f").value + document.getElementById("1l").value;
 	var playerTwo = document.getElementById("2f").value + document.getElementById("2l").value;
@@ -136,7 +189,17 @@ function clearGame() {
 function submitScores() {
 
  
-  let gameRequest = new Request("/api/savegames",{method: 'POST', body:'[  {    "number": 1,    "round": "some string",    "date": "String",    "teamone": "String",    "teamtwo": "String",    "scoreone": 4,    "scoretwo": 10}]'});
+  let gameRequest = new Request(
+		
+	  "/api/savegames",
+	  {
+		  method: 'POST', 
+		  body:gauntlet,
+		  headers: {
+                   'Content-Type': 'text/json'
+               },
+		}
+		  );
   fetch(gameRequest)
     .then( response => {
       if (response.status === 200)
