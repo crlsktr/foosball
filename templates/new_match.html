@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body {
+                font-family: Helvetica;
+            }
+            input[type=submit] {
+                background-color: black;
+                color: white;
+                margin-right: 16px;
+                padding: 8px;
+                border: none;
+            }
+            input[type=text] {
+                font-size: larger;
+                padding-left: 15px;
+                padding-right: 15px;
+                margin-bottom: 15px;
+                max-width: 300px;
+                height: 35px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>The Foosball App!</h1>
+        <h2>New {{ match_type }}</h2>
+        <h3>Select Players</h3>
+        
+        <datalist id="players">
+            {% for player in players %}
+                <option value="{{player.name}}">{{player.name}}</option>
+            {% endfor %}
+        </datalist>
+
+        <form action="/play" method="post">
+            {% for i in num_players %}
+                <input name="player_{{i}}" type="text" list="players">
+                <br>
+            {% endfor %}
+            <input type="submit" value="Start Game">
+        </form>
+    </body>
+</html>
