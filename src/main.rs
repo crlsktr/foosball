@@ -41,17 +41,6 @@ fn main() {
         
         let connection = db.lock().expect("database in use");
         router!(request,
-            // (POST) (/api/savegames) => {
-            //     let games: Vec<NewGame> = try_or_400!(rouille::input::json_input(request));
-            //     for game in games.iter(){
-            //         diesel::insert_into(schema::games::table)
-            //             .values(game)
-            //             .execute(&*connection)
-            //             .expect("couldn't save games");
-            //     } 
-
-            //     rouille::Response::text("Ok")
-            // },
             (POST) (/results) => {
                 let r = try_or_400!(post_input!(request, {
 
@@ -202,6 +191,16 @@ fn main() {
                 context.insert("players", &plyrs);
                 context.insert("num_players", &num_players);
                 let html = templates.render("new_match.html", &context).unwrap();
+                rouille::Response::html(html)
+            },
+
+            (GET) (/leaderboad) => {
+                let leaders: Vec<Leader> = diesel::sql_query(LEADER_BOARD_QUERY)
+                .load(&*connection).unwrap();
+
+                let mut context = Context::new();
+                context.insert("leaders", &leaders);
+                let html = templates.render("leaders.html", &context).unwrap();
                 rouille::Response::html(html)
             },
 
@@ -378,3 +377,80 @@ fn create_results(game_id: i32, spread: i32, winning_team_id: i32, connection: &
                     .execute(connection)
                     .expect("couldn't create game results");
 }
+
+
+const LEADER_BOARD_QUERY: &'static str = r#"
+select
+	p.name as player_name
+	,ifnull(sum(games.wins), 0) as games_won
+	,ifnull(count(games.wins) - sum(games.wins), 0) as games_lost
+	,ifnull(count(games.wins), 0) as games_played
+	,case 
+		when count(games.wins) <> 0 then
+			ifnull(cast(ifnull(sum(games.wins), 0) as real) / cast(ifnull(count(games.wins) - sum(games.wins), 0)as real), 100)
+		else 0
+	end  as percentage
+	,max(case
+		when games.wins = 1 then games.spread
+		else 0
+		end) as highest_winning_spread
+	,max(case
+		when games.wins <> 1 then games.spread
+		else 0
+		end) as highest_losing_spread
+	,min(case
+		when games.wins = 1 then games.spread
+		else 0
+		end) as lowest_winning_spread
+	,min(case
+		when games.wins <> 1 then games.spread
+		else 0
+		end) as lowest_losing_spread
+	,ifnull(sum(case
+		when games.wins = 1 then ifnull(games.spread, 0)
+		else 0
+		end) / sum(
+		case
+		when games.wins = 1 then 1
+		else 0
+		end), 0) as average_winning_spread
+	,ifnull(sum(case
+		when games.wins <> 1 then ifnull(games.spread, 0)
+		else 0
+		end) / sum(
+		case
+		when games.wins <> 1 then 1
+		else 0
+		end), 0) as average_losing_spread
+from players p
+left join (
+	select
+		-- *
+		g.id
+		,t.id
+		,r.spread
+		,t.player_one_id
+		,t.player_two_id
+		,case
+			when r.winning_team = t.id then 1
+			else 0
+		end as wins
+	from games g
+	join results r
+		on r.game_id = g.id
+	join teams t
+		on (g.team_one_id = t.id
+		or g.team_two_id = t.id)
+	) games
+	on games.player_one_id = p.id or games.player_two_id = p.id
+group by p.id
+order by 
+	percentage desc
+	,average_winning_spread desc
+	,highest_winning_spread desc
+	,average_losing_spread asc
+	,highest_losing_spread asc
+	,lowest_winning_spread asc
+	,lowest_losing_spread desc
+	,games_played desc
+;"#;

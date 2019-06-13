@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body {
+                font-family: Helvetica;
+            }
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #bebebe;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #d8dee7;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>The Foosball App!</h1>
+        <h2>Leaders</h2>
+        <table>
+                <tr>
+                    <th>Player</th>
+                    <th>Won</th>
+                    <th>Lost</th>
+                    <th>Played</th>
+                    <th>Percentage</th>
+                    <th>Best Spread(Win)</th>
+                    <th>Worst Spread(Loss)</th>
+                    <th>Worst Spread(Win)</th>
+                    <th>Best Spread(Loss)</th>
+                    <th>Average Spread(Win)</th>
+                    <th>Average Spread(Loss)</th>
+                </tr>
+            {% for leader in leaders %}
+                <tr>
+                    <td>{{leader.player_name}}</td>
+                    <td>{{leader.games_won}}</td>
+                    <td>{{leader.games_lost}}</td>
+                    <td>{{leader.games_played}}</td>
+                    <td>{{leader.percentage}}</td>
+                    <td>{{leader.highest_winning_spread}}</td>
+                    <td>{{leader.highest_losing_spread}}</td>
+                    <td>{{leader.lowest_winning_spread}}</td>
+                    <td>{{leader.lowest_losing_spread}}</td>
+                    <td>{{leader.average_winning_spread}}</td>
+                    <td>{{leader.average_losing_spread}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
