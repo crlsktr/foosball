@@ -26,7 +26,7 @@
         <h1>The Foosball App!</h1>
         <h2>{% if is_gauntlet == true %} Gauntlet {% else %} Match {% endif %} {{match_number}} in Progress</h2>
         <h3>Games</h3>
-        <form action="/results" method="post">
+        <form id="resultform" action="/results" method="post">
             {% for g in games %}
                 <div class="game">
                     <div><strong>Game</strong> {{g.game_id}}</div>
@@ -34,12 +34,12 @@
                     <div>VS</div>
                     <div>Team {{g.team_two.team_id}}: <strong>{{g.team_two.player_one.name}} and {{g.team_two.player_two.name}}</strong></div>
                     <label>Winner</label>
-                    <select name="game-{{g.game_id}}-winner">
+                    <select name="winner_{{loop.index0}}" form="resultform">
                         <option value="{{g.team_one.team_id}}">{{g.team_one.player_one.name}} and {{g.team_one.player_two.name}}</option>
                         <option value="{{g.team_two.team_id}}">{{g.team_two.player_one.name}} and {{g.team_two.player_two.name}}</option>
                     </select>
                     <label>Spread</label>
-                    <select name="game-{{g.game_id}}-spread">
+                    <select name="spread_{{loop.index0}}" form="resultform">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -51,6 +51,7 @@
                         <option value="9">9</option>
                         <option value="10">10</option>
                     </select>
+                    <input type="hidden" name="game_{{loop.index0}}" value="{{g.game_id}}" />
                 </div>
             {% endfor %}
             <input type="submit" value="Finshed">

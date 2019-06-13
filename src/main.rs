@@ -52,6 +52,34 @@ fn main() {
 
             //     rouille::Response::text("Ok")
             // },
+            (POST) (/results) => {
+                let game_results = try_or_400!(post_input!(request, {
+
+                    game_0: i32,
+                    spread_0: i32,
+                    winner_0: i32,
+                    
+                    game_1: i32,
+                    spread_1: i32,
+                    winner_1: i32,
+
+                    game_2: i32,
+                    spread_2: i32,
+                    winner_2: i32,
+
+                    game_3: Option<i32>,
+                    spread_3: Option<i32>,
+                    winner_3: Option<i32>,
+
+                    game_4: Option<i32>,
+                    spread_4: Option<i32>,
+                    winner_4: Option<i32>,
+                }));
+
+                dbg!(game_results);
+
+                rouille::Response::html("Done")
+            },
 
             (POST) (/play) => {
                 let players = try_or_400!(post_input!(request, {
@@ -134,7 +162,6 @@ fn main() {
                     };
                     game_views.push(view);
                 }
-
 
                 let mut context = Context::new();
                 context.insert("is_gauntlet", &new_match.is_gauntlet);
@@ -241,7 +268,7 @@ fn create_match(match_id: i32, player_names: &Vec<String>, connection: &SqliteCo
     }
 
     let mut games: Vec<Game> = vec!();
-    let game_selection = vec!((0, 1), (3, 4), (5, 6));
+    let game_selection = vec!((0, 1), (2, 3), (4, 5));
     for game in game_selection {
         let t1 = teams.get(game.0).unwrap();
         let t2 = teams.get(game.1).unwrap();
