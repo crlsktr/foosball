@@ -58,3 +58,11 @@ pub struct Leader {
     #[sql_type = "Integer"]
     pub average_losing_spread: i32,
 }
+
+#[derive(Serialize, QueryableByName )]
+pub struct Record {
+    #[sql_type = "Integer"]
+    pub won: i32,
+    #[sql_type = "Integer"]
+    pub lost: i32
+}

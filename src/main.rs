@@ -204,6 +204,24 @@ fn main() {
                 rouille::Response::html(html)
             },
 
+            (GET) (/teamstats/{player_one: String}/{player_two: String}) => {
+                let team = find_team(&player_one, &player_two, &*connection);
+                let team = match team {
+                    Some(t) => t,
+                    _ =>  return rouille::Response::html(format!("Couldn't find {} and {} ever being on a team.", player_one, player_two))
+                };
+
+                let query = get_team_win_loss_query(team.id);
+                let record: Vec<Record> = 
+                    diesel::sql_query(query)
+                    .load(&*connection)
+                    .unwrap();
+
+                let record = record.get(0).unwrap();
+
+                rouille::Response::html(format!("{} and {} are team {} and have {} wins and {} losses.", player_one, player_two, team.id, record.won, record.lost))
+            },
+
             (GET) (/api/{id: u32}) => {
                 println!("u32 {:?}", id);
 
@@ -334,6 +352,42 @@ fn create_team(p1: &Player, p2: &Player, connection: &SqliteConnection) -> Team 
     }
 }
 
+fn find_team(p1: &str, p2: &str, connection: &SqliteConnection) -> Option<Team> {
+    use schema::teams::dsl::*;
+
+    let p1 = find_player(p1, connection);
+    let p2 = find_player(p2, connection);
+    if p1.is_none() || p2.is_none() {
+        return None;
+    }
+
+    let p1 = p1.unwrap();
+    let p2 = p2.unwrap();    
+
+    let team = teams
+        .filter(player_one_id.eq_any(&[p1.id, p2.id]))
+        .filter(player_two_id.eq_any(&[p1.id, p2.id]))
+        .first::<Team>(connection);
+
+    match team {
+        Ok(t) => Some(t),
+        Err(_) => None
+    }
+}
+
+fn find_player(player_name: &str, connection: &SqliteConnection) -> Option<Player> {
+    use schema::players::dsl::*;
+
+    let player = players
+        .filter(name.eq(player_name))
+        .first::<Player>(connection);
+    
+    match player {
+        Ok(p) => Some(p),
+        Err(_) => None,
+    }
+}
+
 fn get_players(player_names: &Vec<String>, connection: &SqliteConnection) -> Vec<Player> {
     use schema::players::dsl::*;
     let mut existing_players = players
@@ -454,3 +508,22 @@ order by
 	,lowest_losing_spread desc
 	,games_played desc
 ;"#;
+
+fn get_team_win_loss_query(team_id: i32) -> String {
+    format!(r#"
+    select
+        sum(case 
+            when r.winning_team = t.id then 1
+            else 0 end) as won
+        ,sum(case
+            when r.winning_team <> t.id then 1
+            else 0 end) as lost
+    from teams t
+    join games g
+        on (g.team_one_id = t.id or g.team_two_id = t.id)
+    join results r
+        on r.game_id = g.id
+    where t.id = {}
+    group by g.id
+    ;"#, team_id)
+}

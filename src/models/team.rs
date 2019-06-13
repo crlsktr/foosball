@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 use super::super::schema::teams;
 
-#[derive(Queryable, Serialize)]
+#[derive(Queryable, Serialize, Debug)]
 pub struct Team {
     pub id: i32,
     pub player_one_id: i32,

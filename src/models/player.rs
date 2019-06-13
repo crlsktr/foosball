@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 use super::super::schema::players;
 
-#[derive(Queryable, Serialize)]
+#[derive(Queryable, Serialize, Debug)]
 pub struct Player {
     pub id: i32,
     pub name: String
