@@ -89,7 +89,7 @@ fn main() {
                     player_3: String,
                     player_4: Option<String>,
                 }));
-
+				
                 let mut player_selection = vec![players.player_0, players.player_1, players.player_2, players.player_3 ];
                 if players.player_4.is_some() {
                     player_selection.push(players.player_4.unwrap());
