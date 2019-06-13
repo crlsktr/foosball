@@ -53,7 +53,7 @@ fn main() {
             //     rouille::Response::text("Ok")
             // },
             (POST) (/results) => {
-                let game_results = try_or_400!(post_input!(request, {
+                let r = try_or_400!(post_input!(request, {
 
                     game_0: i32,
                     spread_0: i32,
@@ -75,10 +75,17 @@ fn main() {
                     spread_4: Option<i32>,
                     winner_4: Option<i32>,
                 }));
-
-                dbg!(game_results);
-
-                rouille::Response::html("Done")
+                
+                create_results(r.game_0, r.spread_0, r.winner_0, &*connection);
+                create_results(r.game_1, r.spread_1, r.winner_1, &*connection);
+                create_results(r.game_2, r.spread_2, r.winner_2, &*connection);
+                if r.game_3.is_some() && r.spread_3.is_some() && r.winner_3.is_some() {
+                    create_results(r.game_3.unwrap(), r.spread_3.unwrap(), r.winner_3.unwrap(), &*connection);
+                }
+                if r.game_4.is_some() && r.spread_4.is_some() && r.winner_4.is_some() {
+                    create_results(r.game_4.unwrap(), r.spread_4.unwrap(), r.winner_4.unwrap(), &*connection);
+                }
+                rouille::Response::html("Results Saved")
             },
 
             (POST) (/play) => {
@@ -357,4 +364,17 @@ fn get_players(player_names: &Vec<String>, connection: &SqliteConnection) -> Vec
         }
         existing_players
     }
+}
+
+fn create_results(game_id: i32, spread: i32, winning_team_id: i32, connection: &SqliteConnection) {
+    let game_result = NewResult {
+            game_id,
+            winning_team: winning_team_id,
+            spread,
+    };
+
+    diesel::insert_into(schema::results::table)
+                    .values(game_result)
+                    .execute(connection)
+                    .expect("couldn't create game results");
 }
