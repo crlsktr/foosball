@@ -3,12 +3,12 @@ use super::super::schema::players;
 
 #[derive(Queryable, Serialize, Debug)]
 pub struct Player {
-    pub id: i32,
-    pub name: String
+	pub id: i32,
+	pub name: String,
 }
 
 #[derive(Insertable, Deserialize)]
-#[table_name="players"]
+#[table_name = "players"]
 pub struct NewPlayer {
-    pub name: String
+	pub name: String,
 }
