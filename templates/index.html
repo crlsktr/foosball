@@ -35,36 +35,50 @@
             form {
                 margin-top: 16px;
             }
+
+			.app {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+			}
         </style>
     </head>
     <body>
-        <h1>The Foosball App!</h1>
-        
-        <h2>Current Game Feed</h2>
-        <img src="http://foos:8081/"/>
-        
-        <h2>Start a Match</h2>
-        <nav>
-            <a href="/new/gauntlet">Gauntlet!</a>
-            <a href="/new/match">Other</a>
-        </nav>
-
-        <h2>Data</h2>
-        <a href="/leaderboard">Leaderboard</a>
-
-        <datalist id="players">
-            {% for player in players %}
-                <option value="{{player.name}}">{{player.name}}</option>
-            {% endfor %}
-        </datalist>
-
-        <h4>Team Stats</h4>
-        <form action="/teamstats" method="get">
-            <input name="player_one" type="text" list="players">
-            <br>
-            <input name="player_two" type="text" list="players">
-            <br>
-            <input type="submit" value="Get Team Stats">
-        </form>
+		<h1>The Foosball App!</h1>
+        <div class="app">
+			<div>
+					<h2>Current Game Feed</h2>
+					<img src="http://foos:8081/"/>
+			</div>
+				
+			<div>
+					<h2>Start a Match</h2>
+					<nav>
+						<a href="/new/gauntlet">Gauntlet!</a>
+						<a href="/new/match">Other</a>
+					</nav>
+			</div>
+				
+			<div>
+					<h2>Data</h2>
+					<a href="/leaderboard">Leaderboard</a>
+			
+					<datalist id="players">
+						{% for player in players %}
+							<option value="{{player.name}}">{{player.name}}</option>
+						{% endfor %}
+					</datalist>
+			
+					<h4>Team Stats</h4>
+					<form action="/teamstats" method="get">
+						<input name="player_one" type="text" list="players">
+						<br>
+						<input name="player_two" type="text" list="players">
+						<br>
+						<input type="submit" value="Get Team Stats">
+					</form>
+			</div>
+				
+		</div>
 	</body>
 </html>
