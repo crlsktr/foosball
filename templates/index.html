@@ -6,6 +6,9 @@
             body {
                 font-family: Helvetica;
             }
+            nav {
+                margin-bottom: 16px;
+            }
             nav a {
                 background-color: black;
                 color: white;
@@ -18,11 +21,14 @@
     </head>
     <body>
         <h1>The Foosball App!</h1>
-        <h2>Select Game Type</h2>
+        
+        <h2>Current Game Feed</h2>
+        <img src="http://foos:8081/"/>
+        
+        <h2>Select Match Type to Record a Match</h2>
         <nav>
             <a href="/new/gauntlet">Gauntlet!</a>
             <a href="/new/match">Other</a>
-		</nav>
-		<img src="http://foos:8081/"/>
+        </nav>
 	</body>
 </html>
