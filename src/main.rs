@@ -275,22 +275,23 @@ fn create_gauntlet(
 	connection: &SqliteConnection,
 ) -> (Vec<Game>, Vec<Team>, Vec<Player>) {
 	let players = get_players(player_names, connection);
+    
 	if players.len() != 5 {
 		println!("Not enough players for a gauntlet");
 	}
 
 	let mut teams: Vec<Team> = vec![];
 	let team_selection = vec![
-		(0, 1),
-		(0, 2),
-		(0, 3),
-		(0, 4),
-		(1, 2),
-		(1, 3),
-		(1, 4),
-		(2, 3),
-		(2, 4),
-		(3, 4),
+		(0, 1), // 0 - p1,p2
+		(0, 2), // 1 - p1,p3
+		(0, 3), // 2 - p1,p4
+		(0, 4), // 3 - p1,p5
+		(1, 2), // 4 - p2,p3
+		(1, 3), // 5 - p2,p4
+		(1, 4), // 6 - p2,p5
+		(2, 3), // 7 - p3,p4
+		(2, 4), // 8 - p3,p5
+		(3, 4), // 9 - p4,p5
 	];
 
 	for team in team_selection {
@@ -301,7 +302,13 @@ fn create_gauntlet(
 	}
 
 	let mut games: Vec<Game> = vec![];
-	let game_selection = vec![(4, 9), (7, 3), (2, 6), (0, 8), (5, 1)];
+	let game_selection = vec![
+        (4, 9), // p2,p3 vs p4,p5
+        (7, 3), // p3,p4 vs p1,p5
+        (2, 6), // p1,p4 vs p2,p5
+        (0, 8), // p1,p2 vs p3,p3
+        (5, 1)  // p2,p4 vs p1,p3
+    ];
 	for game in game_selection {
 		let t1 = teams.get(game.0).unwrap();
 		let t2 = teams.get(game.1).unwrap();
@@ -482,7 +489,7 @@ select
 	,ifnull(count(games.wins), 0) as games_played
 	,case 
 		when count(games.wins) <> 0 then
-			ifnull(cast(ifnull(sum(games.wins), 0) as real) / cast(ifnull(count(games.wins) - sum(games.wins), 0)as real), 1)
+			ifnull(cast(ifnull(sum(games.wins), 0) as real) / cast(count(games.wins) as real), 1)
 		else 0
 	end  as percentage
 	,max(case
