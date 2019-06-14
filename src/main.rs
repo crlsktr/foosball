@@ -233,7 +233,10 @@ fn main() {
 					.load(&*connection)
 					.unwrap();
 
-				let stats = stats.get(0).unwrap();
+				let stats = match stats.get(0) {
+                    Some(s) => s,
+                    _ => return rouille::Response::html(format!("Couldn't find {} and {} ever being on a team.", player_one, player_two))
+                };
 
                 let query = get_team_stats_against_query(team.id);
 				let vs_stats: Vec<VsStats> =
