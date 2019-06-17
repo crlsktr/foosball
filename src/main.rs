@@ -541,11 +541,11 @@ select
 		end) as highest_losing_spread
 	,min(case
 		when games.wins = 1 then games.spread
-		else 0
+		else null
 		end) as lowest_winning_spread
 	,min(case
 		when games.wins <> 1 then games.spread
-		else 0
+		else null
 		end) as lowest_losing_spread
 	,ifnull(sum(case
 		when games.wins = 1 then ifnull(games.spread, 0)
