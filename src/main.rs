@@ -209,8 +209,38 @@ fn main() {
 				rouille::Response::html(html)
 			},
 
+            (GET) (/playerstats) => {
+                let name = request.get_param("player_name");
+
+                if name.is_none() {
+                    return rouille::Response::empty_400();
+                }
+                let name= name.unwrap();
+
+                let player = match find_player(&name, &*connection){
+                    Some(p) => p,
+                    _ => return rouille::Response::html(format!("No Stats For {}", name))
+                };
+
+                let query = get_player_stats_query(player.id);
+				let stats: Vec<TeamStats> =
+					diesel::sql_query(query)
+					.load(&*connection)
+					.unwrap_or(vec!());
+
+				let stats = match stats.get(0) {
+                    Some(s) => s,
+                    _ => return rouille::Response::html(format!("No Stats For {}", name))
+                };
+
+                let mut context = Context::new();
+                context.insert("name", &name);
+                context.insert("stats", &stats);
+				let html = templates.render("player_stats.html", &context).unwrap();
+				rouille::Response::html(html)
+            },
+
 			(GET) (/teamstats) => {
-                ///{player_one: String}/{player_two: String}
                 let player_one = request.get_param("player_one");
                 let player_two = request.get_param("player_two");
 
@@ -499,7 +529,7 @@ select
 		when count(games.wins) <> 0 then
 			ifnull(cast(ifnull(sum(games.wins), 0) as real) / cast(count(games.wins) as real), 1)
 		else 0
-	end  as percentage
+	end as percentage
 	,max(case
 		when games.wins = 1 then games.spread
 		else 0
@@ -508,14 +538,14 @@ select
 		when games.wins <> 1 then games.spread
 		else 0
 		end) as highest_losing_spread
-	,min(case
+	,ifnull(min(case
 		when games.wins = 1 then games.spread
-		else 0
-		end) as lowest_winning_spread
-	,min(case
+		else null
+		end), 0) as lowest_winning_spread
+	,ifnull(min(case
 		when games.wins <> 1 then games.spread
-		else 0
-		end) as lowest_losing_spread
+		else null
+		end), 0) as lowest_losing_spread
 	,ifnull(sum(case
 		when games.wins = 1 then ifnull(games.spread, 0)
 		else 0
@@ -585,7 +615,7 @@ fn get_team_stats_query(team_id: i32) -> String {
     join results r
         on r.game_id = g.id
     where t.id = {}
-    group by g.id
+    group by t.id
     ;"#,
 		team_id
 	)
@@ -620,4 +650,26 @@ fn get_team_stats_against_query(team_id: i32) -> String {
     ;"#,
 		team_id
 	)
+}
+
+fn get_player_stats_query(player_id: i32) -> String {
+    format!(
+        r#"
+        select
+            sum(case when r.winning_team = t.id then 1 else 0 end) as won
+            ,sum(case when r.winning_team <> t.id then 1 else 0 end) as lost
+            ,count(g.id) as played
+            ,cast(sum(case when r.winning_team = t.id then 1 else 0 end) as real) / cast(count(g.id) as real) as percentage
+        from games g
+        join results r
+            on g.id = r.game_id
+        join teams t
+            on g.team_one_id = t.id 
+            or g.team_two_id = t.id
+        where t.player_one_id = {}
+            or t.player_two_id = {}
+        ;"#,
+        player_id,
+        player_id
+    )
 }

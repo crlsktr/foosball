@@ -33,7 +33,7 @@ pub struct PlayerView {
 	pub name: String,
 }
 
-#[derive(Serialize, QueryableByName)]
+#[derive(Serialize, QueryableByName, Debug)]
 pub struct Leader {
 	#[sql_type = "Varchar"]
 	pub player_name: String,
