@@ -39,27 +39,26 @@
 			.app {
 				display: flex;
 				flex-direction: row;
-				justify-content: space-around;
+				/*justify-content: space-around;*/
+                justify-content: flex-start;
 			}
+            .app-section {
+                min-width: 320px;
+                margin: 32px;
+            }
         </style>
     </head>
     <body>
 		<h1>The Foosball App!</h1>
         <div class="app">
-			<div>
+            <!-- Live Feed Section -->
+			<div class="app-section">
 					<h2>Current Game Feed</h2>
 					<img src="http://foos:8081/"/>
-			</div>
-				
-			<div>
-					<h2>Start a Match</h2>
-					<nav>
-						<a href="/new/gauntlet">Gauntlet!</a>
-						<a href="/new/match">Other</a>
-					</nav>
-			</div>
-				
-			<div>
+            </div>
+            
+            <!-- Data Section -->
+            <div class="app-section">
 					<h2>Data</h2>
 					<a href="/leaderboard">Leaderboard</a>
 			
@@ -76,9 +75,24 @@
 						<input name="player_two" type="text" list="players">
 						<br>
 						<input type="submit" value="Get Team Stats">
-					</form>
+                    </form>
+                    
+                    <h4>Player Stats</h4>
+                    <form action="/playerstats" mthod="get">
+                        <input name="player_name" type="text" list="players">
+                        <br>
+                        <input type="submit" value="Get Player Stats">
+                    </form>
 			</div>
-				
+            
+            <!-- New Match Section-->
+			<div class="app-section">
+					<h2>Start a Match</h2>
+					<nav>
+						<a href="/new/gauntlet">Gauntlet!</a>
+						<a href="/new/match">Other</a>
+					</nav>
+			</div>
 		</div>
 	</body>
 </html>

@@ -46,7 +46,7 @@
                     <td>{{leader.games_won}}</td>
                     <td>{{leader.games_lost}}</td>
                     <td>{{leader.games_played}}</td>
-                    <td>{{leader.percentage * 100}}</td>
+                    <td>{{leader.percentage * 100 | round(method="ceil", precision=2) }}</td>
                     <td>{{leader.highest_winning_spread}}</td>
                     <td>{{leader.highest_losing_spread}}</td>
                     <td>{{leader.lowest_winning_spread}}</td>
