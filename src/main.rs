@@ -310,6 +310,14 @@ fn create_gauntlet(
 	if players.len() != 5 {
 		println!("Not enough players for a gauntlet");
 	}
+	let mut ordered_players = vec![];
+
+	for name in player_names {
+		let player = players.iter().find( |p| &p.name == name ).unwrap();
+		ordered_players.push(player.clone());
+	}
+
+
 
 	let mut teams: Vec<Team> = vec![];
 	let team_selection = vec![
@@ -326,8 +334,8 @@ fn create_gauntlet(
 	];
 
 	for team in team_selection {
-		let p1 = players.get(team.0).unwrap();
-		let p2 = players.get(team.1).unwrap();
+		let p1 = ordered_players.get(team.0).unwrap();
+		let p2 = ordered_players.get(team.1).unwrap();
 		let team = create_team(p1, p2, connection);
 		teams.push(team);
 	}
