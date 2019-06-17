@@ -241,7 +241,6 @@ fn main() {
             },
 
 			(GET) (/teamstats) => {
-                ///{player_one: String}/{player_two: String}
                 let player_one = request.get_param("player_one");
                 let player_two = request.get_param("player_two");
 
@@ -539,14 +538,14 @@ select
 		when games.wins <> 1 then games.spread
 		else 0
 		end) as highest_losing_spread
-	,min(case
+	,ifnull(min(case
 		when games.wins = 1 then games.spread
 		else null
-		end) as lowest_winning_spread
-	,min(case
+		end), 0) as lowest_winning_spread
+	,ifnull(min(case
 		when games.wins <> 1 then games.spread
 		else null
-		end) as lowest_losing_spread
+		end), 0) as lowest_losing_spread
 	,ifnull(sum(case
 		when games.wins = 1 then ifnull(games.spread, 0)
 		else 0
