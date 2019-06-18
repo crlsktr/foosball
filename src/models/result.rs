@@ -8,7 +8,7 @@ pub struct Result {
 	pub spread: i32,
 }
 
-#[derive(Insertable, Deserialize)]
+#[derive(Insertable, Deserialize, Debug)]
 #[table_name = "results"]
 pub struct NewResult {
 	pub game_id: i32,
