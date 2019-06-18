@@ -10,6 +10,7 @@ pub use self::player::*;
 pub use self::result::*;
 pub use self::team::*;
 
+use std::cmp::Ordering;
 use diesel::sql_types::{Float, Integer, Varchar};
 
 #[derive(Serialize)]
@@ -58,6 +59,53 @@ pub struct Leader {
 	#[sql_type = "Integer"]
 	pub average_losing_spread: i32,
 }
+
+impl PartialOrd for Leader {
+	fn partial_cmp(&self, other: &Leader)-> Option<Ordering> {
+		Some(self.cmp(other))
+	}
+}
+
+impl Ord for Leader {
+	fn cmp(&self, other: &Leader) -> Ordering {
+		if self.percentage > other.percentage{
+			Ordering::Less
+		}
+		else if self.percentage < other.percentage{
+			Ordering::Greater
+		}
+		else if self.average_winning_spread > other.average_winning_spread{
+			 Ordering::Less
+		}
+		else if self.average_winning_spread < other.average_winning_spread{
+			 Ordering::Greater
+		}
+		else if self.highest_winning_spread > other.highest_winning_spread{
+			 Ordering::Less
+		}
+		else if self.highest_winning_spread < other.highest_winning_spread{
+			 Ordering::Greater
+		}
+		else if self.games_played > other.games_played{
+			 Ordering::Less
+		}
+		else if self.games_played < other.games_played{
+			 Ordering::Greater
+		}
+		else {
+			Ordering::Equal
+		}
+	}
+}
+
+impl PartialEq for Leader {
+	fn eq(&self, other: &Leader) -> bool {
+		self.player_name == other.player_name
+		//self.percentage == other.percentage
+	}
+}
+
+impl Eq for Leader {}
 
 #[derive(Serialize, QueryableByName, Debug)]
 pub struct TeamStats {

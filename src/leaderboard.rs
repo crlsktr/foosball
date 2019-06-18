@@ -5,12 +5,12 @@ use tera::Context;
 use tera::Tera;
 
 pub fn get_leaders(_request: &rouille::Request, connection: &SqliteConnection, templates: &Tera) -> rouille::Response {
-    let leaders: Vec<Leader> = match diesel::sql_query(LEADER_BOARD_QUERY)
+    let mut leaders: Vec<Leader> = match diesel::sql_query(LEADER_BOARD_QUERY)
     .load(&*connection) {
         Ok(l) => l,
         Err(_) => return rouille::Response::text(format!("Well that sucks. {}", "Couldn't run the leaders query.")).with_status_code(500)
     };
-
+	leaders.sort();
     let mut context = Context::new();
     context.insert("leaders", &leaders);
     let html = match templates.render("leaders.html", &context) {
