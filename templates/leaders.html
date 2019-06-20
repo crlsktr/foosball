@@ -29,6 +29,7 @@
 		<p>Leaders are sorted by "win percentage" &gt; "average winning spread" &gt; "highest winning spread" &gt; "number of games played" </p>
         <table>
                 <tr>
+                    <th>Rank</th>
                     <th>Player</th>
                     <th>Won</th>
                     <th>Lost</th>
@@ -43,6 +44,7 @@
                 </tr>
             {% for leader in leaders %}
                 <tr>
+                    <td>{{loop.index0}}</td>
                     <td>{{leader.player_name}}</td>
                     <td>{{leader.games_won}}</td>
                     <td>{{leader.games_lost}}</td>
