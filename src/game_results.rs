@@ -3,8 +3,8 @@ use crate::models::*;
 use diesel::sqlite::SqliteConnection;
 use diesel::prelude::*;
 use diesel::RunQueryDsl;
-
-const CHANGE_MULTIPLIER_K: f32 = 30.0;
+use crate::rank::*;
+use crate::shared_queries::*;
 
 pub fn save_game_results(request: &rouille::Request, connection: &SqliteConnection) -> rouille::Response {
     let r = try_or_400!(post_input!(request, {
@@ -61,7 +61,6 @@ pub fn save_game_results(request: &rouille::Request, connection: &SqliteConnecti
     rouille::Response::html("Results Saved")
 }
 
-
 fn create_results(game_id: i32, spread: i32, winning_team_id: i32, connection: &SqliteConnection) -> std::result::Result<(), String> {
 	let game_result = NewResult {
 		game_id,
@@ -86,15 +85,22 @@ fn create_results(game_id: i32, spread: i32, winning_team_id: i32, connection: &
 		.load(&*connection)
 		.unwrap_or(vec!());
 
-	dbg!(&los_team);
+    if win_team.len() < 2 {
+        return Err("Couldn't load the winning team".to_string());
+    }
+
+    if los_team.len() < 2 {
+        return Err("Couldn't load the losing team".to_string());
+    }
+
 	let winner_rating = win_team[0].ranking + win_team[1].ranking;
 	let loser_rating = los_team[0].ranking + los_team[1].ranking;
 
 	let win_prob = probability_win(winner_rating as f32, loser_rating as f32);
 	let los_prob = probability_win(loser_rating as f32, winner_rating as f32);
 
-	let win_change = CHANGE_MULTIPLIER_K * (1.0 - win_prob);
-	let los_change = CHANGE_MULTIPLIER_K * (0.0 - los_prob);
+	let win_change = change_rank_win(win_prob); 
+	let los_change = change_rank_loss(los_prob);
 
 	win_team[0].ranking += (win_change).ceil() as i32;
 	win_team[1].ranking += (win_change).ceil() as i32;
@@ -114,52 +120,4 @@ fn create_results(game_id: i32, spread: i32, winning_team_id: i32, connection: &
 	//save all players
 
     Ok(())
-}
-
-
-fn update_rank(newrankings: Vec<(i32, i32)>, connection: &SqliteConnection ) -> std::result::Result<(), String> {
-	use schema::players::dsl::*;
-	
-
-	for single_rank in newrankings
-	{
-		diesel::update(players.filter(id.eq(single_rank.0)))
-		.set(ranking.eq(single_rank.1))
-		.execute(connection)
-		.map_err(|_| format!("Couldn't update the ranking for {}.", single_rank.0))?;
-	}
-	
-	Ok(())
-}
-
-
-fn probability_win(rating_1: f32, rating_2: f32) -> f32 {
-	1.0 / ( 1.0 + (10.0f32).powf((rating_2 - rating_1) / 400.0))
-}
-
-fn game_win_team(game_id: i32) -> String {
-	format!(r#"SELECT p.* FROM 'games' as g
-				JOIN 'results' as r
-				on r.game_id = g.id
-				join 'teams' as t
-				on t.id = r.winning_team
-				join 'players' as p
-				on p.id = t.player_one_id or p.id = t.player_two_id
-				WHERE g.id = {};"#,
-			game_id)
-}
-
-fn game_los_team(game_id: i32) -> String {
-	format!(r#"
-	select p.* from 'teams' as t
-	join (
-	select case WHEN r.winning_team = g.team_two_id then g.team_one_id else g.team_two_id end as los_team_id from 'games' as g
-		join 'results' as r 
-		on g.id = r.game_id
-		where g.id = {}
-	) as los_team_id
-	on t.id = los_team_id
-	join 'players' as p
-	on p.id = t.player_one_id or p.id = t.player_two_id;"#, 
-	game_id)
 }

@@ -24,7 +24,9 @@ pub fn get_leaders(_request: &rouille::Request, connection: &SqliteConnection, t
 const LEADER_BOARD_QUERY: &'static str = r#"
 select
 	p.name as player_name
-	,p.ranking as ranking
+	,case
+        when ifnull(count(games.wins), 0) = 0 then 0
+        else p.ranking end as ranking
 	,ifnull(sum(games.wins), 0) as games_won
 	,ifnull(count(games.wins) - sum(games.wins), 0) as games_lost
 	,ifnull(count(games.wins), 0) as games_played

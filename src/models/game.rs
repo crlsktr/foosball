@@ -2,7 +2,7 @@
 use super::super::schema::games;
 use super::Team;
 
-#[derive(Queryable, Serialize)]
+#[derive(Queryable, Serialize, Debug)]
 pub struct Game {
 	pub id: i32,
 	pub match_id: i32,
