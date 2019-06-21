@@ -1,5 +1,5 @@
 #!/bin/sh
 git pull
-pkill master
+pkill foosball_server
 ./backup.sh
 cargo run --bin foosball_server &
