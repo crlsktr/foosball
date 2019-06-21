@@ -1,5 +1,5 @@
 [package]
-name = "master"
+name = "foos"
 version = "0.1.0"
 authors = ["Daniel Wilkins <daniel.wilkins@centeva.com>"]
 

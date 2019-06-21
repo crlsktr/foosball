@@ -2,32 +2,28 @@
 
 #[macro_use]
 extern crate rouille;
-#[macro_use]
 extern crate serde_derive;
 extern crate serde;
 extern crate serde_json;
-#[macro_use]
 extern crate diesel;
 extern crate inflector;
 #[macro_use]
 extern crate tera;
 extern crate chrono;
+extern crate foos;
 
 use tera::Tera;
 use self::diesel::prelude::*;
 use diesel::sqlite::SqliteConnection;
 use std::sync::Mutex;
 
-pub mod models;
-pub mod schema;
-pub mod game_results;
-pub mod play;
-pub mod create_match;
-pub mod index;
-pub mod leaderboard;
-pub mod playerstats;
-pub mod shared_queries;
-pub mod teamstats;
+use foos::game_results;
+use foos::play;
+use foos::create_match;
+use foos::index;
+use foos::leaderboard;
+use foos::playerstats;
+use foos::teamstats;
 
 
 fn main() {
@@ -36,6 +32,7 @@ fn main() {
 		// I don't think this fails with maybe the exception of permisisons.
 		Mutex::new(db.expect("Failed to connect to ./foosball.db"))
 	};
+
 
 	let templates: Tera = compile_templates!("templates/**/*");
 

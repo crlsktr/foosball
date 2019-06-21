@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 use super::super::schema::matches;
 
-#[derive(Queryable, Deserialize)]
+#[derive(Queryable, Deserialize, Debug)]
 pub struct Match {
 	pub id: i32,
 	pub is_gauntlet: bool,

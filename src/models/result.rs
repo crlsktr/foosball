@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 use super::super::schema::results;
 
-#[derive(Queryable, Deserialize)]
+#[derive(Queryable, Deserialize, Debug)]
 pub struct Result {
 	pub game_id: i32,
 	pub winning_team: i32,

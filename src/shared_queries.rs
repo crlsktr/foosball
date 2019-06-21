@@ -37,3 +37,30 @@ pub fn find_player(player_name: &str, connection: &SqliteConnection) -> Option<P
 		Err(_) => None,
 	}
 }
+
+pub fn game_win_team(game_id: i32) -> String {
+	format!(r#"SELECT p.* FROM 'games' as g
+				JOIN 'results' as r
+				on r.game_id = g.id
+				join 'teams' as t
+				on t.id = r.winning_team
+				join 'players' as p
+				on p.id = t.player_one_id or p.id = t.player_two_id
+				WHERE g.id = {};"#,
+			game_id)
+}
+
+pub fn game_los_team(game_id: i32) -> String {
+	format!(r#"
+	select p.* from 'teams' as t
+	join (
+	select case WHEN r.winning_team = g.team_two_id then g.team_one_id else g.team_two_id end as los_team_id from 'games' as g
+		join 'results' as r 
+		on g.id = r.game_id
+		where g.id = {}
+	) as los_team_id
+	on t.id = los_team_id
+	join 'players' as p
+	on p.id = t.player_one_id or p.id = t.player_two_id;"#, 
+	game_id)
+}
