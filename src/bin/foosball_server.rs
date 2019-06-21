@@ -37,7 +37,16 @@ fn main() {
 	let templates: Tera = compile_templates!("templates/**/*");
 
 	rouille::start_server("0.0.0.0:12346", move |request| {
-		// This shouldn't happen because rouille is single threaded.
+		
+		// see if we match a static file.
+		{
+			let response = rouille::match_assets(&request, "./static_files/");
+
+			if response.is_success() {
+				return response;
+			}
+		}
+		// This shouldn't error because rouille is single threaded.
 		let connection = db.lock().expect("database in use");
 		router!(request,
 			(POST) (/results) => {
