@@ -1,3 +1,4 @@
+#!/bin/sh
 git pull
 pkill master
 ./backup.sh
