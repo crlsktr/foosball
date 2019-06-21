@@ -15,3 +15,8 @@ scp foos@foos:foosball/foosball.db foosball_real.db
 ```
 .headers on
 ```
+
+## quit sqlite
+```
+.quit
+```
