@@ -128,6 +128,21 @@ pub struct TeamStats {
 }
 
 #[derive(Serialize, QueryableByName, Debug)]
+pub struct PlayerStats {
+	#[sql_type = "Integer"]
+	pub rank: i32,
+	#[sql_type = "Integer"]
+	pub won: i32,
+	#[sql_type = "Integer"]
+	pub lost: i32,
+	#[sql_type = "Integer"]
+	pub played: i32,
+    #[sql_type = "Float"]
+	pub percentage: f32,
+}
+
+
+#[derive(Serialize, QueryableByName, Debug)]
 pub struct VsStats {
     #[sql_type = "Varchar"]
 	pub player_three: String,

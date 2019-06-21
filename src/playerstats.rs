@@ -20,7 +20,7 @@ pub fn get_player_stats(request: &rouille::Request, connection: &SqliteConnectio
     };
 
     let query = get_player_stats_query(player.id);
-    let stats: Vec<TeamStats> =
+    let stats: Vec<PlayerStats> =
         diesel::sql_query(query)
         .load(&*connection)
         .unwrap_or(vec!());
@@ -45,7 +45,8 @@ fn get_player_stats_query(player_id: i32) -> String {
     format!(
         r#"
         select
-            sum(case when r.winning_team = t.id then 1 else 0 end) as won
+            p.ranking as rank
+            ,sum(case when r.winning_team = t.id then 1 else 0 end) as won
             ,sum(case when r.winning_team <> t.id then 1 else 0 end) as lost
             ,count(g.id) as played
             ,cast(sum(case when r.winning_team = t.id then 1 else 0 end) as real) / cast(count(g.id) as real) as percentage
@@ -55,10 +56,11 @@ fn get_player_stats_query(player_id: i32) -> String {
         join teams t
             on g.team_one_id = t.id 
             or g.team_two_id = t.id
-        where t.player_one_id = {}
-            or t.player_two_id = {}
+        join players p
+            on t.player_one_id = p.id
+            or t.player_two_id = p.id
+        where p.id = {}
         ;"#,
-        player_id,
         player_id
     )
 }
