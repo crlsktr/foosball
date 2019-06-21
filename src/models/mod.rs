@@ -39,6 +39,8 @@ pub struct Leader {
 	#[sql_type = "Varchar"]
 	pub player_name: String,
 	#[sql_type = "Integer"]
+	pub ranking: i32,
+	#[sql_type = "Integer"]
 	pub games_won: i32,
 	#[sql_type = "Integer"]
 	pub games_lost: i32,
@@ -68,7 +70,14 @@ impl PartialOrd for Leader {
 
 impl Ord for Leader {
 	fn cmp(&self, other: &Leader) -> Ordering {
-		if self.percentage > other.percentage{
+		
+		if self.ranking > other.ranking{
+			Ordering::Less
+		}
+		else if self.ranking < other.ranking{
+			Ordering::Greater
+		}
+		else if self.percentage > other.percentage{
 			Ordering::Less
 		}
 		else if self.percentage < other.percentage{
@@ -101,7 +110,6 @@ impl Ord for Leader {
 impl PartialEq for Leader {
 	fn eq(&self, other: &Leader) -> bool {
 		self.player_name == other.player_name
-		//self.percentage == other.percentage
 	}
 }
 
