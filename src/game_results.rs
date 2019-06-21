@@ -1,6 +1,7 @@
 use crate::schema;
 use crate::models::*;
 use diesel::sqlite::SqliteConnection;
+use diesel::prelude::*;
 use diesel::RunQueryDsl;
 
 const CHANGE_MULTIPLIER_K: f32 = 30.0;
@@ -85,8 +86,9 @@ fn create_results(game_id: i32, spread: i32, winning_team_id: i32, connection: &
 		.load(&*connection)
 		.unwrap_or(vec!());
 
-	let winner_rating = win_team[0].ranking +  win_team[1].ranking;
-	let loser_rating = los_team[0].ranking +  los_team[1].ranking;
+	dbg!(&los_team);
+	let winner_rating = win_team[0].ranking + win_team[1].ranking;
+	let loser_rating = los_team[0].ranking + los_team[1].ranking;
 
 	let win_prob = probability_win(winner_rating as f32, loser_rating as f32);
 	let los_prob = probability_win(loser_rating as f32, winner_rating as f32);
@@ -94,7 +96,17 @@ fn create_results(game_id: i32, spread: i32, winning_team_id: i32, connection: &
 	let win_change = CHANGE_MULTIPLIER_K * (1.0 - win_prob);
 	let los_change = CHANGE_MULTIPLIER_K * (0.0 - los_prob);
 
-	
+	win_team[0].ranking += (win_change).ceil() as i32;
+	win_team[1].ranking += (win_change).ceil() as i32;
+
+	los_team[0].ranking += (los_change).ceil() as i32;
+	los_team[1].ranking += (los_change).ceil() as i32;
+
+	let mut w :Vec<(i32,i32)> = win_team.iter().map(|t| (t.id, t.ranking)).collect();
+	let mut l :Vec<(i32,i32)> = los_team.iter().map(|t| (t.id, t.ranking)).collect();
+
+	w.append(& mut l);
+	update_rank(w, connection)?;
 	//Ra = Ra + K * (1 - Pa); 
     //Rb = Rb + K * (0 - Pb); 
 	//win_team.player[s].ranking += win_team_win_prob(los_team) + K * (1 - win_team_prob)
@@ -104,12 +116,29 @@ fn create_results(game_id: i32, spread: i32, winning_team_id: i32, connection: &
     Ok(())
 }
 
+
+fn update_rank(newrankings: Vec<(i32, i32)>, connection: &SqliteConnection ) -> std::result::Result<(), String> {
+	use schema::players::dsl::*;
+	
+
+	for single_rank in newrankings
+	{
+		diesel::update(players.filter(id.eq(single_rank.0)))
+		.set(ranking.eq(single_rank.1))
+		.execute(connection)
+		.map_err(|_| format!("Couldn't update the ranking for {}.", single_rank.0))?;
+	}
+	
+	Ok(())
+}
+
+
 fn probability_win(rating_1: f32, rating_2: f32) -> f32 {
 	1.0 / ( 1.0 + (10.0f32).powf((rating_2 - rating_1) / 400.0))
 }
 
 fn game_win_team(game_id: i32) -> String {
-	format!(r#"SELECT r.game_id, r.spread, p.* FROM 'games' as g
+	format!(r#"SELECT p.* FROM 'games' as g
 				JOIN 'results' as r
 				on r.game_id = g.id
 				join 'teams' as t
@@ -122,7 +151,7 @@ fn game_win_team(game_id: i32) -> String {
 
 fn game_los_team(game_id: i32) -> String {
 	format!(r#"
-	select t.* from 'teams' as t 
+	select p.* from 'teams' as t
 	join (
 	select case WHEN r.winning_team = g.team_two_id then g.team_one_id else g.team_two_id end as los_team_id from 'games' as g
 		join 'results' as r 
