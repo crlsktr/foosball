@@ -9,6 +9,7 @@ extern crate foos;
 
 use diesel::sqlite::SqliteConnection;
 use std::sync::Mutex;
+use diesel::prelude::*;
 
 use foos::rank::*;
 use foos::schema;

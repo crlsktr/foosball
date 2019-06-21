@@ -1,7 +1,6 @@
 use crate::schema;
 use crate::models::*;
 use diesel::sqlite::SqliteConnection;
-use diesel::prelude::*;
 use diesel::RunQueryDsl;
 use crate::rank::*;
 use crate::shared_queries::*;
