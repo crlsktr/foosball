@@ -8,17 +8,30 @@
 
             function sortTable(column_index, column_type) {
                 var table, rows, switching, i, x, y, shouldSwitch;
-                table = document.getElementById("leaders-table");
+                table = document.getElementById('leaders-table');
                 switching = true;
                 directions[column_index] = !directions[column_index];
                 let direction = directions[column_index];
+                let headers = table.rows[0].getElementsByTagName('th');
+                for (i = 0; i < headers.length; i++) {
+                    if (i !== column_index) {
+                        headers[i].getElementsByTagName('i')[0].classList.remove('sort-asc');
+                        headers[i].getElementsByTagName('i')[0].classList.remove('sort-desc');
+                    } else if (!!direction) {
+                        headers[i].getElementsByTagName('i')[0].classList.remove('sort-desc');
+                        headers[i].getElementsByTagName('i')[0].classList.add('sort-asc');
+                    } else {
+                        headers[i].getElementsByTagName('i')[0].classList.remove('sort-asc');
+                        headers[i].getElementsByTagName('i')[0].classList.add('sort-desc');
+                    }
+                }
                 while (switching) {
                     switching = false;
                     rows = table.rows;
                     for (i = 1; i < (rows.length - 1); i++) {
                         shouldSwitch = false;
-                        x = rows[i].getElementsByTagName("TD")[column_index];
-                        y = rows[i + 1].getElementsByTagName("TD")[column_index];
+                        x = rows[i].getElementsByTagName('td')[column_index];
+                        y = rows[i + 1].getElementsByTagName('td')[column_index];
                         if ( direction && ((column_type !== 'number' && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase())
                             || (column_type === 'number' && (+x.innerHTML) > (+y.innerHTML)))) {
                             shouldSwitch = true;
@@ -38,6 +51,29 @@
                 }
             }
         </script>
+        <style>
+            th i {
+                margin-left: 10px;
+                bottom: 3px;
+                position: relative;
+            }
+            .sort-asc {
+                border: solid black;
+                border-width: 0 3px 3px 0;
+                display: inline-block;
+                padding: 3px;
+                transform: rotate(-135deg);
+                -webkit-transform: rotate(-135deg);
+            }
+            .sort-desc {
+                border: solid black;
+                border-width: 0 3px 3px 0;
+                display: inline-block;
+                padding: 3px;
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+            }
+        </style>
     </head>
     <body>
         <h1>The Foosball App!</h1>
@@ -45,19 +81,19 @@
 		<p>Leaders are sorted by: "ranking" &gt; "win percentage" &gt; "average winning spread" &gt; "highest winning spread" &gt; "number of games played" </p>
         <table id="leaders-table" class="full-width">
                 <tr>
-                    <th class="clickable" onclick="sortTable(0, 'number')">Position</th>
-					<th class="clickable" onclick="sortTable(1, 'notnumber')">Player</th>
-					<th class="clickable" onclick="sortTable(2, 'number')">Rank</th>
-                    <th class="clickable" onclick="sortTable(3, 'number')">Won</th>
-                    <th class="clickable" onclick="sortTable(4, 'number')">Lost</th>
-                    <th class="clickable" onclick="sortTable(5, 'number')">Played</th>
-                    <th class="clickable" onclick="sortTable(6, 'number')">Percentage</th>
-                    <th class="clickable" onclick="sortTable(7, 'number')">Best Spread(Win)</th>
-                    <th class="clickable" onclick="sortTable(8, 'number')">Worst Spread(Loss)</th>
-                    <th class="clickable" onclick="sortTable(9, 'number')">Worst Spread(Win)</th>
-                    <th class="clickable" onclick="sortTable(10, 'number')">Best Spread(Loss)</th>
-                    <th class="clickable" onclick="sortTable(11, 'number')">Average Spread(Win)</th>
-                    <th class="clickable" onclick="sortTable(12, 'number')">Average Spread(Loss)</th>
+                    <th class="clickable" onclick="sortTable(0, 'number')">Position<i></i></th>
+					<th class="clickable" onclick="sortTable(1, 'notnumber')">Player<i></i></th>
+					<th class="clickable" onclick="sortTable(2, 'number')">Rank<i></i></th>
+                    <th class="clickable" onclick="sortTable(3, 'number')">Won<i></i></th>
+                    <th class="clickable" onclick="sortTable(4, 'number')">Lost<i></i></th>
+                    <th class="clickable" onclick="sortTable(5, 'number')">Played<i></i></th>
+                    <th class="clickable" onclick="sortTable(6, 'number')">Percentage<i></i></th>
+                    <th class="clickable" onclick="sortTable(7, 'number')">Best Spread(Win)<i></i></th>
+                    <th class="clickable" onclick="sortTable(8, 'number')">Worst Spread(Loss)<i></i></th>
+                    <th class="clickable" onclick="sortTable(9, 'number')">Worst Spread(Win)<i></i></th>
+                    <th class="clickable" onclick="sortTable(10, 'number')">Best Spread(Loss)<i></i></th>
+                    <th class="clickable" onclick="sortTable(11, 'number')">Average Spread(Win)<i></i></th>
+                    <th class="clickable" onclick="sortTable(12, 'number')">Average Spread(Loss)<i></i></th>
                 </tr>
             {% for leader in leaders %}
                 <tr>
