@@ -2,6 +2,22 @@
 
 Foosball table
 
+## Dev env setup
+- install rust (if you don't like this... sorry)
+- install sqlite (good luck on windows)
+- install diesel_cli
+```bash
+	cargo install diesel_cli --no-default-features --features sqlite
+```
+- run migrations 
+```
+	diesel migration run
+```
+- run the application
+```
+	cargo run --bin foosball_server
+```
+
 ## Configuration for nginx as reverse proxy
 Add the following snippet of config to the server
 
