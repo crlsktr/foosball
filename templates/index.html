@@ -21,7 +21,7 @@
             <!-- Data Section -->
             <div class="app-section">
 					<h2>Data</h2>
-					<a href="/leaderboard">Leaderboard</a>
+					<a class="btn-primary" href="/leaderboard">Leaderboard</a>
 			
 					<datalist id="players">
 						{% for player in players %}
@@ -35,14 +35,14 @@
 						<br>
 						<input name="player_two" type="text" list="players">
 						<br>
-						<input type="submit" value="Get Team Stats">
+						<input class="btn-primary" type="submit" value="Get Team Stats">
                     </form>
                     
                     <h4>Player Stats</h4>
                     <form action="/playerstats" mthod="get">
                         <input name="player_name" type="text" list="players">
                         <br>
-                        <input type="submit" value="Get Player Stats">
+                        <input class="btn-primary" type="submit" value="Get Player Stats">
                     </form>
 			</div>
             
@@ -50,8 +50,8 @@
 			<div class="app-section">
 					<h2>Start a Match</h2>
 					<nav>
-						<a href="/new/gauntlet">Gauntlet!</a>
-						<a href="/new/match">Other</a>
+						<a class="btn-primary" href="/new/gauntlet">Gauntlet!</a>
+						<a class="btn-primary" href="/new/match">Other</a>
 					</nav>
 			</div>
 		</div>
