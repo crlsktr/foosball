@@ -1,5 +1,6 @@
 use crate::schema;
 use crate::models::*;
+use crate::rank::probability_win;
 use diesel::prelude::*;
 use diesel::sqlite::SqliteConnection;
 use diesel::RunQueryDsl;
@@ -56,47 +57,61 @@ pub fn play_match(request: &rouille::Request, connection: &SqliteConnection, tem
     };
     let mut game_views = vec!();
     for game in games {
+		let team_one = teams.iter().find(|t| t.id == game.team_one_id).unwrap();
+        let team_one_player_one_id = team_one.player_one_id;
+        let team_one_player_two_id = team_one.player_two_id;
+
+		let team_two = teams.iter().find(|t| t.id == game.team_two_id).unwrap();
+		let team_two_player_one_id = team_two.player_one_id;
+		let team_two_player_two_id = team_two.player_two_id;
+
+		let team_one_ranking = 
+			&players.iter().find(|p| p.id == team_one_player_one_id).unwrap().ranking + 
+			&players.iter().find(|p| p.id == team_one_player_two_id).unwrap().ranking;
+
+		let team_two_ranking = 
+			&players.iter().find(|p| p.id == team_two_player_one_id).unwrap().ranking + 
+			&players.iter().find(|p| p.id == team_two_player_two_id).unwrap().ranking;
+
+
         let view = GameView {
             match_id: new_match.id,
             game_id: game.id,
             team_one: {
-                    let team = teams.iter().find(|t| t.id == game.team_one_id).unwrap();
-                    let player_one_id = team.player_one_id;
-                    let player_two_id = team.player_two_id;
-                    let p1_name = &players.iter().find(|p| p.id == player_one_id).unwrap().name;
-                    let p2_name = &players.iter().find(|p| p.id == player_two_id).unwrap().name;
+                    let p1_name = &players.iter().find(|p| p.id == team_one_player_one_id).unwrap().name;
+                    let p2_name = &players.iter().find(|p| p.id == team_one_player_two_id).unwrap().name;
 
                     TeamView {
                     team_id: game.team_one_id,
                     player_one: PlayerView {
-                        player_id: player_one_id,
+                        player_id: team_one_player_one_id,
                         name: p1_name.clone(),
                     },
                     player_two: PlayerView {
-                        player_id: player_two_id,
+                        player_id: team_one_player_two_id,
                         name: p2_name.clone(),
                     }
                 }
             },
             team_two: {
-                    let team = teams.iter().find(|t| t.id == game.team_two_id).unwrap();
-                    let player_one_id = team.player_one_id;
-                    let player_two_id =team.player_two_id;
-                    let p1_name = &players.iter().find(|p| p.id == player_one_id).unwrap().name;
-                    let p2_name = &players.iter().find(|p| p.id == player_two_id).unwrap().name;
+                    
+                    let p1_name = &players.iter().find(|p| p.id == team_two_player_one_id).unwrap().name;
+                    let p2_name = &players.iter().find(|p| p.id == team_two_player_two_id).unwrap().name;
 
                     TeamView {
                     team_id: game.team_two_id,
                     player_one: PlayerView {
-                        player_id: player_one_id,
+                        player_id: team_two_player_one_id,
                         name: p1_name.clone(),
                     },
                     player_two: PlayerView {
-                        player_id: player_two_id,
+                        player_id: team_two_player_two_id,
                         name: p2_name.clone(),
                     }
                 }
-            }
+            },
+			team_one_win_probability: probability_win(team_one_ranking as f32, team_two_ranking as f32),
+			team_two_win_probability: probability_win(team_two_ranking as f32, team_one_ranking as f32)
         };
         game_views.push(view);
     }
