@@ -55,6 +55,15 @@ change the version
 docker push danwilkins8/foosball:0.1.1
 ```
 
+
+### Docker Deploy
+According to chris this is how to do it until the swarm is created.
+```
+ docker login
+ docker-compose -f /mnt/inf/foos/foos-compose.yml pull
+ docker-compose -f /mnt/inf/foos/foos-compose.yml up -d
+```
+
 ### Info on docker file
 
 here is the source of how I got started with the docker file
