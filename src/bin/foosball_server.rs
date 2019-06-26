@@ -28,9 +28,9 @@ use foos::teamstats;
 
 fn main() {
 	let db = {
-		let db = SqliteConnection::establish("./foosball.db");
+		let db = SqliteConnection::establish("./data/foosball.db");
 		// I don't think this fails with maybe the exception of permisisons.
-		Mutex::new(db.expect("Failed to connect to ./foosball.db"))
+		Mutex::new(db.expect("Failed to connect to ./data/foosball.db"))
 	};
 
 

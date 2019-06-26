@@ -7,3 +7,4 @@ foosball*.db
 dbbackups
 .idea/*
 .vs/*
+./data/*
