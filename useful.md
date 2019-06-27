@@ -33,6 +33,7 @@ docker build -t foosball:0.1.1 .
 ```
 
 use no cache to build without the cache
+do this is you need to make sure chagnes got added.
 ```
 docker build --no-cache -t foosball:0.1.1 .
 ```

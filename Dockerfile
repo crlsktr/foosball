@@ -27,4 +27,5 @@ COPY --from=builder \
     /usr/local/bin/
 ENV PORT 12346
 EXPOSE 12346
+RUN sudo chmod 777 /data/foosball.db
 CMD /usr/local/bin/foosball_server
