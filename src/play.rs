@@ -110,8 +110,8 @@ pub fn play_match(request: &rouille::Request, connection: &SqliteConnection, tem
                     }
                 }
             },
-			team_one_win_probability: probability_win(team_one_ranking as f32, team_two_ranking as f32),
-			team_two_win_probability: probability_win(team_two_ranking as f32, team_one_ranking as f32)
+			team_one_win_probability: format!("{:.2}",(probability_win(team_one_ranking as f32, team_two_ranking as f32) * 100.0)),
+			team_two_win_probability: format!("{:.2}",(probability_win(team_two_ranking as f32, team_one_ranking as f32) * 100.0))
         };
         game_views.push(view);
     }

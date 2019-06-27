@@ -14,12 +14,12 @@
                     <div><strong>Game</strong> {{g.game_id}}</div>
 					<div>
 						Team {{g.team_one.team_id}}: <strong>{{g.team_one.player_one.name}} and {{g.team_one.player_two.name}}</strong> 
-						({{g.team_one_win_probability}})
+						({{g.team_one_win_probability}}&#37;)
 					</div>
                     <div>VS</div>
                     <div>
 						Team {{g.team_two.team_id}}: <strong>{{g.team_two.player_one.name}} and {{g.team_two.player_two.name}}</strong>
-						({{g.team_two_win_probability}})
+						({{g.team_two_win_probability}}&#37;)
 					</div>
                     <label>Winner</label>
                     <select name="winner_{{loop.index0}}" form="resultform">
