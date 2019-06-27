@@ -33,6 +33,7 @@ docker build -t foosball:0.1.1 .
 ```
 
 use no cache to build without the cache
+do this is you need to make sure chagnes got added.
 ```
 docker build --no-cache -t foosball:0.1.1 .
 ```
@@ -53,6 +54,15 @@ docker tag foosball danwilkins8/foosball:0.1.1
 change the version
 ```
 docker push danwilkins8/foosball:0.1.1
+```
+
+
+### Docker Deploy
+According to chris this is how to do it until the swarm is created.
+```
+ docker login
+ docker-compose -f /mnt/inf/foos/foos-compose.yml pull
+ docker-compose -f /mnt/inf/foos/foos-compose.yml up -d
 ```
 
 ### Info on docker file
