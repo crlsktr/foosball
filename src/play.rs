@@ -33,7 +33,7 @@ pub fn play_match(request: &rouille::Request, connection: &SqliteConnection, tem
         .execute(&*connection)
 	{
 		Ok(_) => {},
-		Err(_) => return rouille::Response::text(format!("Well that sucks. {}", "Couldn't insert new matches")).with_status_code(500)
+		Err(e) => return rouille::Response::text(format!("Well that sucks. {}. Error: {}", "Couldn't insert new matches", e)).with_status_code(500)
 	};
 
     // load match we just inserted
