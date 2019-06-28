@@ -151,7 +151,9 @@ tr:nth-child(even) {
     align-items: center;
     justify-content: space-around;
 }
-
+.player-stats {
+    margin-bottom: auto;
+}
 /* ---------- CSS helper classes ------- */
 
 .mr-1 {
