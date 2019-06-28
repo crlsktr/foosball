@@ -19,8 +19,8 @@ pub struct GameView {
 	pub game_id: i32,
 	pub team_one: TeamView,
 	pub team_two: TeamView,
-	pub team_one_win_probability: f32,
-	pub team_two_win_probability: f32
+	pub team_one_win_probability: String,
+	pub team_two_win_probability: String
 }
 
 #[derive(Serialize)]
