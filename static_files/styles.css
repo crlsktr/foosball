@@ -51,11 +51,16 @@ tr:nth-child(even) {
 .app {
     display: flex;
     flex-direction: row;
-    /*justify-content: space-around;*/
-    justify-content: flex-start;
+    justify-content: space-around;
+    /*justify-content: flex-start;*/
+}
+#game-start {
+    display: flex;
+    margin: 20px;
+    align-items: center;
+    justify-content: center;
 }
 .app-section {
-    min-width: 320px;
     margin: 32px;
 }
 
@@ -78,14 +83,63 @@ tr:nth-child(even) {
     background-color: #454545;
 }
 
+/* --------- Start Game section --------- */
 
+.start-game {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    background-color: lightgray;
+    margin: 15px;
+    box-shadow: 0px 2px 3px 2px #b1b1b1;
+    transition: padding 1s;
+}
+.start-game-header  {
+    font-size: 18pt;
+    margin-left: 10px;
+    font-weight: bold;
+    color: #252525;
+}
+.start-game:hover {
+    padding: 3px;
+}
+/* --------- Stream section --------- */
 
+.live-stream {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    margin: 15px;
+}
 
+.stream-img {
+    border: 5px solid lightgray;
+    box-shadow: 0px 2px 3px 2px #b1b1b1;
+    width: 330px;
+    height: 250px;
+}
+/* --------- Data section --------- */
+.data-container {
+    background-color: lightgrey;
+    margin: 15px;
+    padding: 10px 0;
+    box-shadow: 0px 2px 3px 2px #b1b1b1;
+}
+.data-header {
+    font-size: 18pt;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    margin: 0 15px;
+}
+.data-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
 
-
-/*
-CSS helper classes
- */
+/* ---------- CSS helper classes ------- */
 
 .mr-1 {
     margin-right: 5px;
