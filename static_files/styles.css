@@ -102,7 +102,7 @@ tr:nth-child(even) {
     color: #252525;
 }
 .start-game:hover {
-    padding: 3px;
+    background-color: #cccccc
 }
 /* --------- Stream section --------- */
 
@@ -120,6 +120,9 @@ tr:nth-child(even) {
     width: 330px;
     height: 250px;
 }
+.stream-img:hover {
+    border: 5px solid #cccccc;
+}
 /* --------- Data section --------- */
 .data-container {
     background-color: lightgrey;
@@ -127,11 +130,19 @@ tr:nth-child(even) {
     padding: 10px 0;
     box-shadow: 0px 2px 3px 2px #b1b1b1;
 }
+.data-container:hover {
+    background-color: #cccccc
+}
+.data-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    margin: 0 10px;
+}
 .data-header {
     font-size: 18pt;
     font-weight: bold;
-    border-bottom: 1px solid black;
-    margin: 0 15px;
 }
 .data-section {
     display: flex;

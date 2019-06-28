@@ -22,11 +22,12 @@
 		</div>
 		<!-- Data Section-->
 		<div class="data-container">
-			<div class="data-header">Foosball Data</div>
+			<div class="data-header-container">
+				<div class="data-header">Foosball Data</div>
+				<a class="btn-primary mb-2" href="/leaderboard">Leaderboard</a>
+			</div>
 			<div class="data-section">
-				<div>
-					<a class="btn-primary" href="/leaderboard">Leaderboard</a>
-				</div>
+
 
 				<datalist id="players">
 					{% for player in players %}
