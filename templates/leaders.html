@@ -77,7 +77,7 @@
     </head>
     <body>
         <h1>The Foosball App!</h1>
-        <h2>Leaders</h2>
+		<h2>Leaders</h2>
 		<p>Leaders are sorted by: "ranking" &gt; "win percentage" &gt; "average winning spread" &gt; "highest winning spread" &gt; "number of games played" </p>
         <table id="leaders-table" class="full-width">
                 <tr>
@@ -112,6 +112,7 @@
                     <td>{{leader.average_losing_spread}}</td>
                 </tr>
             {% endfor %}
-        </table>
+		</table>
+		<p>Video explaining how elo ranking works: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/AsYfbmp0To0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
     </body>
 </html>
