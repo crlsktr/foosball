@@ -1,10 +1,4 @@
 /target
 **/*.rs.bk
-.env
-sqlite3.def
-sqlite3.dll
-foosball*.db
-dbbackups
 .idea/*
 .vs/*
-./data/*
