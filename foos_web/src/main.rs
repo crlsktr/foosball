@@ -1,4 +1,5 @@
 use actix_web::{web, App, HttpServer};
+use actix_cors::Cors;
 
 mod config;
 mod user;
@@ -25,6 +26,10 @@ fn main() {
 
     HttpServer::new(move || {
         App::new()
+			.wrap(
+				Cors::new()
+				.allowed_origin("*")
+				.allowed_methods(vec!["GET", "POST"]))
 			.data(connection_pool.clone())
 			.route("/user/search", web::post().to(user::search_user))
     })
