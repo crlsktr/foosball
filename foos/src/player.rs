@@ -9,6 +9,7 @@ pub struct Player {
 	pub user_id: Option<i32>,
 	pub name: String,
 	pub ranking: i32,
+	pub created_by: i32,
 }
 
 #[derive(Insertable, Deserialize)]
@@ -17,6 +18,7 @@ struct NewPlayer {
 	pub user_id: Option<i32>,
 	pub name: String,
 	pub ranking: i32,
+	pub created_by: i32,
 }
 
 impl Player {
@@ -24,11 +26,13 @@ impl Player {
 		connection: &PgConnection,
 		user_id: Option<i32>,
 		name: S,
+		created_by: i32
 	) -> Result<Player, String> {
 		let new_player = NewPlayer {
 			user_id,
 			name: name.to_string(),
 			ranking: 1500,
+			created_by,
 		};
 
 		let player = diesel::insert_into(players::table)

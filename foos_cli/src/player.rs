@@ -40,9 +40,9 @@ pub fn get_player_command<'a, 'b>(author: &'a str, version: &'a str) -> App<'a, 
 	users_sub
 }
 
-pub fn entry(debug: bool, db: &Database, matches: &ArgMatches) {
+pub fn entry(debug: bool, db: &Database, matches: &ArgMatches, user_id: i32) {
 	if let Some(matches) = matches.subcommand_matches("add") {
-		add_player(debug, db, matches);
+		add_player(debug, db, matches, user_id);
 	}
 
 	if let Some(matches) = matches.subcommand_matches("search") {
@@ -50,14 +50,14 @@ pub fn entry(debug: bool, db: &Database, matches: &ArgMatches) {
 	}
 }
 
-fn add_player(_debug: bool, db: &Database, matches: &ArgMatches) {
+fn add_player(_debug: bool, db: &Database, matches: &ArgMatches, created_by: i32) {
 	use foos::player::Player;
 	let name = matches.value_of("nickname").unwrap();
 	let user_id: Option<i32> = match value_t!(matches, "userid", i32) {
 		Ok(u_id) => Some(u_id),
 		Err(_) => None,
 	};
-	let player_result = Player::create(db.connection(), user_id, name);
+	let player_result = Player::create(db.connection(), user_id, name, created_by);
 	match player_result {
 		Ok(p) => println!("Created player: {:?}", p),
 		Err(e) => println!("{}", e),

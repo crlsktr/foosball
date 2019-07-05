@@ -33,17 +33,6 @@ pub fn get_record_command<'a, 'b>(author: &'a str, version: &'a str) -> App<'a, 
 				.takes_value(true),
 		);
 
-	// let games_sub = SubCommand::with_name("games")
-	// 	.about("records multiple games")
-	// 	.version(version)
-	// 	.author(author)
-	// 	.arg(
-	// 		Arg::with_name("searchterm")
-	// 			.required(false)
-	// 			.help("The string of text to use to search")
-	// 			.index(1),
-	// 	);
-
 	let record_sub = SubCommand::with_name("record")
 		.about("record game results")
 		.version(version)
@@ -53,17 +42,13 @@ pub fn get_record_command<'a, 'b>(author: &'a str, version: &'a str) -> App<'a, 
 	record_sub
 }
 
-pub fn entry(debug: bool, db: &Database, matches: &ArgMatches) {
+pub fn entry(debug: bool, db: &Database, matches: &ArgMatches, user_id: i32) {
 	if let Some(matches) = matches.subcommand_matches("game") {
-		record_game(debug, db, matches);
+		record_game(debug, db, matches, user_id);
 	}
-
-	// if let Some(matches) = matches.subcommand_matches("games") {
-	// 	search_user(debug, db, matches);
-	// }
 }
 
-fn record_game(_debug: bool, db: &Database, matches: &ArgMatches) {
+fn record_game(_debug: bool, db: &Database, matches: &ArgMatches, user_id: i32) {
 	let id = match value_t!(matches, "game-id", i32) {
 		Ok(g) => g,
 		Err(_) => {
@@ -94,7 +79,7 @@ fn record_game(_debug: bool, db: &Database, matches: &ArgMatches) {
 		spread,
 	};
 
-	let result = foos::finish_games(db.connection(), &vec![game_result]);
+	let result = foos::finish_games(db.connection(), &vec![game_result], user_id);
 	match result {
 		Ok(_) => {}
 		Err(e) => println!("Couldn't record game result: {}", e),

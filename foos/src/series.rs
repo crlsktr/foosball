@@ -8,18 +8,21 @@ use diesel::PgConnection;
 pub struct Series {
 	pub id: i32,
 	pub played_on: DateTime<Utc>,
+	pub created_by: i32,
 }
 
 #[derive(Insertable, Deserialize)]
 #[table_name = "series"]
 pub struct NewSeries {
 	pub played_on: DateTime<Utc>,
+	pub created_by: i32,
 }
 
 impl Series {
-	pub fn create(connection: &PgConnection) -> Result<Series, String> {
+	pub fn create(connection: &PgConnection, created_by: i32) -> Result<Series, String> {
 		let new_series = NewSeries {
 			played_on: Utc::now(),
+			created_by,
 		};
 
 		let series_ = diesel::insert_into(series::table)
@@ -29,15 +32,4 @@ impl Series {
 
 		Ok(series_)
 	}
-
-	// pub fn find(connection: &PgConnection, id: i32) -> Result<Series, String> {
-	// 	use series::dsl as s;
-
-	// 	let series_: Series = s::series
-	// 		.find(id)
-	// 		.first::<Series>(connection)
-	// 		.map_err(|e| format!("Unable to find match: {}", e))?;
-
-	// 	Ok(series_)
-	// }
 }

@@ -23,13 +23,13 @@ pub fn get_series_command<'a, 'b>(author: &'a str, version: &'a str) -> App<'a, 
 	users_sub
 }
 
-pub fn entry(debug: bool, db: &Database, matches: &ArgMatches) {
+pub fn entry(debug: bool, db: &Database, matches: &ArgMatches, user_id: i32) {
 	if let Some(matches) = matches.subcommand_matches("start") {
-		start(debug, db, matches);
+		start(debug, db, matches, user_id);
 	}
 }
 
-fn start(_debug: bool, db: &Database, matches: &ArgMatches) {
+fn start(_debug: bool, db: &Database, matches: &ArgMatches, user_id: i32) {
 	let players: Vec<i32> = matches
 		.values_of("players")
 		.unwrap()
@@ -46,19 +46,19 @@ fn start(_debug: bool, db: &Database, matches: &ArgMatches) {
 		4 => {
 			let mut array = [0; 4];
 			array.copy_from_slice(&players[..4]);
-			start_series(_debug, db, array);
+			start_series(_debug, db, array, user_id);
 		}
 		5 => {
 			let mut array = [0; 5];
 			array.copy_from_slice(&players[..5]);
-			start_gauntlet(_debug, db, array);
+			start_gauntlet(_debug, db, array, user_id);
 		}
 		_ => unreachable!(),
 	}
 }
 
-fn start_series(_debug: bool, db: &Database, players: [i32; 4]) {
-	let series = match foos::create_series(db.connection(), players) {
+fn start_series(_debug: bool, db: &Database, players: [i32; 4], user_id: i32) {
+	let series = match foos::create_series(db.connection(), players, user_id) {
 		Ok(s) => s,
 		Err(e) => {
 			println!("Couldn't Start Series: {}", e);
@@ -68,8 +68,8 @@ fn start_series(_debug: bool, db: &Database, players: [i32; 4]) {
 	show_series(series);
 }
 
-fn start_gauntlet(_debug: bool, db: &Database, players: [i32; 5]) {
-	let series = match foos::create_gauntlet(db.connection(), players) {
+fn start_gauntlet(_debug: bool, db: &Database, players: [i32; 5], user_id: i32) {
+	let series = match foos::create_gauntlet(db.connection(), players, user_id) {
 		Ok(s) => s,
 		Err(e) => {
 			println!("Couldn't Start Gauntlet: {}", e);

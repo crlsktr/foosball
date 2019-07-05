@@ -45,7 +45,7 @@ pub struct GameResult {
 	pub spread: i16,
 }
 
-pub fn create_series(connection: &PgConnection, players: [i32; 4]) -> Result<Series, String> {
+pub fn create_series(connection: &PgConnection, players: [i32; 4], created_by: i32) -> Result<Series, String> {
 	let players = find_players(connection, &players)?;
 
 	let t1 = team::Team::create(connection, players[0].id, players[1].id)?;
@@ -73,7 +73,7 @@ pub fn create_series(connection: &PgConnection, players: [i32; 4]) -> Result<Ser
 		})
 		.collect();
 
-	let series = series::Series::create(connection)?;
+	let series = series::Series::create(connection, created_by)?;
 
 	let g1 = game::Game::create(connection, series.id, t1.id, t6.id)?;
 	let g2 = game::Game::create(connection, series.id, t2.id, t5.id)?;
@@ -104,7 +104,7 @@ pub fn create_series(connection: &PgConnection, players: [i32; 4]) -> Result<Ser
 	Ok(series)
 }
 
-pub fn create_gauntlet(connection: &PgConnection, players: [i32; 5]) -> Result<Series, String> {
+pub fn create_gauntlet(connection: &PgConnection, players: [i32; 5], created_by: i32) -> Result<Series, String> {
 	let players = find_players(connection, &players)?;
 
 	let t1 = team::Team::create(connection, players[0].id, players[1].id)?;
@@ -136,7 +136,7 @@ pub fn create_gauntlet(connection: &PgConnection, players: [i32; 5]) -> Result<S
 		})
 		.collect();
 
-	let series = series::Series::create(connection)?;
+	let series = series::Series::create(connection, created_by)?;
 
 	// game order is important here as this makes it match what is on the gauntlet whiteboard.
 	let g1 = game::Game::create(connection, series.id, t5.id, t10.id)?;
@@ -170,7 +170,7 @@ pub fn create_gauntlet(connection: &PgConnection, players: [i32; 5]) -> Result<S
 	Ok(series)
 }
 
-pub fn finish_games(connection: &PgConnection, game_results: &[GameResult]) -> Result<(), String> {
+pub fn finish_games(connection: &PgConnection, game_results: &[GameResult], recorded_by: i32) -> Result<(), String> {
 	let mut games = vec![];
 	for result in game_results.iter() {
 		let game = game::Game::find(connection, result.id)?;
@@ -178,7 +178,7 @@ pub fn finish_games(connection: &PgConnection, game_results: &[GameResult]) -> R
 	}
 
 	for (result, mut game) in games {
-		game.finish(connection, result.spread, result.winners)?;
+		game.finish(connection, result.spread, result.winners, recorded_by)?;
 	}
 
 	Ok(())

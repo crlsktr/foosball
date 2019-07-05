@@ -12,7 +12,9 @@ CREATE TABLE players (
     user_id INTEGER NULL,
     name VARCHAR NOT NULL UNIQUE,
     ranking INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    created_by INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (created_by) REFERENCES users (id)
 );
 
 CREATE TABLE teams (
@@ -26,7 +28,9 @@ CREATE TABLE teams (
 
 CREATE TABLE series (
     id SERIAL PRIMARY KEY NOT NULL,
-    played_on TIMESTAMP WITH TIME ZONE NOT NULL
+    played_on TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_by INTEGER NOT NULL,
+    FOREIGN KEY (created_by) REFERENCES users (id)
 );
 
 CREATE TABLE games (
@@ -36,7 +40,9 @@ CREATE TABLE games (
     team_two_id INTEGER NOT NULL,
     winners INTEGER NULL,
     spread SMALLINT NULL,
+    recorded_by INTEGER NULL,
     FOREIGN KEY (series_id) REFERENCES series (id),
     FOREIGN KEY (team_one_id) REFERENCES teams (id),
-    FOREIGN KEY (team_two_id) REFERENCES teams (id)
+    FOREIGN KEY (team_two_id) REFERENCES teams (id),
+    FOREIGN KEY (recorded_by) REFERENCES users (id)
 );
