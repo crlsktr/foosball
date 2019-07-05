@@ -28,8 +28,8 @@ fn main() {
         App::new()
 			.wrap(
 				Cors::new()
-				.allowed_origin("*")
-				.allowed_methods(vec!["GET", "POST"]))
+				.allowed_methods(vec!["GET", "POST", "PUT"])
+			)
 			.data(connection_pool.clone())
 			.route("/user/search", web::post().to(user::search_user))
 			.route("/user/search/{term}", web::get().to(user::search_user_get))

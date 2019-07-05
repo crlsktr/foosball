@@ -17,13 +17,12 @@ export class FoosService {
 
   public searchUser() {
     debugger;
-    this.httpService.post('/user/search', {term: 'dan'})
+    return this.httpService.post('/user/search', {term: 'dan'})
       .then((data) => {
-        debugger;
+        //todo: parse data
+        return data;
       })
-      .catch((err) => {
-        debugger;
-      })
+
   }
 
   public searchUser2() {

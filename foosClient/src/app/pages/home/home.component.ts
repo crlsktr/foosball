@@ -16,7 +16,10 @@ export class HomeComponent implements OnInit {
   }
 
   public testRoute() {
-    this.foosService.searchUser2();
+    this.foosService.searchUser()
+      .then((user) => {
+
+      });
   }
 
 }
