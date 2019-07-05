@@ -27,6 +27,7 @@ fn main() {
         App::new()
 			.data(connection_pool.clone())
 			.route("/user/search", web::post().to(user::search_user))
+			.route("/user/search/{term}", web::get().to(user::search_user_get))
     })
     .bind(&config.bind_url)
     .expect(&format!("Can not bind to {}", &config.bind_url))

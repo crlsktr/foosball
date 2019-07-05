@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FoosService} from '../../../services/foos.service';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,13 @@ export class HomeComponent implements OnInit {
 
   public players = [];
 
-  constructor() { }
+  constructor(private foosService: FoosService) { }
 
   ngOnInit() {
+  }
+
+  public testRoute() {
+    this.foosService.searchUser2();
   }
 
 }
