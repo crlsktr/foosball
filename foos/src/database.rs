@@ -2,6 +2,7 @@ use diesel::PgConnection;
 use r2d2::{Pool, PooledConnection};
 use r2d2_diesel::ConnectionManager;
 
+#[derive(Clone)]
 pub struct ConnectionPool {
 	pool: Pool<ConnectionManager<PgConnection>>,
 }
