@@ -1,8 +1,12 @@
 use actix_cors::Cors;
 use actix_web::{web, App, HttpServer};
+use actix_session::{CookieSession, Session};
 
 mod config;
 mod user;
+mod player;
+mod series;
+mod game;
 
 use config::Config;
 use foos::database::*;
@@ -24,15 +28,41 @@ fn main() {
 		}
 	};
 
+	let secure_cookies = config.secure_cookies;
 	HttpServer::new(move || {
 		App::new()
 			.wrap(Cors::new().allowed_methods(vec!["GET", "POST", "PUT"]))
+			.wrap(CookieSession::private(&[0;32]).secure(secure_cookies))
 			.data(connection_pool.clone())
-			.route("/user/search", web::post().to(user::search_user))
-			.route("/user/search/{term}", web::get().to(user::search_user_get))
+			// Users
+			.route("/user/search/{term}", web::get().to(user::search))
+			.route("/user/create", web::post().to(user::create))
+			.route("/user/authenticate", web::post().to(user::authenticate))
+			// Players
+			.route("player/search/{term}/{limit}", web::get().to(player::search))
+			.route("player/create", web::post().to(player::create))
+			// Series
+			.route("series/create", web::post().to(series::create))
+			.route("gauntlet/create", web::post().to(series::create_gauntlet))
+			// Record
+			.route("game/finish", web::post().to(game::finish))
 	})
 	.bind(&config.bind_url)
 	.expect(&format!("Can not bind to {}", &config.bind_url))
 	.run()
 	.unwrap();
+}
+
+pub fn get_session_user_id(session: Session) -> Result<i32, String> {
+	let user_id = match session.get("user_id") {
+		Ok(id) => id,
+		Err(_e) => return Err("Couldn't get session".to_string())
+	};
+
+	let user_id = match user_id {
+		Some(id) => id,
+		None => return Err("Couldn't get session".to_string())
+	};
+
+	Ok(user_id)
 }
