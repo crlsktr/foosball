@@ -1,12 +1,12 @@
 use clap::{App, Arg};
 use foos::database::{ConnectionPool, Database};
 
+mod config;
+mod input;
 mod player;
 mod record;
 mod series;
 mod user;
-mod config;
-mod input;
 
 use config::Config;
 
@@ -37,8 +37,10 @@ fn main() {
 				.short("c")
 				.long("config")
 				.value_name("Use Config")
-				.help("Use a config file instead of prompts for database-url, username, and password")
-				.takes_value(false)
+				.help(
+					"Use a config file instead of prompts for database-url, username, and password",
+				)
+				.takes_value(false),
 		)
 		.arg(
 			Arg::with_name("database-url")
@@ -52,14 +54,14 @@ fn main() {
 				.long("username")
 				.value_name("Username")
 				.required(false)
-				.help("Sets the username to use")
+				.help("Sets the username to use"),
 		)
 		.arg(
 			Arg::with_name("password")
 				.long("password")
 				.value_name("Password")
 				.required(false)
-				.help("Sets the password to use")
+				.help("Sets the password to use"),
 		)
 		.subcommands(vec![users_sub, player_sub, series_sub, record_sub])
 		.get_matches();
@@ -89,7 +91,7 @@ fn main() {
 			}
 			config.database_url = Some(url.trim().to_string());
 			ask_save_config = true;
-		}	
+		}
 	}
 	// Username
 	if config.username.is_none() {
@@ -102,7 +104,7 @@ fn main() {
 			}
 			config.username = Some(username.trim().to_string());
 			ask_save_config = true;
-		}	
+		}
 	}
 	// Pasword
 	if config.password.is_none() {
@@ -115,12 +117,17 @@ fn main() {
 			}
 			config.password = Some(password.trim().to_string());
 			ask_save_config = true;
-		}	
+		}
 	}
 
 	if ask_save_config {
 		let mut password = String::new();
-		while password.trim().is_empty() || (password.trim() != "y" && password.trim() != "n" && password.trim() != "yes" && password.trim() != "no") {
+		while password.trim().is_empty()
+			|| (password.trim() != "y"
+				&& password.trim() != "n"
+				&& password.trim() != "yes"
+				&& password.trim() != "no")
+		{
 			password = input::get_input("save config(y/n): ");
 		}
 		if password == "yes" || password == "y" {
@@ -137,7 +144,9 @@ fn main() {
 		}
 	}
 
-	let database_url = config.database_url.expect("We should have a database url...");
+	let database_url = config
+		.database_url
+		.expect("We should have a database url...");
 	if debug {
 		println!("Using conneciton to {}", &database_url);
 	}
@@ -163,7 +172,7 @@ fn main() {
 
 	let username = config.username.expect("You must supply a username");
 	let password = config.password.expect("You must supply a password");
-	let user_id = match foos::user::authenticate(db.connection(), &username, &password ) {
+	let user_id = match foos::user::authenticate(db.connection(), &username, &password) {
 		Ok(u) => u.id,
 		Err(_e) => {
 			println!("Couldn't authenticate with supplied username and password");

@@ -1,20 +1,20 @@
+use dirs;
 use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
-use dirs;
 use std::path::PathBuf;
 
 mod foos_cli_config;
 pub use foos_cli_config::*;
 
 pub fn config_location() -> Option<PathBuf> {
-    let config_dir = dirs::config_dir();
-    if let Some(mut config_dir) = config_dir {
-        config_dir.push("foos_cli.config");
-        return Some(config_dir);
-    }
-    None
+	let config_dir = dirs::config_dir();
+	if let Some(mut config_dir) = config_dir {
+		config_dir.push("foos_cli.config");
+		return Some(config_dir);
+	}
+	None
 }
 
 pub trait Config: Serialize + for<'de> Deserialize<'de> {

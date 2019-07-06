@@ -11,7 +11,7 @@ pub struct Game {
 	pub team_two_id: i32,
 	pub winners: Option<i32>,
 	pub spread: Option<i16>,
-	pub recorded_by: Option<i32>
+	pub recorded_by: Option<i32>,
 }
 
 #[derive(Insertable, Deserialize)]
@@ -22,7 +22,7 @@ pub struct NewGame {
 	pub team_two_id: i32,
 	pub winners: Option<i32>,
 	pub spread: Option<i16>,
-	pub recorded_by: Option<i32>
+	pub recorded_by: Option<i32>,
 }
 
 impl Game {
@@ -81,10 +81,11 @@ impl Game {
 			return Err(format!("Game {}  has already been recorded", self.id));
 		}
 		let game = diesel::update(g::games.find(self.id))
-			.set(
-				(g::winners.eq(Some(winners)),
+			.set((
+				g::winners.eq(Some(winners)),
 				g::recorded_by.eq(Some(recorded_by)),
-				g::spread.eq(Some(spread))))
+				g::spread.eq(Some(spread)),
+			))
 			.get_result::<Game>(connection)
 			.map_err(|e| format!("Couldn't update game record: {}", e))?;
 		self.spread = game.spread;

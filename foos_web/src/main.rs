@@ -1,5 +1,5 @@
-use actix_web::{web, App, HttpServer};
 use actix_cors::Cors;
+use actix_web::{web, App, HttpServer};
 
 mod config;
 mod user;
@@ -24,19 +24,15 @@ fn main() {
 		}
 	};
 
-    HttpServer::new(move || {
-        App::new()
-			.wrap(
-				Cors::new()
-				.allowed_methods(vec!["GET", "POST", "PUT"])
-			)
+	HttpServer::new(move || {
+		App::new()
+			.wrap(Cors::new().allowed_methods(vec!["GET", "POST", "PUT"]))
 			.data(connection_pool.clone())
 			.route("/user/search", web::post().to(user::search_user))
 			.route("/user/search/{term}", web::get().to(user::search_user_get))
-    })
-    .bind(&config.bind_url)
-    .expect(&format!("Can not bind to {}", &config.bind_url))
-    .run()
-    .unwrap();
+	})
+	.bind(&config.bind_url)
+	.expect(&format!("Can not bind to {}", &config.bind_url))
+	.run()
+	.unwrap();
 }
-

@@ -26,7 +26,7 @@ impl Player {
 		connection: &PgConnection,
 		user_id: Option<i32>,
 		name: S,
-		created_by: i32
+		created_by: i32,
 	) -> Result<Player, String> {
 		let new_player = NewPlayer {
 			user_id,

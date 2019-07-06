@@ -45,7 +45,11 @@ pub struct GameResult {
 	pub spread: i16,
 }
 
-pub fn create_series(connection: &PgConnection, players: [i32; 4], created_by: i32) -> Result<Series, String> {
+pub fn create_series(
+	connection: &PgConnection,
+	players: [i32; 4],
+	created_by: i32,
+) -> Result<Series, String> {
 	let players = find_players(connection, &players)?;
 
 	let t1 = team::Team::create(connection, players[0].id, players[1].id)?;
@@ -104,7 +108,11 @@ pub fn create_series(connection: &PgConnection, players: [i32; 4], created_by: i
 	Ok(series)
 }
 
-pub fn create_gauntlet(connection: &PgConnection, players: [i32; 5], created_by: i32) -> Result<Series, String> {
+pub fn create_gauntlet(
+	connection: &PgConnection,
+	players: [i32; 5],
+	created_by: i32,
+) -> Result<Series, String> {
 	let players = find_players(connection, &players)?;
 
 	let t1 = team::Team::create(connection, players[0].id, players[1].id)?;
@@ -170,7 +178,11 @@ pub fn create_gauntlet(connection: &PgConnection, players: [i32; 5], created_by:
 	Ok(series)
 }
 
-pub fn finish_games(connection: &PgConnection, game_results: &[GameResult], recorded_by: i32) -> Result<(), String> {
+pub fn finish_games(
+	connection: &PgConnection,
+	game_results: &[GameResult],
+	recorded_by: i32,
+) -> Result<(), String> {
 	let mut games = vec![];
 	for result in game_results.iter() {
 		let game = game::Game::find(connection, result.id)?;

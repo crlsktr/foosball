@@ -11,7 +11,7 @@ impl Config for FoosWebConfig {
 	fn from_defaults() -> FoosWebConfig {
 		FoosWebConfig {
 			database_url: "".to_string(),
-            bind_url: "127.0.0.1:8000".to_string(),
+			bind_url: "127.0.0.1:8000".to_string(),
 		}
 	}
 }
