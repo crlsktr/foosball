@@ -63,6 +63,6 @@ pub fn authenticate(
 		},
 		Err(_) => {}
 	}
-
 	web::Json(response)
 }
+

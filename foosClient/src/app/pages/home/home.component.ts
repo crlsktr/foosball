@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FoosService} from '../../../services/foos.service';
+import {Router} from '@angular/router';
+import {GAME_TYPES} from '../../../static/foosTypes';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   public players = [];
 
-  constructor(private foosService: FoosService) { }
+  constructor(private foosService: FoosService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -20,6 +22,11 @@ export class HomeComponent implements OnInit {
       .then((user) => {
 
       });
+  }
+
+  public newMatch(isGauntlet) {
+    const type = isGauntlet ? GAME_TYPES.GAUNTLET : GAME_TYPES.MATCH;
+    this.router.navigateByUrl(`new/match/${type}`)
   }
 
 }

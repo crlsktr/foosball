@@ -1,5 +1,4 @@
 <div>
-  <div class="btn-primary" (click)="testRoute()">TEST</div>
   <div class="foos-header">
     <i class="mr-3 ion-md-football"></i>
     Foosball
@@ -13,11 +12,11 @@
       Start A Game
     </div>
     <div>
-      <a class="btn-primary" routerLink="/new/match">
+      <a class="btn-primary" (click)="newMatch(true)">
         <i class="ion-md-flame mr-1"></i>
         Gauntlet!
       </a>
-      <a class="btn-primary" routerLink="/new/match">
+      <a class="btn-primary" (click)="newMatch(false)">
         <i class="ion-md-flower mr-1"></i>
         Other
       </a>

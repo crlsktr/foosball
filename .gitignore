@@ -4,3 +4,5 @@
 .vs/*
 key.pem
 cert.pem
+
+web-config.toml

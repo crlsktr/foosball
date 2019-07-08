@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'home'},
   {path: 'home', component: HomeComponent, },
   {path: 'leaderboard', component: LeaderboardComponent},
-  {path: 'new/match', component: NewMatchComponent},
+  {path: 'new/match/:gameType', component: NewMatchComponent},
 ];
 
 @NgModule({
