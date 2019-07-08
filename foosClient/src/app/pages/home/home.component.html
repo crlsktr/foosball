@@ -11,15 +11,15 @@
       <i class="mr-1 ion-md-football"></i>
       Start A Game
     </div>
-    <div>
-      <a class="btn-primary" (click)="newMatch(true)">
+    <div style="display: flex">
+      <div class="btn-foos" (click)="newMatch(true)">
         <i class="ion-md-flame mr-1"></i>
         Gauntlet!
-      </a>
-      <a class="btn-primary" (click)="newMatch(false)">
+      </div>
+      <div class="btn-foos" (click)="newMatch(false)">
         <i class="ion-md-flower mr-1"></i>
         Other
-      </a>
+      </div>
     </div>
   </div>
   <!-- Data Section-->
@@ -29,10 +29,10 @@
         <i class="ion-md-grid mr-1"></i>
         Foosball Data
       </div>
-      <a class="btn-primary mb-2" routerLink="/leaderboard">
+      <div class="btn-foos mb-2" routerLink="/leaderboard">
         <i class="mr-1 ion-md-trophy"></i>
         Leaderboard
-      </a>
+      </div>
     </div>
     <div class="data-section">
 
@@ -48,7 +48,7 @@
           <br>
           <input name="player_two" type="text" list="players">
           <br>
-          <input class="btn-primary" type="submit" value="Get Team Stats">
+          <input class="btn-foos" type="submit" value="Get Team Stats">
         </form>
       </div>
       <div class="player-stats">
@@ -56,7 +56,7 @@
         <form action="/playerstats" mthod="get">
           <input name="player_name" type="text" list="players">
           <br>
-          <input class="btn-primary" type="submit" value="Get Player Stats">
+          <input class="btn-foos" type="submit" value="Get Player Stats">
         </form>
       </div>
 

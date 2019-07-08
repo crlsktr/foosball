@@ -1,23 +1,22 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class FoosService {
 
-  constructor(private httpService: HttpService, private httpClient: HttpClient) {
+  constructor(private httpService: HttpService) {
   }
 
-  public getOverallStats() {
-    this.httpService.get('/api/stats')
+  public getAllUsers() {
+    return this.httpService.get('/user/search/all')
       .then((data) => {
-        return data;
-      });
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      })
   }
-
-  public searchUser() {
-    debugger;
-    return this.httpService.post('/user/search', {term: 'dan'})
+  public searchUser(searchTerm) {
+    return this.httpService.post('/user/search', {term: searchTerm})
       .then((data) => {
         //todo: parse data
         return data;
@@ -25,14 +24,4 @@ export class FoosService {
 
   }
 
-  public searchUser2() {
-    debugger;
-    this.httpService.get('/user/search/cad')
-      .then((data) => {
-        debugger;
-      })
-      .catch((err) => {
-        debugger;
-      });
-  }
 }

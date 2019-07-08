@@ -1,0 +1,11 @@
+.new-match-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .player-container {
+    display: flex;
+    justify-content: center;
+  }
+
+}

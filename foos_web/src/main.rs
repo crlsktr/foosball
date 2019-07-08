@@ -38,7 +38,6 @@ fn main() {
 			.route("/user/search/{term}", web::get().to(user::search))
 			.route("/user/create", web::post().to(user::create))
 			.route("/user/authenticate", web::post().to(user::authenticate))
-			.route("/users", web::get().to(user::getall))
 			// Players
 			.route("player/search/{term}/{limit}", web::get().to(player::search))
 			.route("player/create", web::post().to(player::create))

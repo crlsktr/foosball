@@ -17,13 +17,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  public testRoute() {
-    this.foosService.searchUser()
-      .then((user) => {
-
-      });
-  }
-
   public newMatch(isGauntlet) {
     const type = isGauntlet ? GAME_TYPES.GAUNTLET : GAME_TYPES.MATCH;
     this.router.navigateByUrl(`new/match/${type}`)
