@@ -4,9 +4,9 @@
 <div class="new-match-container">
 
   <ng-container>
-    <div *ngFor="let player of activePlayers; let i = index" class="player-container mt-3 mb-3">
+    <div *ngFor="let player of numbers; let i = index" class="player-container mt-3 mb-3">
       <span class="mr-2">Player {{i+1}}</span>
-      <app-type-ahead (selectedItemChange)="player = $event" [dropDown]="true" [options]="allPlayers" key="username" ></app-type-ahead>
+      <app-type-ahead (selectedItemChange)="activePlayers[i] = $event" [dropDown]="true" [options]="allPlayers" key="username" ></app-type-ahead>
     </div>
   </ng-container>
 

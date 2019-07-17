@@ -12,7 +12,7 @@ export class NewMatchComponent implements OnInit {
 
   public allPlayers = [];
   public activePlayers = [];
-
+  public numbers = [];
   public numOfPlayers;
   constructor(private route: ActivatedRoute, private foosService: FoosService) { }
 
@@ -26,14 +26,22 @@ export class NewMatchComponent implements OnInit {
       .subscribe((params) => {
         if (params && params.gameType) {
           this.numOfPlayers = +params.gameType;
+          this.numbers = _.fill(Array(this.numOfPlayers), null);
           this.activePlayers = _.fill(Array(this.numOfPlayers), null);
         }
       });
   }
 
+  public addPlayer(player, i) {
+    debugger;
+    this.activePlayers[i] = player;
+  }
   public startGame() {
     this.activePlayers;
-    debugger;
+    this.foosService.startGame(this.activePlayers)
+      .then((data) => {
+        debugger;
+      });
 
   }
 }

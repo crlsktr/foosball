@@ -31,8 +31,11 @@ fn main() {
 	let secure_cookies = config.secure_cookies;
 	HttpServer::new(move || {
 		App::new()
-			.wrap(Cors::new().allowed_methods(vec!["GET", "POST", "PUT"]))
-			.wrap(CookieSession::private(&[0;32]).secure(secure_cookies))
+			.wrap(Cors::new()
+				.allowed_methods(vec!["GET", "POST", "PUT"])
+				.supports_credentials()
+			)
+			.wrap(CookieSession::private(&[0;32]).secure(secure_cookies).http_only(false))
 			.data(connection_pool.clone())
 			// Users
 			.route("/user/search/{term}", web::get().to(user::search))

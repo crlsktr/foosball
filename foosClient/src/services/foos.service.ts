@@ -7,6 +7,12 @@ export class FoosService {
   constructor(private httpService: HttpService) {
   }
 
+  public login() {
+    return this.httpService.post(`/user/authenticate`, {username: 'bob', password: 'password'})
+      .then((data) => {
+        debugger;
+      });
+  }
   public getAllUsers() {
     return this.httpService.get('/user/search/all')
       .then((data) => {
@@ -22,6 +28,14 @@ export class FoosService {
         return data;
       })
 
+  }
+
+  public startGame(players) {
+    if (players.length === 5) {
+      return this.httpService.post('/gauntlet/create', {players: players.map(p => p.id)}, {withCredentials: true});
+    } else {
+      return this.httpService.post('/series/create', {players: players.map(p => p.id)}, {withCredentials: true});
+    }
   }
 
 }
