@@ -35,6 +35,12 @@
 
   <div class="btn-container">
     <div class="btn-foos" (click)="finishGame()">Finish Game</div>
+
+    <app-flip-container [open]="errMsg">
+      <div class="err mt-3">{{errMsg}}</div>
+    </app-flip-container>
+
   </div>
+
 
 </ng-container>

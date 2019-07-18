@@ -38,4 +38,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  .err {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightyellow;
+    padding: 21px;
+    border-radius: 2px;
+    font-size: 15pt;
+    border: 1px solid #d8d8ae;
+  }
 }

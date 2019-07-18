@@ -22,6 +22,8 @@ export class NewMatchComponent implements OnInit {
   public numOfPlayers;
   public games = [];
   public gameResults: GameResult[] = [];
+  public errMsg = '';
+
 
   constructor(private route: ActivatedRoute, private foosService: FoosService, private router: Router) { }
 
@@ -61,15 +63,15 @@ export class NewMatchComponent implements OnInit {
   }
 
   public finishGame() {
-    let canFinish = true;
+    this.errMsg = '';
     _.forEach(this.gameResults, (results) => {
       results.spread = +results.spread;
       if (!results.winners) {
-        canFinish = false;
+        this.errMsg = 'You\'re missing data dawg..';
       }
     });
 
-    if (canFinish) {
+    if (!this.errMsg) {
       this.foosService.finishGame(this.gameResults)
         .then(() => {
           this.router.navigateByUrl('/home');

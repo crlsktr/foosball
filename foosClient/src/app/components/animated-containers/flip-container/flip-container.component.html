@@ -1,0 +1,5 @@
+<div *ngIf="open" @outer [ngClass]="{'overflow-hidden': !open}">
+  <div [@inner]="open">
+    <ng-content></ng-content>
+  </div>
+</div>
