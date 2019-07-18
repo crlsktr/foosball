@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {FoosService} from '../../../services/foos.service';
+
+export interface GameResult {
+  id: number,
+  winners: number,
+  spread: number,
+}
 
 @Component({
   selector: 'app-new-match',
@@ -14,7 +20,10 @@ export class NewMatchComponent implements OnInit {
   public activePlayers = [];
   public numbers = [];
   public numOfPlayers;
-  constructor(private route: ActivatedRoute, private foosService: FoosService) { }
+  public games = [];
+  public gameResults: GameResult[] = [];
+
+  constructor(private route: ActivatedRoute, private foosService: FoosService, private router: Router) { }
 
   ngOnInit() {
     this.foosService.getAllPlayers()
@@ -31,14 +40,40 @@ export class NewMatchComponent implements OnInit {
         }
       });
   }
-
-  public addPlayer(player, i) {
-    this.activePlayers[i] = player;
+  public toggled(e) {
+    debugger;
   }
+
   public startGame() {
     this.foosService.startGame(this.activePlayers)
       .then((data) => {
+        if (data && data.games) {
+          this.games = data.games;
+          _.forEach(data.games, (game) => {
+            this.gameResults.push({
+              id: game.id,
+              winners: null,
+              spread: null,
+            });
+          });
+        }
       });
+  }
 
+  public finishGame() {
+    let canFinish = true;
+    _.forEach(this.gameResults, (results) => {
+      results.spread = +results.spread;
+      if (!results.winners) {
+        canFinish = false;
+      }
+    });
+
+    if (canFinish) {
+      this.foosService.finishGame(this.gameResults)
+        .then(() => {
+          this.router.navigateByUrl('/home');
+        });
+    }
   }
 }

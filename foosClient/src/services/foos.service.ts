@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
+import {GameResult} from '../app/pages/new-match/new-match.component';
 
 @Injectable()
 export class FoosService {
@@ -8,10 +9,7 @@ export class FoosService {
   }
 
   public login() {
-    return this.httpService.post(`/user/authenticate`, {username: 'daniel', password: 'password'}, {withCredentials: true})
-      .then((data) => {
-
-      });
+    return this.httpService.post(`/user/authenticate`, {username: 'daniel', password: 'password'}, {withCredentials: true});
   }
 
   public getAllPlayers() {
@@ -42,10 +40,25 @@ export class FoosService {
 
   public startGame(players) {
     if (players.length === 5) {
-      return this.httpService.post('/gauntlet/create', {players: players.map(p => p.id)}, {withCredentials: true});
+      return this.httpService.post('/gauntlet/create', {players: players.map(p => p.id)}, {withCredentials: true})
+        .then((data) => {
+          if (data && data.Ok) {
+            return data.Ok;
+          }
+        })
+
     } else {
-      return this.httpService.post('/series/create', {players: players.map(p => p.id)}, {withCredentials: true});
+      return this.httpService.post('/series/create', {players: players.map(p => p.id)}, {withCredentials: true})
+        .then((data) => {
+          if (data && data.Ok) {
+            return data.Ok;
+          }
+        });
     }
+  }
+
+  public finishGame(gameResults: GameResult[]) {
+    return this.httpService.post(`/game/finish`, {game_results: gameResults}, {withCredentials: true});
   }
 
 }
