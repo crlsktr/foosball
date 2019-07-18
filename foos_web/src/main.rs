@@ -1,5 +1,5 @@
 use actix_cors::Cors;
-use actix_web::{web, App, HttpServer, http::header};
+use actix_web::{web, App, HttpServer};
 use actix_session::{CookieSession, Session};
 
 mod config;
@@ -7,6 +7,7 @@ mod user;
 mod player;
 mod series;
 mod game;
+mod reports;
 
 use config::Config;
 use foos::database::*;
@@ -50,6 +51,8 @@ fn main() {
 			.route("gauntlet/create", web::post().to(series::create_gauntlet))
 			// Record
 			.route("game/finish", web::post().to(game::finish))
+			// Reports
+			.route("report/leaderboard", web::get().to(reports::get_leader_board))
 	})
 	.bind(&config.bind_url)
 	.expect(&format!("Can not bind to {}", &config.bind_url))
