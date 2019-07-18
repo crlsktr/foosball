@@ -1,0 +1,16 @@
+
+.checkbox-input {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: darkgray;
+
+  &.disabled {
+    cursor: default;
+    background-color: #e9ecef;
+
+    .icon-check-square {
+      color: darkgray;
+    }
+  }
+}

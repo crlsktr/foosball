@@ -9,3 +9,33 @@
   }
 
 }
+
+
+.game-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .team {
+    display: flex;
+    font-size: 16pt;
+    background-color: whitesmoke;
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    &:hover {
+      background-color: #dddddd;
+      cursor: pointer;
+    }
+  }
+
+}
+.spread {
+  display: flex;
+  justify-content: center;
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
