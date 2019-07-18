@@ -8,26 +8,36 @@ export class FoosService {
   }
 
   public login() {
-    return this.httpService.post(`/user/authenticate`, {username: 'bob', password: 'password'})
+    return this.httpService.post(`/user/authenticate`, {username: 'daniel', password: 'password'}, {withCredentials: true})
       .then((data) => {
-        debugger;
+
       });
   }
+
+  public getAllPlayers() {
+    return this.httpService.get('/player/search/all/100000')
+      .then((data) => {
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      });
+  }
+
   public getAllUsers() {
     return this.httpService.get('/user/search/all')
       .then((data) => {
         if (data && data.Ok) {
           return data.Ok;
         }
-      })
+      });
   }
+
   public searchUser(searchTerm) {
     return this.httpService.post('/user/search', {term: searchTerm})
       .then((data) => {
-        //todo: parse data
+        // todo: parse data
         return data;
-      })
-
+      });
   }
 
   public startGame(players) {

@@ -4,5 +4,6 @@
 .vs/*
 key.pem
 cert.pem
+**/package-lock.json
 
 web-config.toml

@@ -17,9 +17,9 @@ export class NewMatchComponent implements OnInit {
   constructor(private route: ActivatedRoute, private foosService: FoosService) { }
 
   ngOnInit() {
-    this.foosService.getAllUsers()
-      .then((users) => {
-        this.allPlayers = users;
+    this.foosService.getAllPlayers()
+      .then((players) => {
+        this.allPlayers = players;
       });
 
     this.route.params
@@ -33,14 +33,11 @@ export class NewMatchComponent implements OnInit {
   }
 
   public addPlayer(player, i) {
-    debugger;
     this.activePlayers[i] = player;
   }
   public startGame() {
-    this.activePlayers;
     this.foosService.startGame(this.activePlayers)
       .then((data) => {
-        debugger;
       });
 
   }

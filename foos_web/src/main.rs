@@ -1,5 +1,5 @@
 use actix_cors::Cors;
-use actix_web::{web, App, HttpServer};
+use actix_web::{web, App, HttpServer, http::header};
 use actix_session::{CookieSession, Session};
 
 mod config;
@@ -32,6 +32,7 @@ fn main() {
 	HttpServer::new(move || {
 		App::new()
 			.wrap(Cors::new()
+				//.allowed_origin("localhost:4200")
 				.allowed_methods(vec!["GET", "POST", "PUT"])
 				.supports_credentials()
 			)
