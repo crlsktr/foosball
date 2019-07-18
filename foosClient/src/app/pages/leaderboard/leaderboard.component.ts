@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FoosService} from '../../../services/foos.service';
 
 @Component({
   selector: 'app-leaderboard',
@@ -8,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
 export class LeaderboardComponent implements OnInit {
 
   public leaders = [];
+  public showVideo = false;
 
-  constructor() { }
+  constructor(private foosService: FoosService) { }
 
   ngOnInit() {
+    this.loadLeaderboard();
+  }
+
+  private loadLeaderboard () {
+    this.foosService.loadLeaderboard()
+      .then((leaders) => {
+        this.leaders = leaders;
+      });
   }
 
 }

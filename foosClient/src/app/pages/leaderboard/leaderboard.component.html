@@ -1,36 +1,39 @@
-<h1>The Foosball App!</h1>
-<h2>Leaders</h2>
-<p>Leaders are sorted by: "ranking" &gt; "win percentage" &gt; "average winning spread" &gt; "highest winning spread" &gt; "number of games played" </p>
-<table id="leaders-table" class="full-width">
-  <tr>
-    <th class="clickable" onclick="sortTable(0, 'number')">Position<i></i></th>
-    <th class="clickable" onclick="sortTable(1, 'notnumber')">Player<i></i></th>
-    <th class="clickable" onclick="sortTable(2, 'number')">Rank<i></i></th>
-    <th class="clickable" onclick="sortTable(3, 'number')">Won<i></i></th>
-    <th class="clickable" onclick="sortTable(4, 'number')">Lost<i></i></th>
-    <th class="clickable" onclick="sortTable(5, 'number')">Played<i></i></th>
-    <th class="clickable" onclick="sortTable(6, 'number')">Percentage<i></i></th>
-    <th class="clickable" onclick="sortTable(7, 'number')">Best Spread(Win)<i></i></th>
-    <th class="clickable" onclick="sortTable(8, 'number')">Worst Spread(Loss)<i></i></th>
-    <th class="clickable" onclick="sortTable(9, 'number')">Worst Spread(Win)<i></i></th>
-    <th class="clickable" onclick="sortTable(10, 'number')">Best Spread(Loss)<i></i></th>
-    <th class="clickable" onclick="sortTable(11, 'number')">Average Spread(Win)<i></i></th>
-    <th class="clickable" onclick="sortTable(12, 'number')">Average Spread(Loss)<i></i></th>
-  </tr>
-  <tr *ngFor="let leader of leaders; let i = index">
-    <td>{{i}}</td>
-    <td>{{leader.player_name}}</td>
-    <td>{{leader.ranking}}</td>
-    <td>{{leader.games_won}}</td>
-    <td>{{leader.games_lost}}</td>
-    <td>{{leader.games_played}}</td>
-    <td>{{leader.percentage * 100 }}</td>
-    <td>{{leader.highest_winning_spread}}</td>
-    <td>{{leader.highest_losing_spread}}</td>
-    <td>{{leader.lowest_winning_spread}}</td>
-    <td>{{leader.lowest_losing_spread}}</td>
-    <td>{{leader.average_winning_spread}}</td>
-    <td>{{leader.average_losing_spread}}</td>
-  </tr>
-</table>
-<p>Video explaining how elo ranking works: <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/AsYfbmp0To0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<div class="leaderboard-container">
+
+  <h1>The Foosball App!</h1>
+  <h2>Leaders</h2>
+  <p>Leaders are sorted by: "ranking" &gt; "win percentage" &gt; "average winning spread" &gt; "highest winning spread" &gt; "number of games played" </p>
+  <table id="leaders-table" class="full-width">
+    <tr>
+      <th class="clickable" onclick="sortTable(0, 'number')">Position<i></i></th>
+      <th class="clickable" onclick="sortTable(1, 'notnumber')">Player<i></i></th>
+      <th class="clickable" onclick="sortTable(2, 'number')">Rank<i></i></th>
+      <th class="clickable" onclick="sortTable(3, 'number')">Won<i></i></th>
+      <th class="clickable" onclick="sortTable(4, 'number')">Lost<i></i></th>
+      <th class="clickable" onclick="sortTable(5, 'number')">Played<i></i></th>
+      <th class="clickable" onclick="sortTable(6, 'number')">Percentage<i></i></th>
+    </tr>
+    <tr *ngFor="let leader of leaders | orderBy: 'ranking'; let i = index">
+      <td>{{i}}</td>
+      <td>{{leader.name}}</td>
+      <td>{{leader.ranking}}</td>
+      <td>{{leader.won}}</td>
+      <td>{{leader.played - leader.won}}</td>
+      <td>{{leader.played}}</td>
+      <td>{{leader.percentage * 100 }}</td>
+    </tr>
+  </table>
+
+  <div class="video-container">
+    <div class="btn-foos " (click)="showVideo = !showVideo">
+      Video explaining how elo ranking works
+    </div>
+
+    <div *ngIf="showVideo"  class="mt-3">
+      <iframe class="mt-3" width="560" height="315" src="https://www.youtube-nocookie.com/embed/AsYfbmp0To0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+
+</div>
+

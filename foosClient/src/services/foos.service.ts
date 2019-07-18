@@ -61,4 +61,13 @@ export class FoosService {
     return this.httpService.post(`/game/finish`, {game_results: gameResults}, {withCredentials: true});
   }
 
+  public loadLeaderboard() {
+    return this.httpService.get(`/report/leaderboard`, {withCredentials: true})
+      .then((data) => {
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      })
+  }
+
 }
