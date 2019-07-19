@@ -4,6 +4,8 @@ use diesel::sql_types::{Varchar, Integer};
 
 #[derive(Serialize, Deserialize, QueryableByName)]
 pub struct Leader {
+	#[sql_type = "Integer"]
+    pub position: i32,
     #[sql_type = "Varchar"]
     pub name: String,
     #[sql_type = "Integer"]
@@ -26,13 +28,18 @@ pub fn leader_board(connection: &PgConnection) -> Result<Vec<Leader>, String> {
 }
 
 const LEADER_BOARD_QUERY: &'static str = r#"
+-- leader board
 SELECT
-	pg.name
+	CAST(ROW_NUMBER() OVER (ORDER BY pg.ranking DESC) AS INT) AS position
+	,pg.name
 	,CAST(pg.ranking AS INT) as ranking
 	,CAST(SUM(pg.won) AS INT) as won
 	,CAST(SUM(CASE WHEN pg.won = 0 THEN 1 ELSE 0 END) AS INT) as lost
 	,CAST(COUNT(pg.game_id) as INT) as played
-	,TO_CHAR(CAST(SUM(pg.won) AS FLOAT) / CAST(SUM(CASE WHEN pg.won = 0 THEN 1 ELSE 0 END) AS FLOAT), 'FM0.00') as percentage
+	,CASE WHEN
+		SUM(CASE WHEN pg.won = 0 THEN 1 ELSE 0 END) > 0 
+		THEN TO_CHAR(CAST(SUM(pg.won) AS FLOAT) / CAST(SUM(CASE WHEN pg.won = 0 THEN 1 ELSE 0 END) AS FLOAT), 'FM0.00')
+	ELSE '1.00' END	AS percentage
 FROM 
 (
 	SELECT
@@ -85,5 +92,5 @@ FROM
 	ORDER BY p.id DESC
 ) pg
 GROUP BY pg.id, pg.name, pg.ranking
-ORDER BY pg.ranking desc, won desc, lost asc, percentage desc
+ORDER BY pg.ranking DESC, won DESC, lost ASC, percentage DESC
 "#;

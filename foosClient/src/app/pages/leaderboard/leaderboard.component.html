@@ -2,23 +2,23 @@
 
   <h1>The Foosball App!</h1>
   <h2>Leaders</h2>
-  <p>Leaders are sorted by: "ranking" &gt; "win percentage" &gt; "average winning spread" &gt; "highest winning spread" &gt; "number of games played" </p>
+  <p>Leaders are sorted by: "Rank" &gt; "Wins" &gt; "Losses" &gt; "Percentage" </p>
   <table id="leaders-table" class="full-width">
     <tr>
-      <th class="clickable" onclick="sortTable(0, 'number')">Position<i></i></th>
-      <th class="clickable" onclick="sortTable(1, 'notnumber')">Player<i></i></th>
-      <th class="clickable" onclick="sortTable(2, 'number')">Rank<i></i></th>
-      <th class="clickable" onclick="sortTable(3, 'number')">Won<i></i></th>
-      <th class="clickable" onclick="sortTable(4, 'number')">Lost<i></i></th>
-      <th class="clickable" onclick="sortTable(5, 'number')">Played<i></i></th>
-      <th class="clickable" onclick="sortTable(6, 'number')">Percentage<i></i></th>
+      <th class="clickable" (click)="sortLeaders('position')">Position<i></i></th>
+      <th class="clickable" (click)="sortLeaders('name')">Player<i></i></th>
+      <th class="clickable" (click)="sortLeaders('ranking')">Rank<i></i></th>
+      <th class="clickable" (click)="sortLeaders('won')">Won<i></i></th>
+      <th class="clickable" (click)="sortLeaders('lost')">Lost<i></i></th>
+      <th class="clickable" (click)="sortLeaders('played')">Played<i></i></th>
+      <th class="clickable" (click)="sortLeaders('percentage')">Percentage<i></i></th>
     </tr>
-    <tr *ngFor="let leader of leaders | orderBy: 'ranking'; let i = index">
-      <td>{{i}}</td>
+    <tr *ngFor="let leader of sortedLeaders">
+      <td>{{leader.position}}</td>
       <td>{{leader.name}}</td>
       <td>{{leader.ranking}}</td>
       <td>{{leader.won}}</td>
-      <td>{{leader.played - leader.won}}</td>
+      <td>{{leader.lost}}</td>
       <td>{{leader.played}}</td>
       <td>{{leader.percentage * 100 }}</td>
     </tr>

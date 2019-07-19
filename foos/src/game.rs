@@ -1,4 +1,5 @@
 use crate::schema::games;
+use crate::ranking::update_rankings;
 use diesel::prelude::*;
 use diesel::PgConnection;
 
@@ -90,6 +91,8 @@ impl Game {
 			.map_err(|e| format!("Couldn't update game record: {}", e))?;
 		self.spread = game.spread;
 		self.winners = game.winners;
+		let losers = if game.winners.unwrap() == game.team_one_id { game.team_two_id } else { game.team_one_id }; 
+		update_rankings(connection, game.winners.unwrap(), losers)?;
 
 		Ok(())
 	}

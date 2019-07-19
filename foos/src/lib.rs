@@ -15,6 +15,7 @@ mod game;
 mod schema;
 mod series;
 mod team;
+mod ranking;
 
 use player::*;
 
