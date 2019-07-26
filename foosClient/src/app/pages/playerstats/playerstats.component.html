@@ -1,0 +1,16 @@
+<div *ngIf="!stats">
+    Loading player stats ...
+  </div>
+
+<div class="playerstats-container" *ngIf="!!stats">
+  <h1>The Foosball App!</h1>
+  <h2>Player Stats For {{stats.name}}</h2>
+
+  <div>
+    <ul>
+      <li *ngFor="let item of statsKeys">{{item}}: {{stats[item]}}</li>
+    </ul>
+  </div>
+</div>
+
+

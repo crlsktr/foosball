@@ -53,11 +53,8 @@
       </div>
       <div class="player-stats">
         <h4>Player Stats</h4>
-        <form action="/playerstats" mthod="get">
-          <input name="player_name" type="text" list="players">
-          <br>
-          <input class="btn-foos" type="submit" value="Get Player Stats">
-        </form>
+        <app-type-ahead (selectedItemChange)="selectedPlayer = $event" [dropDown]="true" [options]="players" key="name" ></app-type-ahead>
+        <input class="btn-foos" value="Get Player Stats" (click)="getPlayerStats()">
       </div>
 
     </div>

@@ -53,6 +53,7 @@ fn main() {
 			.route("game/finish", web::post().to(game::finish))
 			// Reports
 			.route("report/leaderboard", web::get().to(reports::get_leader_board))
+			.route("report/playerstats/{player_id}", web::get().to(reports::get_player_stats))
 	})
 	.bind(&config.bind_url)
 	.expect(&format!("Can not bind to {}", &config.bind_url))

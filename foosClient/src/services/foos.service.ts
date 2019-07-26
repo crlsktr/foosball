@@ -45,7 +45,7 @@ export class FoosService {
           if (data && data.Ok) {
             return data.Ok;
           }
-        })
+        });
 
     } else {
       return this.httpService.post('/series/create', {players: players.map(p => p.id)}, {withCredentials: true})
@@ -67,7 +67,15 @@ export class FoosService {
         if (data && data.Ok) {
           return data.Ok;
         }
-      })
+      });
   }
 
+  public getPlayersStats(playerId: number) {
+    return this.httpService.get(`/report/playerstats/${playerId}`)
+      .then((data) => {
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      });
+  }
 }

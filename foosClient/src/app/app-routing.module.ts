@@ -6,11 +6,14 @@ import {LeaderboardComponent} from './pages/leaderboard/leaderboard.component';
 import {LeaderboardModule} from './pages/leaderboard/leaderboard.module';
 import {NewMatchComponent} from './pages/new-match/new-match.component';
 import {NewMatchModule} from './pages/new-match/new-match.module';
+import { PlayerStatsComponent } from './pages/playerstats/playerstats.component';
+import { PlayerStatsModule } from './pages/playerstats/playerstats.module';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'home'},
   {path: 'home', component: HomeComponent, },
   {path: 'leaderboard', component: LeaderboardComponent},
+  {path: 'playerstats/:playerId', component: PlayerStatsComponent},
   {path: 'new/match/:gameType', component: NewMatchComponent},
 ];
 
@@ -18,6 +21,7 @@ const routes: Routes = [
   imports: [
     HomeModule,
     LeaderboardModule,
+    PlayerStatsModule,
     NewMatchModule,
     RouterModule.forRoot(routes)
   ],

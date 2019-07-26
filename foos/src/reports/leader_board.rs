@@ -30,67 +30,23 @@ pub fn leader_board(connection: &PgConnection) -> Result<Vec<Leader>, String> {
 const LEADER_BOARD_QUERY: &'static str = r#"
 -- leader board
 SELECT
-	CAST(ROW_NUMBER() OVER (ORDER BY pg.ranking DESC) AS INT) AS position
-	,pg.name
-	,CAST(pg.ranking AS INT) as ranking
-	,CAST(SUM(pg.won) AS INT) as won
-	,CAST(SUM(CASE WHEN pg.won = 0 THEN 1 ELSE 0 END) AS INT) as lost
-	,CAST(COUNT(pg.game_id) as INT) as played
+	CAST(ROW_NUMBER() OVER (ORDER BY p.ranking DESC) AS INT) AS position
+	,p.name
+	,CAST(p.ranking AS INT) AS ranking
+	,CAST(SUM(CASE WHEN t.id = g.winners THEN 1 ELSE 0 END) AS INT) AS won
+	,CAST(SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) AS INT) AS lost
+	,CAST(COUNT(g.id) AS INT) AS played
 	,CASE WHEN
-		SUM(CASE WHEN pg.won = 0 THEN 1 ELSE 0 END) > 0 
-		THEN TO_CHAR(CAST(SUM(pg.won) AS FLOAT) / CAST(SUM(CASE WHEN pg.won = 0 THEN 1 ELSE 0 END) AS FLOAT), 'FM0.00')
-	ELSE '1.00' END	AS percentage
-FROM 
-(
-	SELECT
-		p.id 
-		,p.name
-		,p.ranking
-		,g.id as game_id
-		,CASE
-			WHEN g.winners = g.team_one_id AND (p.id = g.player_one_id OR p.id = g.player_two_id) THEN 1
-			WHEN g.winners = g.team_two_id AND (p.id = g.player_three_id OR p.id = g.player_four_id) THEN 1
-		ELSE 0 END AS won
-		,g.spread
-	FROM players p
-	JOIN (
-		SELECT
-			g.id
-			,t1.team_id as team_one_id
-			,t2.team_id as team_two_id
-			,winners
-			,spread
-			,t1.p1_id as player_one_id
-			,t1.p2_id as player_two_id
-			,t2.p1_id as player_three_id
-			,t2.p2_id as player_four_id
-		FROM games g
-		JOIN (
-			SELECT
-				t.id as team_id
-				,p1.id as p1_id
-				,p2.id as p2_id
-			FROM teams t
-			JOIN players p1 ON t.player_one_id = p1.id
-			JOIN players p2 on t.player_two_id = p2.id
-		) t1 ON t1.team_id = g.team_one_id
-		JOIN (
-			SELECT
-				t.id as team_id
-				,p1.id as p1_id
-				,p2.id as p2_id
-			FROM teams t
-			JOIN players p1 ON t.player_one_id = p1.id
-			JOIN players p2 on t.player_two_id = p2.id
-		) t2 ON t2.team_id = g.team_two_id
-	) g
-	ON g.player_one_id = p.id
-	OR g.player_two_id = p.id
-	OR g.player_three_id = p.id
-	OR g.player_four_id = p.id
-	--WHERE g.winners IS NOT NULL
-	ORDER BY p.id DESC
-) pg
-GROUP BY pg.id, pg.name, pg.ranking
-ORDER BY pg.ranking DESC, won DESC, lost ASC, percentage DESC
+		SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) > 0
+		THEN TO_CHAR(CAST(SUM(CASE WHEN t.id = g.winners THEN 1 ELSE 0 END) AS FLOAT) / CAST(SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) AS FLOAT), 'FM0.00')
+	ELSE '1.00' END AS percentage
+FROM players p
+JOIN teams t
+	ON t.player_one_id = p.id
+	OR t.player_two_id = p.id
+JOIN games g
+	ON g.team_one_id = t.id
+	OR g.team_two_id = t.id
+GROUP BY p.name, p.id, p.ranking
+ORDER BY p.ranking DESC, won DESC, lost ASC, percentage DESC
 "#;
