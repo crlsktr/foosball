@@ -29,6 +29,17 @@ fn main() {
 		}
 	};
 
+	{ // Want to make sure not to keep this db connection arround for the whole lifetime of the application.
+		let db = match connection_pool.get() {
+			Ok(db) => db,
+			Err(_e) => {
+				println!("Could not get the underlying database to run migrations");
+				return;
+			}
+		};
+		foos::run_pending_migrations(db.connection());
+	}
+
 	let secure_cookies = config.secure_cookies;
 	HttpServer::new(move || {
 		App::new()

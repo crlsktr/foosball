@@ -1,6 +1,8 @@
 #[macro_use]
 extern crate diesel;
 #[macro_use]
+extern crate diesel_migrations;
+#[macro_use]
 extern crate serde_derive;
 extern crate serde;
 
@@ -18,6 +20,8 @@ mod team;
 mod ranking;
 
 use player::*;
+
+embed_migrations!();
 
 #[derive(Serialize, Deserialize)]
 pub struct Series {
@@ -44,6 +48,10 @@ pub struct GameResult {
 	pub id: i32,
 	pub winners: i32,
 	pub spread: i16,
+}
+
+pub fn run_pending_migrations(connection: &PgConnection) {
+	embedded_migrations::run(connection);
 }
 
 pub fn create_series(

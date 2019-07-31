@@ -1,5 +1,6 @@
 use clap::{App, Arg};
 use foos::database::{ConnectionPool, Database};
+use foos::run_pending_migrations;
 
 mod config;
 mod input;
@@ -156,7 +157,7 @@ fn main() {
 		let connection_pool: ConnectionPool = match ConnectionPool::create(database_url) {
 			Ok(cp) => cp,
 			Err(e) => {
-				println!("No Connetion Pool: {}", e);
+				println!("No Connection Pool: {}", e);
 				return;
 			}
 		};
@@ -164,11 +165,13 @@ fn main() {
 		match connection_pool.get() {
 			Ok(db) => db,
 			Err(e) => {
-				println!("No Connetion: {}", e);
+				println!("No Connection: {}", e);
 				return;
 			}
 		}
 	};
+
+	run_pending_migrations(db.connection());
 
 	let username = config.username.expect("You must supply a username");
 	let password = config.password.expect("You must supply a password");
