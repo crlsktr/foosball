@@ -23,6 +23,12 @@ export class FoosService {
       });
   }
 
+  public isUserAuthenticated() {
+    return this.httpService.get('/user/authenticated', {withCredentials: true})
+      .then((data) => {
+        debugger;
+      })
+  }
   public createUser(newUsername: string, newPassword: string) {
     return this.httpService.post(`/user/create`, {username: newUsername, password: newPassword}, {withCredentials: true})
       .then((data) => {

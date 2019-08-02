@@ -75,7 +75,15 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-direction: row;
+
 }
 .player-stats {
   margin-bottom: auto;
+}
+
+@media (max-width: 800px) {
+  .data-section {
+    flex-direction: column;
+  }
 }

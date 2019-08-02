@@ -9,5 +9,6 @@ import {FoosService} from '../services/foos.service';
 export class AppComponent {
   constructor( private foosService: FoosService) {
     // this.foosService.login();
+    this.foosService.isUserAuthenticated();
   }
 }

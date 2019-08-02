@@ -66,3 +66,15 @@ pub fn authenticate(
 	web::Json(response)
 }
 
+
+//pub fn authenticated(
+//	path: web::Path<String>,
+//	pool: web::Data<ConnectionPool>,
+//	session: Session,
+//) -> impl Responder {
+//	let user_id = match crate::get_session_user_id(session) {
+//		Ok(u) => u,
+//		Err(e) => return web::Json(Err(e)),
+//	};
+//	web::Json(user_id)
+//}

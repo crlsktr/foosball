@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   public loginPassword = '';
   public createUsername = '';
   public createPassword = '';
+  public loggingIn = false;
+  public createUserContext = false;
 
   constructor(private foosService: FoosService, private router: Router) { }
 
@@ -21,7 +23,9 @@ export class LoginComponent implements OnInit {
   }
 
   async attemptLogin() {
+    this.loggingIn = true;
     const user = await this.foosService.login(this.loginUsername, this.loginPassword);
+    this.loggingIn = false;
     this.router.navigateByUrl(`home`);
     console.log(user);
   }

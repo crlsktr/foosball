@@ -1,10 +1,19 @@
-<div >
-    <h3>Login</h3>
-    <div><input [(ngModel)]="loginUsername" type="text"/></div>
-    <div><input [(ngModel)]="loginPassword" type="password"/></div>
-    <div><button class="btn-foos" (click)="attemptLogin()">Login</button></div>
-    <h3>Create User</h3>
-    <div><input [(ngModel)]="createUsername" type="text"/></div>
-    <div><input [(ngModel)]="createPassword" type="password"/></div>
-    <div><button class="btn-foos" (click)="createUser()">Create User</button></div>
+<div class="login-container">
+    <div *ngIf="!createUserContext" class="login">
+      <h3>Login</h3>
+      <div><input [(ngModel)]="loginUsername" type="text"/></div>
+      <div><input [(ngModel)]="loginPassword" type="password" (keyup.enter)="attemptLogin()"/></div>
+      <div><button class="btn-foos" (click)="attemptLogin()">Login</button></div>
+
+      <div *ngIf="!loggingIn" class="btn btn-link mt-2" (click)="createUserContext = true;">Create User</div>
+      <app-flip-container class="mt-2" [open]="loggingIn">Logging In..</app-flip-container>
+    </div>
+    <div *ngIf="createUserContext" class="create-user">
+        <h3 >Create User</h3>
+        <div><input [(ngModel)]="createUsername" type="text"/></div>
+        <div><input [(ngModel)]="createPassword" type="password"/></div>
+        <div><button class="btn-foos" (click)="createUser()">Create User</button></div>
+        <div class="btn-link mt-2" (click)="createUserContext = false;">Have an account? Login</div>
+    </div>
+
 </div>

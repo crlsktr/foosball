@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import { TypeAheadModule } from 'src/app/components/type-ahead/type-ahead.module';
 
 import { FormsModule } from '@angular/forms';
+import {FlipContainerModule} from '../../components/animated-containers/flip-container/flip-container.module';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     TypeAheadModule,
     FormsModule,
+    FlipContainerModule,
   ]
 })
 export class LoginModule {}
