@@ -38,7 +38,7 @@ SELECT
 	,CAST(COUNT(g.id) AS INT) AS played
 	,CASE WHEN
 		SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) > 0
-		THEN TO_CHAR(CAST(SUM(CASE WHEN t.id = g.winners THEN 1 ELSE 0 END) AS FLOAT) / CAST(SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) AS FLOAT), 'FM0.00')
+		THEN TO_CHAR(CAST(SUM(CASE WHEN t.id = g.winners THEN 1 ELSE 0 END) AS FLOAT) / CAST(COUNT(g.id) AS FLOAT), 'FM0.00')
 	ELSE '1.00' END AS percentage
 FROM players p
 JOIN teams t

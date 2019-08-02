@@ -11,14 +11,30 @@ import {GAME_TYPES} from '../../../static/foosTypes';
 export class HomeComponent implements OnInit {
 
   public players = [];
+  public users = [];
   public selectedPlayer;
+  public newPlayerName = '';
+  public newPlayerUser;
 
   constructor(private foosService: FoosService, private router: Router) { }
 
   ngOnInit() {
+    if (!this.foosService.loggedIn) {
+      this.router.navigateByUrl(`login`);
+    }
+    this.loadPlayersAndUsers();
+  }
+
+  public loadPlayersAndUsers() {
     this.foosService.getAllPlayers()
     .then((players) => {
       this.players = players;
+    });
+
+    this.foosService.getAllUsers()
+    .then((users) => {
+      this.users = users;
+      this.users.push({username: 'no user', id: 0});
     });
   }
 
@@ -29,5 +45,23 @@ export class HomeComponent implements OnInit {
 
   public getPlayerStats() {
     this.router.navigateByUrl(`playerstats/${this.selectedPlayer.id}`);
+  }
+
+  public createPlayer() {
+    if (!this.newPlayerUser || !this.newPlayerUser.id || this.newPlayerUser.id === 0) {
+      this.foosService.createPlayer(this.newPlayerName, null)
+        .then(() => {
+          this.newPlayerUser = null;
+          this.newPlayerName = '';
+          this.loadPlayersAndUsers();
+        });
+    } else {
+      this.foosService.createPlayer(this.newPlayerName, this.newPlayerUser.id)
+        .then(() => {
+          this.newPlayerUser = null;
+          this.newPlayerName = '';
+          this.loadPlayersAndUsers();
+        });
+    }
   }
 }

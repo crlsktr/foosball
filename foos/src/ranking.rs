@@ -47,7 +47,6 @@ pub fn get_rating_change_loss(winner_rating: i32, loser_rating: i32) -> i32 {
 }
 
 fn update_rank(connection: &PgConnection, player: Player, change: i32) -> Result<Player, String> {
-    use crate::schema::players;
     use crate::schema::players::dsl as p;
 
     let new_rank = player.ranking + change;

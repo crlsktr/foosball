@@ -1,4 +1,9 @@
+// Need this because musl and postgres combo
+#[cfg(target_env = "musl")]
+extern crate openssl;
+
 use actix_cors::Cors;
+use actix_files as files;
 use actix_web::{web, App, HttpServer};
 use actix_session::{CookieSession, Session};
 
@@ -48,7 +53,7 @@ fn main() {
 				.allowed_methods(vec!["GET", "POST", "PUT"])
 				.supports_credentials()
 			)
-			.wrap(CookieSession::private(&[0;32]).secure(secure_cookies).http_only(false))
+			.wrap(CookieSession::private(&[0;32]).secure(secure_cookies).http_only(true))
 			.data(connection_pool.clone())
 			// Users
 			.route("/user/search/{term}", web::get().to(user::search))
@@ -65,6 +70,11 @@ fn main() {
 			// Reports
 			.route("report/leaderboard", web::get().to(reports::get_leader_board))
 			.route("report/playerstats/{player_id}", web::get().to(reports::get_player_stats))
+			// This service call needs to be at the end so all of the other routes get processed first.
+			.service(
+				files::Files::new("/", "./foosClient/dist/foosClient")
+				.index_file("index.html")
+			)
 	})
 	.bind(&config.bind_url)
 	.expect(&format!("Can not bind to {}", &config.bind_url))

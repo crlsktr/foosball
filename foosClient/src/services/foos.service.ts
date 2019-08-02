@@ -8,8 +8,46 @@ export class FoosService {
   constructor(private httpService: HttpService) {
   }
 
-  public login() {
-    return this.httpService.post(`/user/authenticate`, {username: 'daniel', password: 'password'}, {withCredentials: true});
+  // I'm lazy so putting a logged in flag here for all of the pages to use.
+  public loggedIn = false;
+
+  public login(uname: string, pword: string) {
+    return this.httpService.post(`/user/authenticate`, {username: uname, password: pword}, {withCredentials: true})
+      .then((data) => {
+        if (data && data.Ok) {
+          this.loggedIn = true;
+          return data.Ok;
+        } else {
+          this.loggedIn = false;
+        }
+      });
+  }
+
+  public createUser(newUsername: string, newPassword: string) {
+    return this.httpService.post(`/user/create`, {username: newUsername, password: newPassword}, {withCredentials: true})
+      .then((data) => {
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      });
+  }
+
+  public createPlayer(playerName: string, userId: number) {
+    if (!!userId) {
+      return this.httpService.post(`/player/create`, { name: playerName, user_id: userId }, {withCredentials: true})
+      .then((data) => {
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      });
+    } else {
+      return this.httpService.post(`/player/create`, {name: playerName }, {withCredentials: true})
+      .then((data) => {
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      });
+    }
   }
 
   public getAllPlayers() {

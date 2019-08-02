@@ -6,7 +6,8 @@ nav {
   margin-bottom: 16px;
 }
 
-input[type=text] {
+input[type=text],
+input[type=password] {
   font-size: larger;
   padding-left: 15px;
   padding-right: 15px;
@@ -71,6 +72,11 @@ tr:nth-child(even) {
 }
 .btn-foos:hover {
   background-color: #454545;
+}
+
+.column-form{
+  display: flex;
+  flex-direction: column;
 }
 
 /* ---------- CSS helper classes ------- */

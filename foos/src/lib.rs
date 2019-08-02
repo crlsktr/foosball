@@ -1,3 +1,7 @@
+// Need this for musl and postgres combo
+#[cfg(target_env = "musl")]
+extern crate openssl;
+
 #[macro_use]
 extern crate diesel;
 #[macro_use]
@@ -51,7 +55,8 @@ pub struct GameResult {
 }
 
 pub fn run_pending_migrations(connection: &PgConnection) {
-	embedded_migrations::run(connection);
+	// if this fails that sucks.
+	let _ = embedded_migrations::run(connection);
 }
 
 pub fn create_series(

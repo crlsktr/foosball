@@ -20,4 +20,7 @@ features = ["serde"]
 
 [dependencies.diesel]
 version = "1.4"
-features = ["postgres", "chrono"] 
+features = ["postgres", "chrono"]
+
+[target.x86_64-unknown-linux-musl.dependencies]
+openssl = "0.10"

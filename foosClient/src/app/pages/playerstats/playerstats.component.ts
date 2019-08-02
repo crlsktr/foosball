@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FoosService} from '../../../services/foos.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-playerstats',
@@ -9,13 +9,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PlayerStatsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private foosService: FoosService) { }
+  constructor(private route: ActivatedRoute, private foosService: FoosService, private router: Router) { }
 
   public playerId = 0;
   public stats;
   public statsKeys;
+  public loadingMessage = 'Loading player stats ...';
 
   ngOnInit() {
+    if (!this.foosService.loggedIn) {
+      this.router.navigateByUrl(`login`);
+    }
+
     this.route.params.subscribe( params => {
       this.playerId = +params['playerId'];
       this.loadLeaderboard();
@@ -28,6 +33,9 @@ export class PlayerStatsComponent implements OnInit {
         this.stats = stats;
         this.stats.percentage = this.stats.percentage * 100;
         this.statsKeys = Object.keys(this.stats).filter(x => x !== 'name');
+      })
+      .catch((err) => {
+        this.loadingMessage = 'Couldn\'t find any stats for the player';
       });
   }
 }

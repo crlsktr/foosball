@@ -1,6 +1,6 @@
 [package]
 name = "foos_web"
-version = "0.1.0"
+version = "0.1.4"
 authors = ["Daniel Wilkins <daniel.wilkins@centeva.com>"]
 edition = "2018"
 
@@ -11,6 +11,10 @@ foos = { path = "../foos" }
 actix-web = "1.0"
 actix-cors = "0.1"
 actix-session = "0.1"
+actix-files = "0.1"
 toml = "0.5"
 serde = "1.0"
 serde_derive = "1.0"
+
+[target.x86_64-unknown-linux-musl.dependencies]
+openssl = "0.10"

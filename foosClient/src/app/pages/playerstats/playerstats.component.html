@@ -1,6 +1,6 @@
 <div *ngIf="!stats">
-    Loading player stats ...
-  </div>
+  {{loadingMessage}}
+</div>
 
 <div class="playerstats-container" *ngIf="!!stats">
   <h1>The Foosball App!</h1>

@@ -56,7 +56,14 @@
         <app-type-ahead (selectedItemChange)="selectedPlayer = $event" [dropDown]="true" [options]="players" key="name" ></app-type-ahead>
         <input class="btn-foos" value="Get Player Stats" (click)="getPlayerStats()">
       </div>
-
+      <div class="column-form">
+        <h4>Create a Player</h4>
+        <label>New Player Name</label>
+        <input type="text" [(ngModel)]="newPlayerName"/>
+        <label>User(optional)</label>
+        <app-type-ahead (selectedItemChange)="newPlayerUser = $event" [dropDown]="true" [options]="users" key="username" ></app-type-ahead>
+        <button class="btn-foos" (click)="createPlayer()">Create Player</button>
+      </div>
     </div>
   </div>
   <!-- Live Stream Section-->

@@ -28,6 +28,10 @@ export class NewMatchComponent implements OnInit {
   constructor(private route: ActivatedRoute, private foosService: FoosService, private router: Router) { }
 
   ngOnInit() {
+    if (!this.foosService.loggedIn) {
+      this.router.navigateByUrl(`login`);
+    }
+
     this.foosService.getAllPlayers()
       .then((players) => {
         this.allPlayers = players;

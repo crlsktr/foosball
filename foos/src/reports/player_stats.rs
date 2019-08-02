@@ -1,8 +1,7 @@
 use diesel::prelude::*;
 use diesel::PgConnection;
-use diesel::sql_types::{Varchar, Integer, BigInt, Array};
+use diesel::sql_types::{Varchar, Integer};
 use diesel::sql_query;
-use diesel::dsl::sql;
 
 #[derive(Serialize, Deserialize, QueryableByName)]
 pub struct PlayerStats {
