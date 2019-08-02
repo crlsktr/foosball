@@ -1,10 +1,9 @@
 /target
 **/*.rs.bk
-.env
-sqlite3.def
-sqlite3.dll
-foosball*.db
-dbbackups
 .idea/*
 .vs/*
-./data/*
+key.pem
+cert.pem
+**/package-lock.json
+
+web-config.toml

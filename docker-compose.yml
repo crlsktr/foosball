@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  ball:
+    image: danwilkins8/foosball
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 8079:12346
+    environment:
+      VERSION: latest
+      DB_HOST: postgres://foosball:l3tspl4yF00sb4ll@dev-docker03.cen.centeva.com:6432/foosball
+      BIND_URL: 0.0.0.0:12346

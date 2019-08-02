@@ -1,0 +1,34 @@
+<div>
+  <div [ngClass]="{'input-group': prependIcon}">
+    <div *ngIf="prependIcon" class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="icon-{{prependIcon}}"></i>
+      </span>
+    </div>
+    <input
+      #input
+      type="text"
+      class="form-control"
+      placeholder="{{placeholder}}"
+      autocomplete="nofill"
+      maxlength="50"
+      [ngStyle]="{'border-radius': (borderRadius || borderRadius ===0) ? borderRadius : ''}"
+      (keyup.enter)="enterPressed.emit($event.target.value)"
+      (blur)="onBlur()"
+      [disabled]="disabled">
+  </div>
+  <div *ngIf="predictions.length > 0 && isFocused" class="drop-down-container" #dropDownComponent>
+    <div #dropDownItem class="drop-down-item" *ngFor="let p of predictions; index as i"
+         [ngClass]="{highlight: highlightItemIndex === i}"
+         (mousemove)="highlightItemIndex = i"
+         (mousedown)="predictionSelected(p, $event)">
+      <div class="main-text" *ngIf="p.structured_formatting?.main_parts?.length > 0">
+        <span *ngFor="let s of p.structured_formatting?.main_parts" [ngClass]="{match: s.match}">{{s.text}}</span>
+      </div>
+      <div *ngIf="p.structured_formatting?.secondary_parts?.length > 0">
+        <span *ngFor="let s of p.structured_formatting?.secondary_parts" [ngClass]="{match: s.match}">{{s.text}}</span>
+      </div>
+    </div>
+
+  </div>
+</div>

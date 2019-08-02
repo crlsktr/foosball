@@ -70,3 +70,26 @@ According to chris this is how to do it until the swarm is created.
 here is the source of how I got started with the docker file
 https://github.com/emk/rust-musl-builder/blob/master/examples/using-diesel/Dockerfile
 https://medium.com/@gruberbastian/rust-for-the-web-02-x-deploy-your-first-app-51d1ed69cbe3
+https://malcoded.com/posts/angular-docker/
+
+### SWARM
+This is the swarm stuff
+```
+to update / deploy
+docker -H devdocker:2376 stack deploy -c <file> foos
+
+if acting funny after update
+docker -H devdocker:2376 stack rm foos
+docker -H devdocker:2376 stack deploy -c <file> foos
+
+to look at the container
+docker -H devdocker:2376 service ps foos_<service name>
+
+list all services
+docker -H devdocker:2376 service ls
+
+logs
+
+docker -H devdocker:2376 service logs <stack>_<service name>.<if replicated container number>
+docker -H devdocker:2376 service logs foos_ball
+```

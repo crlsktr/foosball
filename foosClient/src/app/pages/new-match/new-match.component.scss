@@ -1,0 +1,52 @@
+.new-match-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .player-container {
+    display: flex;
+    justify-content: center;
+  }
+
+}
+
+
+.game-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .team {
+    display: flex;
+    font-size: 16pt;
+    background-color: whitesmoke;
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    &:hover {
+      background-color: #dddddd;
+      cursor: pointer;
+    }
+  }
+
+}
+.spread {
+  display: flex;
+  justify-content: center;
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .err {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightyellow;
+    padding: 21px;
+    border-radius: 2px;
+    font-size: 15pt;
+    border: 1px solid #d8d8ae;
+  }
+}

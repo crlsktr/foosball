@@ -1,0 +1,46 @@
+
+
+<ng-container *ngIf="games.length === 0">
+  <div class="new-match-container">
+
+    <ng-container>
+      <div *ngFor="let player of numbers; let i = index" class="player-container mt-3 mb-3">
+        <span class="mr-2">Player {{i+1}}</span>
+        <app-type-ahead (selectedItemChange)="activePlayers[i] = $event" [dropDown]="true" [options]="allPlayers" key="name" ></app-type-ahead>
+      </div>
+    </ng-container>
+
+    <div class="btn-foos" (click)="startGame()">Start Game</div>
+  </div>
+
+</ng-container>
+
+<ng-container *ngIf="games.length > 0">
+  <div *ngFor="let game of games; let i = index;">
+    <div class="game-container">
+      <div class="team" (click)="gameResults[i].winners === game.team_one.id ? gameResults[i].winners = null : gameResults[i].winners = game.team_one.id">
+        {{game.team_one.player_one.name}} and {{game.team_one.player_two.name}}
+        <app-checkbox-input class="ml-2" [isChecked]="gameResults[i].winners === game.team_one.id" ></app-checkbox-input>
+      </div>
+      <span class="ml-3 mr-3">vs</span>
+      <div class="team" (click)="gameResults[i].winners === game.team_two.id ? gameResults[i].winners = null : gameResults[i].winners = game.team_two.id">
+        {{game.team_two.player_one.name}} and {{game.team_two.player_two.name}}
+        <app-checkbox-input class="ml-2" [isChecked]="gameResults[i].winners === game.team_two.id" ></app-checkbox-input>
+      </div>
+    </div>
+    <div class="spread">
+      <input type="text" class="form-control" placeholder="spread" [(ngModel)]="gameResults[i].spread">
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <div class="btn-foos" (click)="finishGame()">Finish Game</div>
+
+    <app-flip-container [open]="errMsg">
+      <div class="err mt-3">{{errMsg}}</div>
+    </app-flip-container>
+
+  </div>
+
+
+</ng-container>

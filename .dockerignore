@@ -1,0 +1,4 @@
+.git
+foosClient/dist/*
+foosClient/node_modules/*
+target/*
