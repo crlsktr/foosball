@@ -26,7 +26,11 @@ export class FoosService {
   public isUserAuthenticated() {
     return this.httpService.get('/user/authenticated', {withCredentials: true})
       .then((data) => {
-        debugger;
+        if (data && data.Ok) {
+          this.loggedIn = true;
+        } else {
+          this.loggedIn = false;
+        }
       })
   }
   public createUser(newUsername: string, newPassword: string) {

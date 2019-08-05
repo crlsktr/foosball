@@ -45,6 +45,14 @@ pub struct AuthenticateRequest {
 	password: String,
 }
 
+pub fn authenticated(session: Session) -> impl Responder {
+	let _ = match crate::get_session_user_id(session) {
+		Ok(u) => u,
+		Err(e) => return web::Json(Err(e)),
+	};
+	web::Json(Ok(true))
+}
+
 pub fn authenticate(
 	request: web::Json<AuthenticateRequest>,
 	pool: web::Data<ConnectionPool>,

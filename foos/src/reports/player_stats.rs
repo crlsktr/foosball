@@ -51,7 +51,7 @@ FROM
 		,CAST(COUNT(g.id) AS INT) AS played
 		,CASE WHEN
 			SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) > 0
-			THEN TO_CHAR(CAST(SUM(CASE WHEN t.id = g.winners THEN 1 ELSE 0 END) AS FLOAT) / CAST(SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) AS FLOAT), 'FM0.00')
+			THEN TO_CHAR(CAST(SUM(CASE WHEN t.id = g.winners THEN 1 ELSE 0 END) AS FLOAT) / CAST(COUNT(g.id) AS FLOAT), 'FM0.00')
 		ELSE '1.00' END AS percentage
 	FROM players p
 	JOIN teams t
@@ -60,6 +60,7 @@ FROM
 	JOIN games g
 		ON g.team_one_id = t.id
 		OR g.team_two_id = t.id
+	WHERE g.winners IS NOT NULL
 	GROUP BY p.name, p.id, p.ranking
 	ORDER BY p.ranking DESC, won DESC, lost ASC, percentage DESC
 ) t

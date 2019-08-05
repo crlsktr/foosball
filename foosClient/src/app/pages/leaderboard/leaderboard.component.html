@@ -20,7 +20,7 @@
       <td>{{leader.won}}</td>
       <td>{{leader.lost}}</td>
       <td>{{leader.played}}</td>
-      <td>{{leader.percentage * 100 }}</td>
+      <td>{{ +(leader.percentage * 100).toFixed(2) }}</td>
     </tr>
   </table>
 

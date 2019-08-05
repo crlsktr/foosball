@@ -47,6 +47,7 @@ JOIN teams t
 JOIN games g
 	ON g.team_one_id = t.id
 	OR g.team_two_id = t.id
+WHERE g.winners IS NOT NULL
 GROUP BY p.name, p.id, p.ranking
 ORDER BY p.ranking DESC, won DESC, lost ASC, percentage DESC
 "#;
