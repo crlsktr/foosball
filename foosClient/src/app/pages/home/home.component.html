@@ -29,6 +29,10 @@
         <i class="ion-md-grid mr-1"></i>
         Foosball Data
       </div>
+      <div class="btn-foos mb-2" routerLink="/teamleaderboard">
+        <i class="mr-1 ion-md-trophy"></i>
+        Teams Leaderboard
+      </div>
       <div class="btn-foos mb-2" routerLink="/leaderboard">
         <i class="mr-1 ion-md-trophy"></i>
         Leaderboard
@@ -44,11 +48,11 @@
       <div>
         <h4>Team Stats</h4>
         <form action="/teamstats" method="get">
-          <input name="player_one" type="text" list="players">
+          <app-type-ahead (selectedItemChange)="teamPlayerOne = $event" [dropDown]="true" [options]="players" key="name" ></app-type-ahead>
           <br>
-          <input name="player_two" type="text" list="players">
+          <app-type-ahead (selectedItemChange)="teamPlayerTwo = $event" [dropDown]="true" [options]="players" key="name" ></app-type-ahead>
           <br>
-          <input class="btn-foos" type="submit" value="Get Team Stats">
+          <button class="btn-foos" (click)="getTeamStats()" [disabled]="!teamPlayerOne || !teamPlayerTwo">Get Team Stats</button>
         </form>
       </div>
       <div class="player-stats">
@@ -59,7 +63,7 @@
       <div class="column-form">
         <h4>Create a Player</h4>
         <label>New Player Name</label>
-        <input type="text" [(ngModel)]="newPlayerName"/>
+        <input class="form-control" type="text" [(ngModel)]="newPlayerName"/>
         <label>User(optional)</label>
         <app-type-ahead (selectedItemChange)="newPlayerUser = $event" [dropDown]="true" [options]="users" key="username" ></app-type-ahead>
         <button class="btn-foos" (click)="createPlayer()">Create Player</button>

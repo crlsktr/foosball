@@ -31,7 +31,7 @@ export class FoosService {
         } else {
           this.loggedIn = false;
         }
-      })
+      });
   }
   public createUser(newUsername: string, newPassword: string) {
     return this.httpService.post(`/user/create`, {username: newUsername, password: newPassword}, {withCredentials: true})
@@ -118,8 +118,26 @@ export class FoosService {
       });
   }
 
+  public loadTeamLeaderboard() {
+    return this.httpService.get(`/report/teamleaderboard`, {withCredentials: true})
+      .then((data) => {
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      });
+  }
+
   public getPlayersStats(playerId: number) {
     return this.httpService.get(`/report/playerstats/${playerId}`)
+      .then((data) => {
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      });
+  }
+
+  public getTeamStats(playerOneId: number, playerTwoId: number) {
+    return this.httpService.get(`/report/teamstats/${playerOneId}/${playerTwoId}`)
       .then((data) => {
         if (data && data.Ok) {
           return data.Ok;

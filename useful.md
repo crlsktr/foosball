@@ -47,7 +47,7 @@ docker run -v C:\dev\foosball\data:/data -v  C:\dev\foosball\templates:/template
 ### Docker tag foosball
 change the version
 ```
-docker tag foosball danwilkins8/foosball:0.1.1
+docker tag foosball:0.1.6 danwilkins8/foosball:0.1.1
 ```
 
 ### Docker push

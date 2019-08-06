@@ -70,7 +70,9 @@ fn main() {
 			.route("game/finish", web::post().to(game::finish))
 			// Reports
 			.route("report/leaderboard", web::get().to(reports::get_leader_board))
+			.route("report/teamleaderboard", web::get().to(reports::get_team_leader_board))
 			.route("report/playerstats/{player_id}", web::get().to(reports::get_player_stats))
+			.route("report/teamstats/{player_one_id}/{player_two_id}", web::get().to(reports::get_team_stats))
 			// This service call needs to be at the end so all of the other routes get processed first.
 			.service(
 				files::Files::new("/", "./foosClient/dist/foosClient")

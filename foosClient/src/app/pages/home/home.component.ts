@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   public selectedPlayer;
   public newPlayerName = '';
   public newPlayerUser;
+  public teamPlayerOne;
+  public teamPlayerTwo;
 
   constructor(private foosService: FoosService, private router: Router) { }
 
@@ -63,5 +65,9 @@ export class HomeComponent implements OnInit {
           this.loadPlayersAndUsers();
         });
     }
+  }
+
+  public getTeamStats() {
+    this.router.navigateByUrl(`teamstats/${this.teamPlayerOne.id}/${this.teamPlayerTwo.id}`);
   }
 }

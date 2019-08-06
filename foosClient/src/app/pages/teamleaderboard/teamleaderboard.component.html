@@ -1,0 +1,27 @@
+<div class="leaderboard-container">
+
+  <h1>The Foosball App!</h1>
+  <h2>Leaders</h2>
+  <p>Leaders are positioned by: "Wins" &gt; "Losses" &gt; "Percentage" </p>
+  <table id="leaders-table" class="full-width">
+    <tr>
+      <th class="clickable" (click)="sortLeaders('position')">Position<i></i></th>
+      <th class="clickable" (click)="sortLeaders('player_one_name')">Player One Name<i></i></th>
+      <th class="clickable" (click)="sortLeaders('player_two_name')">Player Two Name<i></i></th>
+      <th class="clickable" (click)="sortLeaders('won')">Won<i></i></th>
+      <th class="clickable" (click)="sortLeaders('lost')">Lost<i></i></th>
+      <th class="clickable" (click)="sortLeaders('played')">Played<i></i></th>
+      <th class="clickable" (click)="sortLeaders('percentage')">Percentage<i></i></th>
+    </tr>
+    <tr *ngFor="let leader of sortedLeaders">
+      <td>{{leader.position}}</td>
+      <td>{{leader.player_one_name}}</td>
+      <td>{{leader.player_two_name}}</td>
+      <td>{{leader.won}}</td>
+      <td>{{leader.lost}}</td>
+      <td>{{leader.played}}</td>
+      <td>{{ +(leader.percentage * 100).toFixed(2) }}</td>
+    </tr>
+  </table>
+</div>
+
