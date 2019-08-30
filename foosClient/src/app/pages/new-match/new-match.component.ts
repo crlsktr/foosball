@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {FoosService} from '../../../services/foos.service';
@@ -15,6 +15,9 @@ export interface GameResult {
   styleUrls: ['./new-match.component.scss']
 })
 export class NewMatchComponent implements OnInit {
+
+  public onDismiss = new EventEmitter();
+  public params: any = {};
 
   public allPlayers = [];
   public activePlayers = [];

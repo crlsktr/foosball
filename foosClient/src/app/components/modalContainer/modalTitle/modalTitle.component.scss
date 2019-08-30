@@ -1,0 +1,43 @@
+
+.modal-title::ng-deep{
+    position: relative;
+    font-size: 18pt;
+    border-bottom: 1px solid lightgray;
+    i{
+      margin: 0 10px;
+    }
+}
+
+.close-btn{
+    $animationDuration: 200ms;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    color: #afafaf;
+    font-size: 14pt;
+    cursor: pointer;
+    transition: color $animationDuration ease-out;
+    i{
+        margin: 0;
+        transition: transform $animationDuration ease-out;
+    }
+    .text{
+        transition: width $animationDuration ease-out;
+        width: 0px;
+        overflow: hidden;
+    }
+    &:hover{
+        color: lightblue;
+        i{
+            transform: rotateZ(-90deg);
+        }
+        .text{
+            width: 50px;
+        }
+    }
+}
+

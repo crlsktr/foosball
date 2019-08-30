@@ -1,0 +1,8 @@
+<div @fadeInAnimation class="backdrop" (click)="backdropClicked($event)"></div>
+<div [@slideInOut]="{value: animationState, params: {transform: transform}}" class="wrapper">
+  <div class="clamp-height">
+    <div class="dialog">
+      <div #content></div>
+    </div>
+  </div>
+</div>

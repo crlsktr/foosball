@@ -1,0 +1,50 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow-y: auto;
+  will-change: opacity;
+}
+
+.dialog {
+  //max-width: 900px;
+  min-width: 375px;
+  max-height: 95%;
+  background-color: white;
+  padding: 1em;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
+  cursor: default;
+  z-index: 1000;
+  position: relative;
+  margin: auto;
+  //overflow: scroll;
+}
+
+// This is a workaround/hacky solution to center the dialog while also leaving areas for the backdrop to receive events
+.wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: fit-content;
+  height: fit-content;
+  z-index: 999;
+  margin: auto;
+  cursor: pointer;
+  // overflow-y: scroll; had to comment out for file upload modal -Caden
+
+  .clamp-height {
+    height: fit-content;
+    display: flex;
+  }
+}

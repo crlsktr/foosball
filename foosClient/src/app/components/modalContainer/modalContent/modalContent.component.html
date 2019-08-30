@@ -1,0 +1,5 @@
+<div class="content-container" [ngStyle]="{'min-width': minWidth ? minWidth: '', 'min-height': minHeight ? minHeight : ''}"
+     [style.overflowY]="overflowVisible ? 'visible' : 'auto'"
+     [style.overflowX]="overflowVisible ? 'unset' : 'hidden'">
+  <ng-content></ng-content>
+</div>

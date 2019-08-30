@@ -1,0 +1,9 @@
+<div class="modal-title">
+    <div class="close-btn" (click)="$event.stopPropagation(); close.next()">
+        <i class="icon-x"></i>
+        <div class="text">
+            Close
+        </div>
+    </div>
+    <ng-content></ng-content>
+</div>
