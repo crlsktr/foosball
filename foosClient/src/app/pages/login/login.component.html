@@ -12,6 +12,7 @@
         <h3 >Create User</h3>
         <div><input [(ngModel)]="createUsername" type="text"/></div>
         <div><input [(ngModel)]="createPassword" type="password"/></div>
+        <div><label>Please refrain from using your bank password as Chris could be intercepting the traffic to this application</label></div>
         <div><button class="btn-foos" (click)="createUser()">Create User</button></div>
         <div class="btn-link mt-2" (click)="createUserContext = false;">Have an account? Login</div>
     </div>
