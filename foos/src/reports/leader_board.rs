@@ -14,6 +14,8 @@ pub struct Leader {
     pub won: i32,
     #[sql_type = "Integer"]
     pub lost: i32,
+	#[sql_type = "Varchar"]
+    pub respected: String,
     #[sql_type = "Integer"]
     pub played: i32,
     #[sql_type = "Varchar"]
@@ -35,6 +37,11 @@ SELECT
 	,CAST(p.ranking AS INT) AS ranking
 	,CAST(SUM(CASE WHEN t.id = g.winners THEN 1 ELSE 0 END) AS INT) AS won
 	,CAST(SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) AS INT) AS lost
+	,CASE
+		WHEN SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) > 0 THEN
+		TO_CHAR(CAST(SUM(CASE WHEN t.id <> g.winners AND g.spread >= 5 THEN 1 ELSE 0 END) AS FLOAT) / 
+		CAST(SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) AS FLOAT),  'FM0.00')
+	ELSE '1.00' END AS respected
 	,CAST(COUNT(g.id) AS INT) AS played
 	,CASE WHEN
 		SUM(CASE WHEN t.id = g.winners THEN 0 ELSE 1 END) > 0

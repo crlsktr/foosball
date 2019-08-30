@@ -10,6 +10,7 @@
       <th class="clickable" (click)="sortLeaders('ranking')">Rank<i></i></th>
       <th class="clickable" (click)="sortLeaders('won')">Won<i></i></th>
       <th class="clickable" (click)="sortLeaders('lost')">Lost<i></i></th>
+      <th class="clickable" (click)="sortLeaders('respected')">Respected<i></i></th>
       <th class="clickable" (click)="sortLeaders('played')">Played<i></i></th>
       <th class="clickable" (click)="sortLeaders('percentage')">Percentage<i></i></th>
     </tr>
@@ -19,6 +20,7 @@
       <td>{{leader.ranking}}</td>
       <td>{{leader.won}}</td>
       <td>{{leader.lost}}</td>
+      <td>{{ +(leader.respected * 100).toFixed(2) }}</td>
       <td>{{leader.played}}</td>
       <td>{{ +(leader.percentage * 100).toFixed(2) }}</td>
     </tr>
