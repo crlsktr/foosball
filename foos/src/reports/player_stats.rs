@@ -1,32 +1,32 @@
 use diesel::prelude::*;
-use diesel::PgConnection;
-use diesel::sql_types::{Varchar, Integer};
 use diesel::sql_query;
+use diesel::sql_types::{Integer, Varchar};
+use diesel::PgConnection;
 
 #[derive(Serialize, Deserialize, QueryableByName)]
 pub struct PlayerStats {
 	#[sql_type = "Integer"]
-    pub position: i32,
-    #[sql_type = "Varchar"]
-    pub name: String,
-    #[sql_type = "Integer"]
-    pub ranking: i32,
-    #[sql_type = "Integer"]
-    pub won: i32,
-    #[sql_type = "Integer"]
-    pub lost: i32,
-    #[sql_type = "Integer"]
-    pub played: i32,
-    #[sql_type = "Varchar"]
-    pub percentage: String, // yes this is a string.... 
+	pub position: i32,
+	#[sql_type = "Varchar"]
+	pub name: String,
+	#[sql_type = "Integer"]
+	pub ranking: i32,
+	#[sql_type = "Integer"]
+	pub won: i32,
+	#[sql_type = "Integer"]
+	pub lost: i32,
+	#[sql_type = "Integer"]
+	pub played: i32,
+	#[sql_type = "Varchar"]
+	pub percentage: String, // yes this is a string....
 }
 
 pub fn player_stats(connection: &PgConnection, player_id: i32) -> Result<PlayerStats, String> {
-    let player_stats = sql_query(PLAYER_STATS_QUERY)
-        .bind::<Integer, _>(player_id)
-        .get_result(connection)
-        .map_err(|e| format!("Couldn't load the leaders. Error: {}", e))?;
-    Ok(player_stats)
+	let player_stats = sql_query(PLAYER_STATS_QUERY)
+		.bind::<Integer, _>(player_id)
+		.get_result(connection)
+		.map_err(|e| format!("Couldn't load the leaders. Error: {}", e))?;
+	Ok(player_stats)
 }
 
 const PLAYER_STATS_QUERY: &'static str = r#"

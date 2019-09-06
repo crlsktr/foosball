@@ -1,14 +1,14 @@
+use actix_session::Session;
 use serde_derive::{Deserialize, Serialize};
-use actix_session::{Session};
 
 use actix_web::{web, Responder};
 
-use foos::database::*;
 use foos;
+use foos::database::*;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CreateSeriesRequest {
-	players: [i32; 4] 
+	players: [i32; 4],
 }
 
 pub fn create(
@@ -18,7 +18,7 @@ pub fn create(
 ) -> impl Responder {
 	let db = match pool.get() {
 		Ok(db) => db,
-		Err(e) =>  return web::Json(Err(format!("Couldn't get the database: {}", e))),
+		Err(e) => return web::Json(Err(format!("Couldn't get the database: {}", e))),
 	};
 	let request = request.into_inner();
 	let user_id = match crate::get_session_user_id(session) {
@@ -31,7 +31,7 @@ pub fn create(
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CreateGauntletRequest {
-	players: [i32; 5] 
+	players: [i32; 5],
 }
 
 pub fn create_gauntlet(
@@ -41,7 +41,7 @@ pub fn create_gauntlet(
 ) -> impl Responder {
 	let db = match pool.get() {
 		Ok(db) => db,
-		Err(e) =>  return web::Json(Err(format!("Couldn't get the database: {}", e))),
+		Err(e) => return web::Json(Err(format!("Couldn't get the database: {}", e))),
 	};
 	let request = request.into_inner();
 	let user_id = match crate::get_session_user_id(session) {

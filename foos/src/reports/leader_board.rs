@@ -1,32 +1,32 @@
 use diesel::prelude::*;
+use diesel::sql_types::{Integer, Varchar};
 use diesel::PgConnection;
-use diesel::sql_types::{Varchar, Integer};
 
 #[derive(Serialize, Deserialize, QueryableByName)]
 pub struct Leader {
 	#[sql_type = "Integer"]
-    pub position: i32,
-    #[sql_type = "Varchar"]
-    pub name: String,
-    #[sql_type = "Integer"]
-    pub ranking: i32,
-    #[sql_type = "Integer"]
-    pub won: i32,
-    #[sql_type = "Integer"]
-    pub lost: i32,
+	pub position: i32,
 	#[sql_type = "Varchar"]
-    pub respected: String,
-    #[sql_type = "Integer"]
-    pub played: i32,
-    #[sql_type = "Varchar"]
-    pub percentage: String, // yes this is a string.... 
+	pub name: String,
+	#[sql_type = "Integer"]
+	pub ranking: i32,
+	#[sql_type = "Integer"]
+	pub won: i32,
+	#[sql_type = "Integer"]
+	pub lost: i32,
+	#[sql_type = "Varchar"]
+	pub respected: String,
+	#[sql_type = "Integer"]
+	pub played: i32,
+	#[sql_type = "Varchar"]
+	pub percentage: String, // yes this is a string....
 }
 
 pub fn leader_board(connection: &PgConnection) -> Result<Vec<Leader>, String> {
-    let leaders: Vec<Leader> = diesel::sql_query(LEADER_BOARD_QUERY)
-        .load(connection)
-        .map_err(|e| format!("Couldn't load the leaders. Error: {}", e))?;
-    Ok(leaders)
+	let leaders: Vec<Leader> = diesel::sql_query(LEADER_BOARD_QUERY)
+		.load(connection)
+		.map_err(|e| format!("Couldn't load the leaders. Error: {}", e))?;
+	Ok(leaders)
 }
 
 const LEADER_BOARD_QUERY: &'static str = r#"
@@ -59,32 +59,30 @@ GROUP BY p.name, p.id, p.ranking
 ORDER BY p.ranking DESC, won DESC, lost ASC, percentage DESC
 "#;
 
-
 #[derive(Serialize, Deserialize, QueryableByName)]
 pub struct TeamLeader {
 	#[sql_type = "Integer"]
-    pub position: i32,
-    #[sql_type = "Varchar"]
-    pub player_one_name: String,
-    #[sql_type = "Varchar"]
-    pub player_two_name: String,
-    #[sql_type = "Integer"]
-    pub won: i32,
-    #[sql_type = "Integer"]
-    pub lost: i32,
-    #[sql_type = "Integer"]
-    pub played: i32,
-    #[sql_type = "Varchar"]
-    pub percentage: String, // yes this is a string.... 
+	pub position: i32,
+	#[sql_type = "Varchar"]
+	pub player_one_name: String,
+	#[sql_type = "Varchar"]
+	pub player_two_name: String,
+	#[sql_type = "Integer"]
+	pub won: i32,
+	#[sql_type = "Integer"]
+	pub lost: i32,
+	#[sql_type = "Integer"]
+	pub played: i32,
+	#[sql_type = "Varchar"]
+	pub percentage: String, // yes this is a string....
 }
 
 pub fn team_leader_board(connection: &PgConnection) -> Result<Vec<TeamLeader>, String> {
-    let leaders: Vec<TeamLeader> = diesel::sql_query(TEAM_LEADER_BOARD_QUERY)
-        .load(connection)
-        .map_err(|e| format!("Couldn't load the team leaders. Error: {}", e))?;
-    Ok(leaders)
+	let leaders: Vec<TeamLeader> = diesel::sql_query(TEAM_LEADER_BOARD_QUERY)
+		.load(connection)
+		.map_err(|e| format!("Couldn't load the team leaders. Error: {}", e))?;
+	Ok(leaders)
 }
-
 
 const TEAM_LEADER_BOARD_QUERY: &'static str = r#"
 SELECT

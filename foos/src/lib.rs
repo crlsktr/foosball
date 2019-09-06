@@ -18,10 +18,10 @@ pub mod reports;
 pub mod user;
 
 mod game;
+mod ranking;
 mod schema;
 mod series;
 mod team;
-mod ranking;
 
 use player::*;
 
