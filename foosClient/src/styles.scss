@@ -1,7 +1,11 @@
 body {
   font-family: Helvetica;
   margin: 0;
+  background-color: #17293e;
+  color: #f2a003;
+  padding: 16px;
 }
+
 nav {
   margin-bottom: 16px;
 }
@@ -18,25 +22,6 @@ input[type=password] {
 }
 form {
   margin-top: 16px;
-}
-
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-}
-
-.full-width {
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #bebebe;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #d8dee7;
 }
 
 .app {

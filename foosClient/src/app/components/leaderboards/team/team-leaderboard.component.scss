@@ -1,0 +1,95 @@
+:host {
+  width: 100%;
+  display: flex;
+  color: #c7c7c7;
+}
+
+#leaders-table {
+  width: 100%;
+  font-size: 1.2em;
+  text-transform: capitalize;
+  margin-right: 24px;
+}
+
+#leaders-table th {
+  color: white;
+  text-align: left;
+  font-size: 1.3em;
+}
+
+#leaders-table button {
+  background-color: transparent;
+  border: none;
+  color: #0095ff;
+  padding: 0px;
+  margin: 0px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+#leaders-table button:hover {
+  filter: brightness(120%);
+}
+
+.first-position {
+  position: relative;
+  right: 35px;
+  font-size: 1.5em;
+  color: #f2a003;
+  margin-right: -30px;
+}
+
+.no-results {
+  font-size: 1.5em;
+  width: 100%;
+  text-align: center;
+}
+
+.no-results span {
+  color: white;
+  font-size: 1.5em;
+}
+
+
+@media only screen and (max-width: 950px) {
+  #leaders-table,
+  #leaders-table thead,
+  #leaders-table tbody,
+  #leaders-table th,
+  #leaders-table td,
+  #leaders-table tr {
+    display: block;
+  }
+
+  #leaders-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  #leaders-table tr {
+    border: 1px solid white;
+    padding: 8px 0px;
+  }
+
+  #leaders-table td {
+    position: relative;
+    padding-left: 55%;
+  }
+
+  #leaders-table td:before {
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 45%;
+    padding-right: 15px;
+    white-space: nowrap;
+  }
+
+  #leaders-table td:nth-of-type(1):before { content: "Teammates"; font-size: 1.2em; color: white; }
+  #leaders-table td:nth-of-type(2):before { content: "Position" }
+  #leaders-table td:nth-of-type(3):before { content: "Won" }
+  #leaders-table td:nth-of-type(4):before { content: "Lost" }
+  #leaders-table td:nth-of-type(5):before { content: "Played" }
+  #leaders-table td:nth-of-type(6):before { content: "Percentage" }
+}

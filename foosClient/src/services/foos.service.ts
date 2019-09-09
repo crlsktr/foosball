@@ -18,7 +18,7 @@ export class FoosService {
           this.loggedIn = true;
           return data.Ok;
         } else {
-          this.loggedIn = false;
+           this.loggedIn = false;
         }
       });
   }
@@ -29,7 +29,7 @@ export class FoosService {
         if (data && data.Ok) {
           this.loggedIn = true;
         } else {
-          this.loggedIn = false;
+           this.loggedIn = false;
         }
       });
   }

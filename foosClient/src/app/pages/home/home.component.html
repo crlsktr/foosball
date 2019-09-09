@@ -1,77 +1,23 @@
 <div>
-  <div class="foos-header">
-    <i class="mr-3 ion-md-football"></i>
-    Foosball
-    <i class="ml-3 ion-md-football"></i>
+  <h1>
+    <span class="mdi mdi-bell-ring"></span>
+    Ding
+  </h1>
+  <div class="action-buttons">
+    <button (click)="startGame()">Start Game</button>
+    <button>New Challenger</button>
   </div>
-
-  <!-- New Match Section-->
-  <div class="start-game">
-    <div class="ml-2 start-game-header">
-      <i class="mr-1 ion-md-football"></i>
-      Start A Game
-    </div>
-    <div style="display: flex">
-      <div class="btn-foos" (click)="newMatch(true)">
-        <i class="ion-md-flame mr-1"></i>
-        Gauntlet!
-      </div>
-      <div class="btn-foos" (click)="newMatch(false)">
-        <i class="ion-md-flower mr-1"></i>
-        Other
-      </div>
+  <div class="stat-controls">
+    <span>Leaderboard</span>
+    <button [ngClass]="{'button-selected': statSelection === 'individual'}" (click)="setStatSelection('individual')">By Individual</button>
+    <button [ngClass]="{'button-selected': statSelection === 'team'}" (click)="setStatSelection('team')">By Team</button>
+    <div class="search-box">
+      <input [(ngModel)]="searchText" type="text" placeholder="search for player"/>
+      <span class="mdi mdi-magnify"></span>
     </div>
   </div>
-  <!-- Data Section-->
-  <div class="data-container">
-    <div class="data-header-container">
-      <div class="data-header">
-        <i class="ion-md-grid mr-1"></i>
-        Foosball Data
-      </div>
-      <div class="btn-foos mb-2" routerLink="/teamleaderboard">
-        <i class="mr-1 ion-md-trophy"></i>
-        Teams Leaderboard
-      </div>
-      <div class="btn-foos mb-2" routerLink="/leaderboard">
-        <i class="mr-1 ion-md-trophy"></i>
-        Leaderboard
-      </div>
-    </div>
-    <div class="data-section">
-
-
-      <datalist id="players">
-        <option *ngFor="let player of players" value="{{player.name}}">{{player.name}}</option>
-      </datalist>
-
-      <div>
-        <h4>Team Stats</h4>
-        <form action="/teamstats" method="get">
-          <app-type-ahead (selectedItemChange)="teamPlayerOne = $event" [dropDown]="true" [options]="players" key="name" ></app-type-ahead>
-          <br>
-          <app-type-ahead (selectedItemChange)="teamPlayerTwo = $event" [dropDown]="true" [options]="players" key="name" ></app-type-ahead>
-          <br>
-          <button class="btn-foos" (click)="getTeamStats()" [disabled]="!teamPlayerOne || !teamPlayerTwo">Get Team Stats</button>
-        </form>
-      </div>
-      <div class="player-stats">
-        <h4>Player Stats</h4>
-        <app-type-ahead (selectedItemChange)="selectedPlayer = $event" [dropDown]="true" [options]="players" key="name" ></app-type-ahead>
-        <input class="btn-foos" value="Get Player Stats" (click)="getPlayerStats()">
-      </div>
-      <div class="column-form">
-        <h4>Create a Player</h4>
-        <label>New Player Name</label>
-        <input class="form-control" type="text" [(ngModel)]="newPlayerName"/>
-        <label>User(optional)</label>
-        <app-type-ahead (selectedItemChange)="newPlayerUser = $event" [dropDown]="true" [options]="users" key="username" ></app-type-ahead>
-        <button class="btn-foos" (click)="createPlayer()">Create Player</button>
-      </div>
-    </div>
-  </div>
-  <!-- Live Stream Section-->
-  <div class="live-stream">
-    <img class="stream-img" src="http://foos-camera.cen.centeva.com:8081/"/>
+  <div class="stat-table">
+    <app-individual-leaderboard *ngIf="statSelection === 'individual'" [search]="searchText"></app-individual-leaderboard>
+    <app-team-leaderboard *ngIf="statSelection === 'team'" [search]="searchText"></app-team-leaderboard>
   </div>
 </div>

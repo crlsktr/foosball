@@ -1,0 +1,29 @@
+<table id="leaders-table" *ngIf="sortedLeaders.length > 0">
+  <thead>
+    <tr>
+      <th class="clickable" (click)="sortLeaders('name')">Player<i></i></th>
+      <th class="clickable" (click)="sortLeaders('position')">Position<i></i></th>
+      <th class="clickable" (click)="sortLeaders('ranking')">Rank<i></i></th>
+      <th class="clickable" (click)="sortLeaders('won')">Won<i></i></th>
+      <th class="clickable" (click)="sortLeaders('lost')">Lost<i></i></th>
+      <th class="clickable" (click)="sortLeaders('respected')">Respected<i></i></th>
+      <th class="clickable" (click)="sortLeaders('played')">Played<i></i></th>
+      <th class="clickable" (click)="sortLeaders('percentage')">Percentage<i></i></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let leader of sortedLeaders">
+      <td><span *ngIf="leader.position === 1" class="mdi mdi-crown first-position"></span><button>{{leader.name}}</button></td>
+      <td>{{leader.position}}</td>
+      <td>{{leader.ranking}}</td>
+      <td>{{leader.won}}</td>
+      <td>{{leader.lost}}</td>
+      <td>{{ +(leader.respected * 100).toFixed(2) }} %</td>
+      <td>{{leader.played}}</td>
+      <td>{{ +(leader.percentage * 100).toFixed(2) }} %</td>
+    </tr>
+  </tbody>
+</table>
+<div class="no-results" *ngIf="sortedLeaders.length === 0">
+  No results <span class="mdi mdi-emoticon-poop"></span>
+</div>

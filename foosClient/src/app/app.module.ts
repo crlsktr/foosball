@@ -10,6 +10,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SocketService} from '../services/socket.service';
 import {ModalService} from '../services/modal/modal.service';
 import {ModalModule} from '../services/modal/modal.module';
+import { AuthGuardService } from 'src/services/auth-gaurd.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {ModalModule} from '../services/modal/modal.module';
     FoosService,
     SocketService,
     ModalService,
+    AuthGuardService,
   ],
   bootstrap: [AppComponent]
 })

@@ -4,6 +4,7 @@ import { HomeComponent } from './home.component';
 import {RouterModule} from '@angular/router';
 import { TypeAheadModule } from 'src/app/components/type-ahead/type-ahead.module';
 import { FormsModule } from '@angular/forms';
+import { LeaderBoardsModule } from 'src/app/components/leaderboards/leaderboards.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     TypeAheadModule,
     FormsModule,
+    LeaderBoardsModule
   ]
 })
 export class HomeModule {}
