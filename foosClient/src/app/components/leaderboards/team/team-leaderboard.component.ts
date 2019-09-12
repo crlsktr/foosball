@@ -1,5 +1,16 @@
-import { EventEmitter, Component, OnInit, Output, Input, SimpleChanges, OnChanges, SimpleChange } from '@angular/core';
+import {
+  EventEmitter,
+  Component,
+  OnInit,
+  Output,
+  Input,
+  SimpleChanges,
+  OnChanges,
+  SimpleChange,
+  OnDestroy
+} from '@angular/core';
 import { FoosService } from 'src/services/foos.service';
+import {BehaviorSubject} from 'rxjs';
 
 interface TeamLeader {
   player_one_name: string;
@@ -11,8 +22,9 @@ interface TeamLeader {
     templateUrl: 'team-leaderboard.component.html',
     styleUrls: ['team-leaderboard.component.scss'],
 })
-export class TeamLeaderboardComponent implements OnInit, OnChanges {
+export class TeamLeaderboardComponent implements OnInit, OnChanges, OnDestroy {
   @Input() search: string;
+  @Input() reloadStats = new BehaviorSubject(false);
 
   public searchText = '';
   public leaders = new Array<TeamLeader>();
@@ -21,12 +33,20 @@ export class TeamLeaderboardComponent implements OnInit, OnChanges {
   public showVideo = false;
   private sortColumn = 'position';
   private sortDesc = true;
-
+  private sub;
   constructor(private foosService: FoosService) { }
 
   ngOnInit() {
     this.loadLeaderboard();
     this.searchText = this.search;
+    this.sub = this.reloadStats.subscribe((shouldReload) => {
+      if (shouldReload) {
+        this.loadLeaderboard();
+      }
+    });
+  }
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="stat-table">
-    <app-individual-leaderboard *ngIf="statSelection === 'individual'" [search]="searchText"></app-individual-leaderboard>
-    <app-team-leaderboard *ngIf="statSelection === 'team'" [search]="searchText"></app-team-leaderboard>
+    <app-individual-leaderboard [reloadStats]="reloadLeaderboard" *ngIf="statSelection === 'individual'" [search]="searchText"></app-individual-leaderboard>
+    <app-team-leaderboard [reloadStats]="reloadLeaderboard" *ngIf="statSelection === 'team'" [search]="searchText"></app-team-leaderboard>
   </div>
 </div>

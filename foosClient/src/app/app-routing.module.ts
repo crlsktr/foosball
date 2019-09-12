@@ -10,14 +10,11 @@ import { PlayerStatsModule } from './pages/playerstats/playerstats.module';
 import { LoginComponent } from './pages/login/login.component';
 import { LoginModule } from './pages/login/login.module';
 import { TeamStatsModule } from './pages/teamstats/teamstats.module';
-import { TeamLeaderboardComponent } from './pages/teamleaderboard/teamleaderboard.component';
-import { TeamLeaderboardModule } from './pages/teamleaderboard/teamleaderboard.module';
 import { AuthGuardService } from 'src/services/auth-gaurd.service';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'home', canActivate: [AuthGuardService]},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
-  {path: 'teamleaderboard', component: TeamLeaderboardComponent, canActivate: [AuthGuardService]},
   {path: 'playerstats/:playerId', component: PlayerStatsComponent, canActivate: [AuthGuardService]},
   {path: 'teamstats/:playerOneId/:playerTwoId', component: TeamStatsComponent, canActivate: [AuthGuardService]},
   {path: 'new/match/:gameType', component: NewMatchComponent, canActivate: [AuthGuardService]},
@@ -31,7 +28,6 @@ const routes: Routes = [
     NewMatchModule,
     LoginModule,
     TeamStatsModule,
-    TeamLeaderboardModule,
     RouterModule.forRoot(routes, {useHash: true})
   ],
   exports: [RouterModule]

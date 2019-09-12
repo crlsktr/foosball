@@ -1,5 +1,16 @@
-import { EventEmitter, Component, OnInit, Output, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import {
+  EventEmitter,
+  Component,
+  OnInit,
+  Output,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  SimpleChange,
+  OnDestroy
+} from '@angular/core';
 import { FoosService } from 'src/services/foos.service';
+import {BehaviorSubject} from 'rxjs';
 
 interface Leader {
   name: string;
@@ -10,7 +21,8 @@ interface Leader {
     templateUrl: 'individual-leaderboard.component.html',
     styleUrls: ['individual-leaderboard.component.scss'],
 })
-export class IndividualLeaderboardComponent implements OnInit, OnChanges {
+export class IndividualLeaderboardComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() reloadStats = new BehaviorSubject(false);
   @Input() search: string;
 
   public searchText = '';
@@ -20,12 +32,20 @@ export class IndividualLeaderboardComponent implements OnInit, OnChanges {
   public showVideo = false;
   private sortColumn = 'ranking';
   private sortDesc = true;
-
+  private sub;
   constructor(private foosService: FoosService) { }
 
   ngOnInit() {
     this.loadLeaderboard();
     this.searchText = this.search;
+    this.sub = this.reloadStats.subscribe((shouldReload) => {
+      if (shouldReload) {
+        this.loadLeaderboard();
+      }
+    });
+  }
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   private loadLeaderboard() {

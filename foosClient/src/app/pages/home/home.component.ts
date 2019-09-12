@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {GAME_TYPES} from '../../../static/foosTypes';
 import { ModalService } from 'src/services/modal/modal.service';
 import { NewMatchComponent } from '../new-match/new-match.component';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   public statSelection = 'individual';
   public searchText = '';
-
+  public reloadLeaderboard = new BehaviorSubject(false);
   constructor(private foosService: FoosService, private router: Router, private modalService: ModalService) { }
 
   ngOnInit() {
@@ -25,9 +26,9 @@ export class HomeComponent implements OnInit {
   }
 
   public startGame() {
-    this.modalService.create(NewMatchComponent, {params: {test: 'hi'}})
+    this.modalService.create(NewMatchComponent)
       .then((data) => {
-        console.log('After modal close');
+        this.reloadLeaderboard.next(true);
       });
   }
 
