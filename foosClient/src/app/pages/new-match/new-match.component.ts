@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from 'lodash';
 import {FoosService} from '../../../services/foos.service';
+import {IModalComponent} from '../../../services/modal/modal.service';
 
 export interface GameResult {
   id: number,
@@ -14,7 +15,7 @@ export interface GameResult {
   templateUrl: './new-match.component.html',
   styleUrls: ['./new-match.component.scss']
 })
-export class NewMatchComponent implements OnInit {
+export class NewMatchComponent implements OnInit, IModalComponent {
 
   public onDismiss = new EventEmitter();
   public params: any = {};
@@ -31,23 +32,19 @@ export class NewMatchComponent implements OnInit {
   constructor(private route: ActivatedRoute, private foosService: FoosService, private router: Router) { }
 
   ngOnInit() {
-    if (!this.foosService.loggedIn) {
-      this.router.navigateByUrl(`login`);
-    }
 
     this.foosService.getAllPlayers()
       .then((players) => {
         this.allPlayers = players;
       });
 
-    this.route.params
-      .subscribe((params) => {
-        if (params && params.gameType) {
-          this.numOfPlayers = +params.gameType;
-          this.numbers = _.fill(Array(this.numOfPlayers), null);
-          this.activePlayers = _.fill(Array(this.numOfPlayers), null);
-        }
-      });
+    this.setGameMode(4);
+  }
+
+  public setGameMode(numPlayers) {
+    this.numOfPlayers = +numPlayers;
+    this.numbers = _.fill(Array(this.numOfPlayers), null);
+    this.activePlayers = _.fill(Array(this.numOfPlayers), null);
   }
   public toggled(e) {
     debugger;
@@ -81,7 +78,7 @@ export class NewMatchComponent implements OnInit {
     if (!this.errMsg) {
       this.foosService.finishGame(this.gameResults)
         .then(() => {
-          this.router.navigateByUrl('/home');
+          this.onDismiss.next();
         });
     }
   }

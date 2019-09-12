@@ -9,7 +9,7 @@ export class FoosService {
   }
 
   // I'm lazy so putting a logged in flag here for all of the pages to use.
-  public loggedIn = false;
+  public loggedIn = true;
 
   public login(uname: string, pword: string) {
     return this.httpService.post(`/user/authenticate`, {username: uname, password: pword}, {withCredentials: true})

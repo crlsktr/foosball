@@ -1,5 +1,5 @@
 <div class="checkbox-input" (click)="toggle()" [ngClass]="{disabled: isDisabled}">
-  <i *ngIf="isChecked" class="ion-md-checkbox-outline mr-2" [ngStyle]="{'color': checkBoxColor}" style="position: relative; left: 1px"></i>
-  <i *ngIf="!isChecked" class="ion-md-square-outline mr-2"></i>
+  <i *ngIf="isChecked" class="mdi mdi-checkbox-marked-outline mr-2" [ngStyle]="{'color': checkBoxColor}" style="position: relative; left: 1px"></i>
+  <i *ngIf="!isChecked" class="mdi mdi-checkbox-blank-outline mr-2"></i>
   <span><ng-content></ng-content></span>
 </div>

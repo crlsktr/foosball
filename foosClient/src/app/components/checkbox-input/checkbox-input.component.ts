@@ -19,7 +19,7 @@ export class CheckboxInputComponent implements OnInit, ControlValueAccessor {
   @Input() public text: string;
   @Input() public isChecked = false;
   @Input() isDisabled = false;
-  @Input() checkBoxColor = '#15c2d8';
+  @Input() checkBoxColor = '#f3ae2b';
   @Output() public toggleChange = new EventEmitter<boolean>();
 
   private propagateChange = (val: boolean) => {};

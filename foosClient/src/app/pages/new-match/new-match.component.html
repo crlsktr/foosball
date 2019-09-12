@@ -1,6 +1,20 @@
 
 
+
 <ng-container *ngIf="games.length === 0">
+  <div>
+    <div class="Header">Game Type</div>
+    <div (click)="setGameMode(4)" class="game-type">
+      <app-checkbox-input [isChecked]="numOfPlayers === 4" ></app-checkbox-input>
+      Standard Rules (4 players)
+    </div>
+    <div (click)="setGameMode(5)" class="game-type">
+      <app-checkbox-input [isChecked]="numOfPlayers === 5" ></app-checkbox-input>
+      Gauntlet (5 players)
+    </div>
+    <hr>
+
+  </div>
   <div class="new-match-container">
 
     <ng-container>
@@ -16,6 +30,10 @@
 </ng-container>
 
 <ng-container *ngIf="games.length > 0">
+  <div class="result-header">
+    <span>Game Results</span>
+    <span>Spread</span>
+  </div>
   <div *ngFor="let game of games; let i = index;">
     <div class="game-container">
       <div class="team" (click)="gameResults[i].winners === game.team_one.id ? gameResults[i].winners = null : gameResults[i].winners = game.team_one.id">
@@ -27,9 +45,7 @@
         {{game.team_two.player_one.name}} and {{game.team_two.player_two.name}}
         <app-checkbox-input class="ml-2" [isChecked]="gameResults[i].winners === game.team_two.id" ></app-checkbox-input>
       </div>
-    </div>
-    <div class="spread">
-      <input type="text" class="form-control" placeholder="spread" [(ngModel)]="gameResults[i].spread">
+      <input type="text" class="form-control spread-input" [(ngModel)]="gameResults[i].spread">
     </div>
   </div>
 

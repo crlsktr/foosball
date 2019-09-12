@@ -41,7 +41,7 @@
     }
 
     .match{
-      background-color: #daf4fb;
+      background-color: #f19f03;
       color: #24829a;
       border-radius: 2px;
       border: 1px solid #c1e5ec;
@@ -58,9 +58,9 @@
       border-bottom: 1px solid transparent;
     }
     &.highlight{
-      background-color: lightblue;
-      border-bottom: 1px solid #c0e2e5;
-      border-color: #c0e2e5;
+      background-color: lightgray;
+      border-bottom: 1px solid lightgray;
+      border-color: lightgray;
     }
   }
 }

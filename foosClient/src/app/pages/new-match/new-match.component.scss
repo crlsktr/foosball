@@ -1,3 +1,20 @@
+
+.Header {
+  font-size: 20pt;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.game-type {
+  display: flex;
+  align-items: center;
+  font-size: 14pt;
+  &:hover {
+    background-color: whitesmoke;
+  }
+
+  padding: 5px 0;
+  margin: 5px 0;
+}
 .new-match-container{
   display: flex;
   flex-direction: column;
@@ -10,11 +27,17 @@
 
 }
 
-
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 17pt;
+  border-bottom: 1px solid;
+  font-weight: 600;
+}
 .game-container {
   margin-top: 40px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   .team {
     display: flex;
@@ -27,6 +50,10 @@
       background-color: #dddddd;
       cursor: pointer;
     }
+  }
+  .spread-input{
+    width: 22px;
+    margin-left: 20px;
   }
 
 }
