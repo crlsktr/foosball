@@ -5,9 +5,9 @@ import {FoosService} from '../../../services/foos.service';
 import {IModalComponent} from '../../../services/modal/modal.service';
 
 export interface GameResult {
-  id: number,
-  winners: number,
-  spread: number,
+  id: number;
+  winners: number;
+  spread: number;
 }
 
 @Component({
@@ -45,9 +45,6 @@ export class NewMatchComponent implements OnInit, IModalComponent {
     this.numOfPlayers = +numPlayers;
     this.numbers = _.fill(Array(this.numOfPlayers), null);
     this.activePlayers = _.fill(Array(this.numOfPlayers), null);
-  }
-  public toggled(e) {
-    debugger;
   }
 
   public startGame() {

@@ -8,6 +8,7 @@ mod player;
 mod record;
 mod series;
 mod user;
+mod replay;
 
 use config::Config;
 
@@ -20,6 +21,7 @@ fn main() {
 	let player_sub = player::get_player_command(author, version);
 	let series_sub = series::get_series_command(author, version);
 	let record_sub = record::get_record_command(author, version);
+	let replay_sub = replay::get_replay_command(author, version);
 
 	let matches = App::new("Foosball CLI")
 		.version(version)
@@ -64,7 +66,7 @@ fn main() {
 				.required(false)
 				.help("Sets the password to use"),
 		)
-		.subcommands(vec![users_sub, player_sub, series_sub, record_sub])
+		.subcommands(vec![users_sub, player_sub, series_sub, record_sub, replay_sub])
 		.get_matches();
 
 	let debug = matches.is_present("debug");
@@ -198,5 +200,9 @@ fn main() {
 
 	if let Some(matches) = matches.subcommand_matches("record") {
 		record::entry(debug, &db, matches, user_id);
+	}
+
+	if let Some(_matches) = matches.subcommand_matches("replay") {
+		replay::entry(&db);
 	}
 }

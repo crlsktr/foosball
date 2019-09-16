@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let leader of sortedLeaders">
-      <td><span *ngIf="leader.position === 1" class="mdi mdi-crown first-position"></span><button>{{leader.name}}</button></td>
+      <td><span *ngIf="leader.position === 1" class="mdi mdi-crown first-position"></span><button (click)="showPlayerStats(leader.player_id)">{{leader.name}}</button></td>
       <td>{{leader.position}}</td>
       <td>{{leader.ranking}}</td>
       <td>{{leader.won}}</td>

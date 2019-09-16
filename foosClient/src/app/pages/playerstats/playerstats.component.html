@@ -1,15 +1,53 @@
-<div *ngIf="!stats">
-  {{loadingMessage}}
-</div>
-
-<div class="playerstats-container" *ngIf="!!stats">
-  <h1>The Foosball App!</h1>
-  <h2>Player Stats For {{stats.name}}</h2>
-
-  <div>
-    <ul>
-      <li *ngFor="let item of statsKeys">{{item}}: {{stats[item]}}</li>
-    </ul>
+<div class="player-stats-page">
+  <h1>{{stats.name}} : {{stats.ranking}}</h1>
+  <div class="player-stats">
+    <div>
+      <div>{{ +(stats.percentage * 100).toFixed(2) }}%</div>
+      <div>Win Rate</div>
+    </div>
+    <div>
+      <div>{{stats.won}}<span class="game-won">&nbsp;W</span> - {{stats.lost}}<span class="game-lost">&nbsp;L</span></div>
+      <div>of {{stats.played}} games</div>
+    </div>
+    <div>
+      <div>{{stats.best_team_mate}} - {{stats.best_team_ranking}}:{{ +(stats.best_team_percentage * 100).toFixed(2) }}%</div>
+      <div>Best Team</div>
+    </div>
+    <div>
+      <div>{{stats.worst_team_mate}} - {{stats.worst_team_ranking}}:{{ +(stats.worst_team_percentage * 100).toFixed(2) }}%</div>
+      <div>Worst Team</div>
+    </div>
+  </div>
+  <div class="player-games">
+    <table class="scrollable-table">
+      <thead>
+        <tr>
+          <th>Teammate</th>
+          <th></th>
+          <th>Opponent</th>
+          <th>Result</th>
+          <th>Rank Change</th>
+          <th>Rank After</th>
+          <th>Date/Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let game of games">
+          <td>{{game.team_mate_name}}</td>
+          <td>vs</td>
+          <td>{{game.opponent_one}}/{{game.opponent_two}}</td>
+          <td>
+            <span *ngIf="game.won && game.opponent_points < 5" class="mdi mdi-crown disrespect" title="disrespectful"></span>
+            <span *ngIf="!game.won">&nbsp;</span>{{game.points}} - {{game.opponent_points}}<span *ngIf="game.won">&nbsp;</span>&nbsp;
+            <span class="game-won" *ngIf="game.won">W</span>
+            <span class="game-lost" *ngIf="!game.won">L</span>
+          </td>
+          <td>{{game.change}}</td>
+          <td>{{game.game_ranking}}</td>
+          <td>{{game.played_on}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

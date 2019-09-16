@@ -1,3 +1,93 @@
-li {
-  list-style-type: none;
+.player-stats-page {
+  color: #616161;
+}
+
+.player-stats {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-bottom: 2px solid #f2a003;
+  padding-bottom: 24px;
+  font-weight: 700;
+}
+
+.game-won {
+  color: green;
+}
+.game-lost {
+  color: red;
+}
+
+.player-stats div {
+  margin-right: 10px;
+}
+
+.scrollable-table tbody {
+  height: 500px;
+  overflow-y: auto;
+  display: block;
+}
+
+.scrollable-table thead {
+  display: block;
+  font-weight: 700;
+}
+
+.scrollable-table td,
+.scrollable-table th {
+  padding: 0px;
+}
+
+.scrollable-table td:nth-of-type(1),
+.scrollable-table th:nth-of-type(1) {
+  text-align: left;
+  width: 125px;
+}
+
+.scrollable-table td:nth-of-type(2),
+.scrollable-table th:nth-of-type(2) {
+  width: 25px;
+  text-align: left;
+}
+
+.scrollable-table td:nth-of-type(3),
+.scrollable-table th:nth-of-type(3) {
+  width: 175px;
+  text-align: left;
+}
+
+.scrollable-table td:nth-of-type(4),
+.scrollable-table th:nth-of-type(4) {
+  width: 100px;
+  text-align: left;
+}
+
+.scrollable-table td:nth-of-type(5),
+.scrollable-table th:nth-of-type(5) {
+  width: 75px;
+  text-align: left;
+}
+
+.scrollable-table td:nth-of-type(6),
+.scrollable-table th:nth-of-type(6) {
+  width: 75px;
+  text-align: left;
+}
+
+.scrollable-table td:nth-of-type(7) {
+  width: 250px;
+  text-align: left;
+}
+
+.scrollable-table th:nth-of-type(7) {
+  width: 270px;
+  text-align: left;
+}
+
+
+.disrespect {
+  position: relative;
+  right: 17px;
+  color: #f2a003;
+  margin-right: -16px;
 }

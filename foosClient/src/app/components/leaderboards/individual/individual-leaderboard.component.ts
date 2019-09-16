@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import { FoosService } from 'src/services/foos.service';
 import {BehaviorSubject} from 'rxjs';
+import { PlayerStatsComponent } from 'src/app/pages/playerstats/playerstats.component';
+import { ModalService } from 'src/services/modal/modal.service';
 
 interface Leader {
   name: string;
@@ -33,7 +35,7 @@ export class IndividualLeaderboardComponent implements OnInit, OnChanges, OnDest
   private sortColumn = 'ranking';
   private sortDesc = true;
   private sub;
-  constructor(private foosService: FoosService) { }
+  constructor(private foosService: FoosService, private modalService: ModalService) { }
 
   ngOnInit() {
     this.loadLeaderboard();
@@ -91,5 +93,13 @@ export class IndividualLeaderboardComponent implements OnInit, OnChanges, OnDest
       }
       return 0;
     });
+  }
+
+  public showPlayerStats(playerId: number) {
+    console.log('playerId: ', playerId);
+    this.modalService.create(PlayerStatsComponent, { params: {playerId} })
+      .then((data) => {
+        console.log('doen');
+      });
   }
 }

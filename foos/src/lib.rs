@@ -22,7 +22,10 @@ mod ranking;
 mod schema;
 mod series;
 mod team;
+mod history;
 
+
+pub use ranking::replay_ranking;
 use player::*;
 
 embed_migrations!();

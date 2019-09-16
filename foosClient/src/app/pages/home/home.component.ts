@@ -31,5 +31,4 @@ export class HomeComponent implements OnInit {
         this.reloadLeaderboard.next(true);
       });
   }
-
 }

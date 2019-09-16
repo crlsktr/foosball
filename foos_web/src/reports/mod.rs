@@ -31,6 +31,16 @@ pub fn get_player_stats(pool: web::Data<ConnectionPool>, path: web::Path<i32>) -
 	web::Json(response)
 }
 
+pub fn get_player_games(pool: web::Data<ConnectionPool>, path: web::Path<i32>) -> impl Responder {
+	let db = match pool.get() {
+		Ok(db) => db,
+		Err(e) => return web::Json(Err(format!("Couldn't get the database: {}", e))),
+	};
+	let player_id: i32 = *path;
+	let response = foos::reports::player_games(db.connection(), player_id);
+	web::Json(response)
+}
+
 pub fn get_team_stats(
 	pool: web::Data<ConnectionPool>,
 	path: web::Path<(i32, i32)>,

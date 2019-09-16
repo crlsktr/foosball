@@ -96,7 +96,7 @@ impl Game {
 		} else {
 			game.team_one_id
 		};
-		update_rankings(connection, game.winners.unwrap(), losers)?;
+		update_rankings(connection, game.winners.unwrap(), losers, game.id)?;
 
 		Ok(())
 	}

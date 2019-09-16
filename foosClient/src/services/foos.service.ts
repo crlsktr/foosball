@@ -18,7 +18,7 @@ export class FoosService {
           this.loggedIn = true;
           return data.Ok;
         } else {
-           this.loggedIn = false;
+           //this.loggedIn = false;
         }
       });
   }
@@ -29,7 +29,7 @@ export class FoosService {
         if (data && data.Ok) {
           this.loggedIn = true;
         } else {
-           this.loggedIn = false;
+           //this.loggedIn = false;
         }
       });
   }
@@ -129,6 +129,15 @@ export class FoosService {
 
   public getPlayersStats(playerId: number) {
     return this.httpService.get(`/report/playerstats/${playerId}`)
+      .then((data) => {
+        if (data && data.Ok) {
+          return data.Ok;
+        }
+      });
+  }
+
+  public getPlayersGames(playerId: number) {
+    return this.httpService.get(`/report/playergames/${playerId}`)
       .then((data) => {
         if (data && data.Ok) {
           return data.Ok;

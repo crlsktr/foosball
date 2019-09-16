@@ -91,6 +91,10 @@ fn main() {
 				web::get().to(reports::get_player_stats),
 			)
 			.route(
+				"report/playergames/{player_id}",
+				web::get().to(reports::get_player_games),
+			)
+			.route(
 				"report/teamstats/{player_one_id}/{player_two_id}",
 				web::get().to(reports::get_team_stats),
 			)
