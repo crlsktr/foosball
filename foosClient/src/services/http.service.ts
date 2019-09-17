@@ -9,7 +9,7 @@ export class HttpService {
   // you might need to put that in here for development...
   // maybe better to set a proxy that forwards request to localhost:4200 _. localhost:8000
   // public static ROOT_URL = '';
-  public static ROOT_URL = 'http://foos.cen.centeva.com';
+  public static ROOT_URL = '';
 
   public onError = new EventEmitter<any>();
   constructor(private http: HttpClient) {}
