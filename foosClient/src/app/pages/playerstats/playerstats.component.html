@@ -1,4 +1,4 @@
-<div class="player-stats-page">
+<div class="player-stats-page" *ngIf="!!stats">
   <h1>{{stats.name}} : {{stats.ranking}}</h1>
   <div class="player-stats">
     <div>
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="player-games">
-    <table class="scrollable-table">
+    <table id="player-stats-table" class="scrollable-table">
       <thead>
         <tr>
           <th>Teammate</th>
@@ -34,7 +34,7 @@
       <tbody>
         <tr *ngFor="let game of games">
           <td>{{game.team_mate_name}}</td>
-          <td>vs</td>
+          <td class="no-transform">vs</td>
           <td>{{game.opponent_one}}/{{game.opponent_two}}</td>
           <td>
             <span *ngIf="game.won && game.opponent_points < 5" class="mdi mdi-crown disrespect" title="disrespectful"></span>
@@ -44,10 +44,13 @@
           </td>
           <td>{{game.change}}</td>
           <td>{{game.game_ranking}}</td>
-          <td>{{game.played_on}}</td>
+          <td>{{formatDate(game.played_on)}}</td>
         </tr>
       </tbody>
     </table>
+    <div>
+      <button class="btn-foos-secondary" (click)="close()">Done</button>
+    </div>
   </div>
 </div>
 

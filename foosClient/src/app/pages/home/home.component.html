@@ -1,18 +1,18 @@
 <div>
-  <h1>
+  <h1 class="ding">
     <span class="mdi mdi-bell-ring"></span>
     Ding
   </h1>
   <div class="action-buttons">
     <button (click)="startGame()">Start Game</button>
-    <button>New Challenger</button>
+    <button (click)="addChallenger()">New Challenger</button>
   </div>
   <div class="stat-controls">
     <span>Leaderboard</span>
     <button [ngClass]="{'button-selected': statSelection === 'individual'}" (click)="setStatSelection('individual')">By Individual</button>
     <button [ngClass]="{'button-selected': statSelection === 'team'}" (click)="setStatSelection('team')">By Team</button>
     <div class="search-box">
-      <input [(ngModel)]="searchText" type="text" placeholder="search for player"/>
+      <input [(ngModel)]="searchText" type="text" placeholder="search for challenger"/>
       <span class="mdi mdi-magnify"></span>
     </div>
   </div>

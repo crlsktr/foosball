@@ -9,13 +9,13 @@ export class HttpService {
   // you might need to put that in here for development...
   // maybe better to set a proxy that forwards request to localhost:4200 _. localhost:8000
   // public static ROOT_URL = '';
-  public static ROOT_URL = '';
+  public static ROOT_URL = 'http://localhost:8000';
 
   public onError = new EventEmitter<any>();
   constructor(private http: HttpClient) {}
 
   public get(url: string, params = {}): Promise<any> {
-    return this.http.get(url.indexOf('http') === 0 ? url : HttpService.ROOT_URL + url, {params})
+    return this.http.get(url.indexOf('http') === 0 ? url : HttpService.ROOT_URL + url, params)
       .toPromise();
   }
 

@@ -3,7 +3,7 @@
 
 <ng-container *ngIf="games.length === 0">
   <div>
-    <div class="Header">Game Type</div>
+    <h2>Game Type</h2>
     <div (click)="setGameMode(4)" class="game-type">
       <app-checkbox-input [isChecked]="numOfPlayers === 4" ></app-checkbox-input>
       Standard Rules (4 players)
@@ -25,6 +25,7 @@
     </ng-container>
 
     <div class="btn-foos" (click)="startGame()">Start Game</div>
+    <button class="btn-foos-secondary" (click)="close()">Nevermind</button>
   </div>
 
 </ng-container>
@@ -51,7 +52,7 @@
 
   <div class="btn-container">
     <div class="btn-foos" (click)="finishGame()">Finish Game</div>
-
+    <button class="btn-foos-secondary" (click)="close()">Nevermind</button>
     <app-flip-container [open]="errMsg">
       <div class="err mt-3">{{errMsg}}</div>
     </app-flip-container>

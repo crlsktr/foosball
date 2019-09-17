@@ -24,7 +24,7 @@ export class FoosService {
   }
 
   public isUserAuthenticated() {
-    return this.httpService.get('/user/authenticated', {withCredentials: true})
+    return this.httpService.get('/user/authenticated', { withCredentials: true })
       .then((data) => {
         if (data && data.Ok) {
           this.loggedIn = true;

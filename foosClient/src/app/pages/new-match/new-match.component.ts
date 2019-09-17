@@ -79,4 +79,8 @@ export class NewMatchComponent implements OnInit, IModalComponent {
         });
     }
   }
+
+  close() {
+    this.onDismiss.next();
+  }
 }

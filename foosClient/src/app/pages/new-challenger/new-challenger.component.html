@@ -1,0 +1,15 @@
+<div class="new-challenger">
+  <h2>New Challenger</h2>
+  <div>
+    <span>Challenger's name</span>
+    <div><input type="text" [(ngModel)]="playerName"></div>
+  </div>
+  <div>
+    <span>Connected User (Optional)</span>
+    <app-type-ahead (selectedItemChange)="playerUserId = $event" [dropDown]="true" [options]="users" key="username" ></app-type-ahead>
+  </div>
+  <div>
+    <button class="btn-foos" (click)="addChallenger()">Challenger Ready</button>
+    <button class="btn-foos-secondary" (click)="close()">Nevermind</button>
+  </div>
+</div>

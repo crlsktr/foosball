@@ -8,6 +8,9 @@ import {PipesModule} from '../../pipes/pipes.module';
   imports: [
     CommonModule,
     PipesModule,
+  ],
+  entryComponents: [
+    PlayerStatsComponent,
   ]
 })
 export class PlayerStatsModule { }

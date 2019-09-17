@@ -96,10 +96,8 @@ export class IndividualLeaderboardComponent implements OnInit, OnChanges, OnDest
   }
 
   public showPlayerStats(playerId: number) {
-    console.log('playerId: ', playerId);
     this.modalService.create(PlayerStatsComponent, { params: {playerId} })
       .then((data) => {
-        console.log('doen');
       });
   }
 }

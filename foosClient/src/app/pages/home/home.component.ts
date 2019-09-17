@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {GAME_TYPES} from '../../../static/foosTypes';
 import { ModalService } from 'src/services/modal/modal.service';
 import { NewMatchComponent } from '../new-match/new-match.component';
+import { NewChallengerComponent } from '../new-challenger/new-challenger.component';
 import {BehaviorSubject} from 'rxjs';
 
 @Component({
@@ -29,6 +30,13 @@ export class HomeComponent implements OnInit {
     this.modalService.create(NewMatchComponent)
       .then((data) => {
         this.reloadLeaderboard.next(true);
+      });
+  }
+
+  public addChallenger() {
+    this.modalService.create(NewChallengerComponent)
+      .then((data) => {
+        console.log('done adding challenger.');
       });
   }
 }

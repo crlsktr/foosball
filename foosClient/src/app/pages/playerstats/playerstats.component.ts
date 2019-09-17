@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import {FoosService} from '../../../services/foos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IModalComponent } from 'src/services/modal/modal.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-playerstats',
@@ -46,5 +47,14 @@ export class PlayerStatsComponent implements OnInit, IModalComponent {
       .catch((err) => {
         this.loadingMessage = 'Couldn\'t find and games for the player';
       });
+  }
+
+  formatDate(date: string): string {
+    const jsDate = new Date(date);
+    return jsDate.toLocaleDateString() + ' ' + jsDate.toLocaleTimeString();
+  }
+
+  close() {
+    this.onDismiss.next();
   }
 }
