@@ -9,7 +9,7 @@ export class FoosService {
   }
 
   // I'm lazy so putting a logged in flag here for all of the pages to use.
-  public loggedIn = true;
+  public loggedIn = false;
 
   public login(uname: string, pword: string) {
     return this.httpService.post(`/user/authenticate`, {username: uname, password: pword}, {withCredentials: true})
@@ -18,7 +18,7 @@ export class FoosService {
           this.loggedIn = true;
           return data.Ok;
         } else {
-           //this.loggedIn = false;
+           this.loggedIn = false;
         }
       });
   }
@@ -29,7 +29,7 @@ export class FoosService {
         if (data && data.Ok) {
           this.loggedIn = true;
         } else {
-           //this.loggedIn = false;
+           this.loggedIn = false;
         }
       });
   }
