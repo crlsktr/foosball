@@ -51,7 +51,6 @@ fn main() {
 		App::new()
 			.wrap(
 				Cors::new()
-					//.allowed_origin("localhost:4200")
 					.allowed_methods(vec!["GET", "POST", "PUT"])
 					.supports_credentials(),
 			)
