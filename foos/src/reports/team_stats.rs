@@ -21,6 +21,12 @@ pub struct TeamStats {
 	pub percentage: String, // yes this is a string....
 }
 
+pub fn team_games(
+
+) -> Result <TeamGames, String> {
+
+}
+
 pub fn team_stats(
 	connection: &PgConnection,
 	player_one_id: i32,

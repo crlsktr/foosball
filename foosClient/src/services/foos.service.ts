@@ -136,7 +136,7 @@ export class FoosService {
       });
   }
 
-  public getPlayersGames(playerId: number) {
+  public getPlayerGames(playerId: number) {
     return this.httpService.get(`/report/playergames/${playerId}`)
       .then((data) => {
         if (data && data.Ok) {
@@ -152,5 +152,13 @@ export class FoosService {
           return data.Ok;
         }
       });
+  }
+
+  public getTeamGames(teamId: number){
+    return this.httpService.get(`/report/teamgames/${teamId}`)
+    .then(
+      (data) => {
+        console.log("xkcd: getGames data");
+    });
   }
 }

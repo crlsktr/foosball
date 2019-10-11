@@ -97,6 +97,10 @@ fn main() {
 				"report/teamstats/{player_one_id}/{player_two_id}",
 				web::get().to(reports::get_team_stats),
 			)
+			.route(
+				"report/teamgames/{team_id}",
+				web::get().to(reports::get_team_games),
+			)
 			// This service call needs to be at the end so all of the other routes get processed first.
 			.service(
 				files::Files::new("/", "./foosClient/dist/foosClient").index_file("index.html"),

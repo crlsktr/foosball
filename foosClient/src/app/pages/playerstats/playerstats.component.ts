@@ -40,7 +40,7 @@ export class PlayerStatsComponent implements OnInit, IModalComponent {
         this.loadingMessage = 'Couldn\'t find any stats for the player';
       });
 
-    this.foosService.getPlayersGames(this.playerId)
+    this.foosService.getPlayerGames(this.playerId)
       .then((games) => {
         this.games = games;
       })

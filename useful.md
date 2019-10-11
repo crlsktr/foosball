@@ -75,3 +75,8 @@ logs
 docker -H devdocker:2376 service logs <stack>_<service name>.<if replicated container number>
 docker -H devdocker:2376 service logs foos_ball
 ```
+
+## Restoring the Database locally
+```
+pg_restore --host "localhost" --port "5432" --username "postgres" -W --role "postgres" --dbname "foosball" --verbose --clean ".\db.bak"
+```

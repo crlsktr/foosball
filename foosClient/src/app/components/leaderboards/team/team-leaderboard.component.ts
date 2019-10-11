@@ -95,4 +95,8 @@ export class TeamLeaderboardComponent implements OnInit, OnChanges, OnDestroy {
       return 0;
     });
   }
+
+  showTeamStats(teamId: number){
+    console.log("xkcd: this might show somewhere", teamId);
+  }
 }
