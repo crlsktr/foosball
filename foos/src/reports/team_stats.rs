@@ -21,6 +21,30 @@ pub struct TeamStats {
 	pub percentage: String, // yes this is a string....
 }
 
+#[derive(Serialize, Deserialize, QueryableByName)]
+pub struct TeamGames {
+	#[sql_type = "Varchar"]
+	pub team_one_player_one: String,
+	#[sql_type = "Varchar"]
+	pub team_one_player_two: String,
+	#[sql_type = "Varchar"]
+	pub team_two_player_one: String,
+	#[sql_type = "Varchar"]
+	pub team_two_player_two: String,
+	#[sql_type = "Bool"]
+	pub won: bool,
+	#[sql_type = "Integer"]
+	pub points: i32,
+	#[sql_type = "Integer"]
+	pub opponent_points: i32,
+	#[sql_type = "Timestamptz"]
+	pub played_on: DateTime<Utc>,
+	#[sql_type = "Integer"]
+	change: i32,
+	#[sql_type = "Integer"]
+	game_ranking: i32,
+}
+
 pub fn team_games(
 
 ) -> Result <TeamGames, String> {
@@ -39,6 +63,56 @@ pub fn team_stats(
 		.map_err(|e| format!("Couldn't load the leaders. Error: {}", e))?;
 	Ok(player_stats)
 }
+
+const TEAM_GAMES_QUERY: &'static str = r#"
+
+
+SELECT 
+	tlp1.name as team_one_player_one, 
+	tlp2.name as team_one_player_two,
+	trp1.name as team_two_player_one, 
+	trp2.name as team_two_player_two,
+	CAST(CASE WHEN g.winners = t.id THEN 1 ELSE 0 END AS BOOLEAN) AS won,
+	CAST(CASE WHEN g.winners = t.id THEN 10 ELSE 10 - g.spread END AS INT) AS points,
+	CAST(CASE WHEN g.winners = t.id THEN 10 - g.spread ELSE 10 END AS INT) AS opponent_points,
+	s.played_on,
+	tr.change,
+	tr.current_ranking AS game_ranking
+
+FROM 
+teams t
+JOIN games g
+ON
+	g.team_one_id = t.id OR 
+	g.team_two_id = t.id
+JOIN teams t_left
+ON
+	t_left.id = g.team_one_id
+JOIN teams t_right
+ON
+	t_right.id = g.team_two_id
+JOIN players tlp1 --player 1 team left
+ON
+	tlp1.id = t_left.player_one_id
+JOIN players tlp2 --player 2 team left
+ON
+	tlp2.id = t_left.player_two_id
+JOIN players trp1
+ON
+	trp1.id = t_right.player_one_id
+JOIN players trp2
+ON
+	trp2.id = t_right.player_two_id
+JOIN series s
+ON 
+	g.series_id = s.id
+JOIN team_rankings tr
+ON
+	tr.team_id = t.id AND
+	tr.game_id = g.id
+WHERE t.id = 7
+ORDER BY s.played_on DESC;
+"#;
 
 const TEAM_STATS_QUERY: &'static str = r#"
 -- Player stats query
