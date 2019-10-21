@@ -4,11 +4,11 @@
 
 <div class="playerstats-container" *ngIf="!!stats">
   <h1>The Foosball App!</h1>
-  <h2>Team Stats For {{stats.player_one_name}} and {{stats.player_two_name}}</h2>
+  <h2>Team Stats For {{teamId}}</h2>
 
   <div>
     <ul>
-      <li *ngFor="let item of statsKeys">{{item}}: {{stats[item]}}</li>
+      <li *ngFor="let item of stats">{{item.change}}</li>
     </ul>
   </div>
 </div>

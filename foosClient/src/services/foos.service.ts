@@ -158,7 +158,9 @@ export class FoosService {
     return this.httpService.get(`/report/teamgames/${teamId}`)
     .then(
       (data) => {
-        console.log("xkcd: getGames data");
+        if (data && data.Ok){
+          return data.Ok;
+        }
     });
   }
 }

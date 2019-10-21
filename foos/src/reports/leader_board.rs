@@ -65,6 +65,8 @@ ORDER BY p.ranking DESC, won DESC, lost ASC, percentage DESC
 #[derive(Serialize, Deserialize, QueryableByName)]
 pub struct TeamLeader {
 	#[sql_type = "Integer"]
+	pub team_id: i32,
+	#[sql_type = "Integer"]
 	pub position: i32,
 	#[sql_type = "Varchar"]
 	pub player_one_name: String,
@@ -91,6 +93,7 @@ pub fn team_leader_board(connection: &PgConnection) -> Result<Vec<TeamLeader>, S
 
 const TEAM_LEADER_BOARD_QUERY: &'static str = r#"
 SELECT
+	t.id as team_id,
 	CAST(ROW_NUMBER() OVER (ORDER BY t.ranking DESC) AS INT) AS position
 	,p1.name AS player_one_name
 	,p2.name AS player_two_name

@@ -1,6 +1,7 @@
+use chrono::prelude::*;
 use diesel::prelude::*;
 use diesel::sql_query;
-use diesel::sql_types::{Integer, Varchar};
+use diesel::sql_types::{Integer, Varchar, Bool, Timestamptz};
 use diesel::PgConnection;
 
 #[derive(Serialize, Deserialize, QueryableByName)]
@@ -46,9 +47,15 @@ pub struct TeamGames {
 }
 
 pub fn team_games(
+	connection: &PgConnection,
+	team_id : i32
+) -> Result <Vec<TeamGames>, String> {
+	let team_games = sql_query (TEAM_GAMES_QUERY)
+		.bind::<Integer, _>(team_id)
+		.load(connection)
+		.map_err(|err| format!("Couldn't load the games. Error {}", err))?;
 
-) -> Result <TeamGames, String> {
-
+	Ok(team_games)
 }
 
 pub fn team_stats(
@@ -65,8 +72,6 @@ pub fn team_stats(
 }
 
 const TEAM_GAMES_QUERY: &'static str = r#"
-
-
 SELECT 
 	tlp1.name as team_one_player_one, 
 	tlp2.name as team_one_player_two,
@@ -110,7 +115,7 @@ JOIN team_rankings tr
 ON
 	tr.team_id = t.id AND
 	tr.game_id = g.id
-WHERE t.id = 7
+WHERE t.id = $1
 ORDER BY s.played_on DESC;
 "#;
 
