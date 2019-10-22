@@ -3,12 +3,29 @@
 </div>
 
 <div class="playerstats-container" *ngIf="!!stats">
-  <h1>The Foosball App!</h1>
-  <h2>Team Stats For {{teamId}}</h2>
-
-  <div>
-    <ul>
-      <li *ngFor="let item of stats">{{item.change}}</li>
-    </ul>
-  </div>
+  <h1>Team Stats!</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Team 1 P1</th>
+        <th>Team 1 P2</th>
+        <th>vs</th>
+        <th>Team 2 P1</th>
+        <th>Team 2 P2</th>
+        <th>Team Points</th>
+        <th>Opposing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let game of stats">
+        <td>{{game.team_one_player_one}}</td>
+        <td>{{game.team_one_player_two}}</td>
+        <td>vs</td>
+        <td>{{game.team_two_player_one}}</td>
+        <td>{{game.team_two_player_two}}</td>
+        <td>{{game.points}}</td>
+        <td>{{game.opponent_points}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
