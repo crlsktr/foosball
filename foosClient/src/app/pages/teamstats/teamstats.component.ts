@@ -31,11 +31,10 @@ export class TeamStatsComponent implements OnInit {
 
       this.foosService.getTeamGames(this.teamId)
       .then((stats) => {
-        console.log("loaded all stats", stats);
         this.stats = stats;
       })
       .catch((err) => {
-        this.loadingMessage = 'Couldn\'t find any stats for the team';
+        this.loadingMessage = `Couldn't find any stats for the team, ${err}`;
       });
 
   }

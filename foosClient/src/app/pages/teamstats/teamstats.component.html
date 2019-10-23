@@ -1,31 +1,32 @@
 <div *ngIf="!stats">
-  {{loadingMessage}}
+	{{loadingMessage}}
 </div>
 
 <div class="playerstats-container" *ngIf="!!stats">
-  <h1>Team Stats!</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Team 1 P1</th>
-        <th>Team 1 P2</th>
-        <th>vs</th>
-        <th>Team 2 P1</th>
-        <th>Team 2 P2</th>
-        <th>Team Points</th>
-        <th>Opposing</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let game of stats">
-        <td>{{game.team_one_player_one}}</td>
-        <td>{{game.team_one_player_two}}</td>
-        <td>vs</td>
-        <td>{{game.team_two_player_one}}</td>
-        <td>{{game.team_two_player_two}}</td>
-        <td>{{game.points}}</td>
-        <td>{{game.opponent_points}}</td>
-      </tr>
-    </tbody>
-  </table>
+	<h1>Team Stats!</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Team 1</th>
+				<th>vs</th>
+				<th>Team 2</th>
+				<th>Team Points</th>
+				<th>Opposing</th>
+				<th>Change</th>
+				<th>Ranking</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let game of stats">
+				<td><a href="/team-games/{{game.team_one_id}}">{{game.team_one_player_one}} and {{game.team_one_player_two}}</a></td>
+				<td>vs</td>
+				<td><a href="/team-games/{{game.team_two_id}}">{{game.team_two_player_one}} and {{game.team_two_player_two}}</a></td>
+
+				<td>{{game.points}}</td>
+				<td>{{game.opponent_points}}</td>
+				<td>{{game.change}}</td>
+				<td>{{game.current_ranking}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

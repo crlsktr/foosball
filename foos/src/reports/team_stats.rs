@@ -28,10 +28,14 @@ pub struct TeamGames {
 	pub team_one_player_one: String,
 	#[sql_type = "Varchar"]
 	pub team_one_player_two: String,
+	#[sql_type = "Integer"]
+	pub team_one_id: i32,
 	#[sql_type = "Varchar"]
 	pub team_two_player_one: String,
 	#[sql_type = "Varchar"]
 	pub team_two_player_two: String,
+	#[sql_type = "Integer"]
+	pub team_two_id: i32,
 	#[sql_type = "Bool"]
 	pub won: bool,
 	#[sql_type = "Integer"]
@@ -43,7 +47,7 @@ pub struct TeamGames {
 	#[sql_type = "Integer"]
 	change: i32,
 	#[sql_type = "Integer"]
-	game_ranking: i32,
+	current_ranking: i32,
 }
 
 pub fn team_games(
@@ -75,14 +79,16 @@ const TEAM_GAMES_QUERY: &'static str = r#"
 SELECT 
 	tlp1.name as team_one_player_one, 
 	tlp2.name as team_one_player_two,
+	t_left.id as team_one_id,
 	trp1.name as team_two_player_one, 
 	trp2.name as team_two_player_two,
+	t_right.id as team_two_id,
 	CAST(CASE WHEN g.winners = t.id THEN 1 ELSE 0 END AS BOOLEAN) AS won,
 	CAST(CASE WHEN g.winners = t.id THEN 10 ELSE 10 - g.spread END AS INT) AS points,
 	CAST(CASE WHEN g.winners = t.id THEN 10 - g.spread ELSE 10 END AS INT) AS opponent_points,
 	s.played_on,
 	tr.change,
-	tr.current_ranking AS game_ranking
+	tr.current_ranking AS current_ranking
 
 FROM 
 teams t
