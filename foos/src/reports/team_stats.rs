@@ -25,17 +25,11 @@ pub struct TeamStats {
 #[derive(Serialize, Deserialize, QueryableByName)]
 pub struct TeamGames {
 	#[sql_type = "Varchar"]
-	pub team_one_player_one: String,
+	pub opposing_player_one: String,
 	#[sql_type = "Varchar"]
-	pub team_one_player_two: String,
+	pub opposing_player_two: String,
 	#[sql_type = "Integer"]
-	pub team_one_id: i32,
-	#[sql_type = "Varchar"]
-	pub team_two_player_one: String,
-	#[sql_type = "Varchar"]
-	pub team_two_player_two: String,
-	#[sql_type = "Integer"]
-	pub team_two_id: i32,
+	pub opposing_team_id: i32,
 	#[sql_type = "Bool"]
 	pub won: bool,
 	#[sql_type = "Integer"]
@@ -77,43 +71,30 @@ pub fn team_stats(
 
 const TEAM_GAMES_QUERY: &'static str = r#"
 SELECT 
-	tlp1.name as team_one_player_one, 
-	tlp2.name as team_one_player_two,
-	t_left.id as team_one_id,
-	trp1.name as team_two_player_one, 
-	trp2.name as team_two_player_two,
-	t_right.id as team_two_id,
+	tlp1.name as opposing_player_one, 
+	tlp2.name as opposing_player_two,
+	o_team.id as opposing_team_id,
 	CAST(CASE WHEN g.winners = t.id THEN 1 ELSE 0 END AS BOOLEAN) AS won,
 	CAST(CASE WHEN g.winners = t.id THEN 10 ELSE 10 - g.spread END AS INT) AS points,
 	CAST(CASE WHEN g.winners = t.id THEN 10 - g.spread ELSE 10 END AS INT) AS opponent_points,
 	s.played_on,
 	tr.change,
-	tr.current_ranking AS current_ranking
-
+	tr.current_ranking
 FROM 
 teams t
 JOIN games g
 ON
 	g.team_one_id = t.id OR 
 	g.team_two_id = t.id
-JOIN teams t_left
+JOIN teams o_team
 ON
-	t_left.id = g.team_one_id
-JOIN teams t_right
-ON
-	t_right.id = g.team_two_id
+	o_team.id <> t.id AND (g.team_one_id = o_team.id OR g.team_two_id = o_team.id)
 JOIN players tlp1 --player 1 team left
 ON
-	tlp1.id = t_left.player_one_id
+	tlp1.id = o_team.player_one_id
 JOIN players tlp2 --player 2 team left
 ON
-	tlp2.id = t_left.player_two_id
-JOIN players trp1
-ON
-	trp1.id = t_right.player_one_id
-JOIN players trp2
-ON
-	trp2.id = t_right.player_two_id
+	tlp2.id = o_team.player_two_id
 JOIN series s
 ON 
 	g.series_id = s.id
@@ -121,7 +102,7 @@ JOIN team_rankings tr
 ON
 	tr.team_id = t.id AND
 	tr.game_id = g.id
-WHERE t.id = $1
+WHERE t.id = 11
 ORDER BY s.played_on DESC;
 "#;
 
