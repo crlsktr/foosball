@@ -115,12 +115,12 @@ fn main() {
 pub fn get_session_user_id(session: Session) -> Result<i32, String> {
 	let user_id = match session.get("user_id") {
 		Ok(id) => id,
-		Err(_e) => return Err("Couldn't get session".to_string()),
+		Err(_e) => return Err("Couldn't get session user_id".to_string()),
 	};
 
 	let user_id = match user_id {
 		Some(id) => id,
-		None => return Err("Couldn't get session".to_string()),
+		None => return Err("Couldn't match a userId".to_string()),
 	};
 
 	Ok(user_id)
