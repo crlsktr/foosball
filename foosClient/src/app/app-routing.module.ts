@@ -9,10 +9,12 @@ import { LoginModule } from './pages/login/login.module';
 import { TeamStatsModule } from './pages/teamstats/teamstats.module';
 import { AuthGuardService } from 'src/services/auth-gaurd.service';
 import { NewChallengerModule } from './pages/new-challenger/new-challenger.module';
+import { TeamStatsComponent } from './pages/teamstats/teamstats.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'home', canActivate: [AuthGuardService]},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
+  {path: 'team-games/:teamId', component: TeamStatsComponent, canActivate: [AuthGuardService]},
   {path: 'login', component: LoginComponent}
 ];
 

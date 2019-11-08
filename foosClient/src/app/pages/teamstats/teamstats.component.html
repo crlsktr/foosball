@@ -1,14 +1,35 @@
 <div *ngIf="!stats">
-  {{loadingMessage}}
+	{{loadingMessage}}
 </div>
 
 <div class="playerstats-container" *ngIf="!!stats">
-  <h1>The Foosball App!</h1>
-  <h2>Team Stats For {{stats.player_one_name}} and {{stats.player_two_name}}</h2>
-
-  <div>
-    <ul>
-      <li *ngFor="let item of statsKeys">{{item}}: {{stats[item]}}</li>
-    </ul>
+  <h1>Team Stats!</h1>
+  <div class="graph">
+      <svg id="historyplot"></svg>
   </div>
+	<table>
+		<thead>
+			<tr>
+				<th>Opponents</th>
+				<th>Score</th>
+				<th>Change</th>
+				<th>Ranking</th>
+				<th>Played On</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let game of stats">
+				<td><a href="/team-games/{{game.opposing_team_id}}">{{game.opposing_player_one}} and {{game.opposing_player_two}}</a></td>
+				<td>
+					<span *ngIf="game.won && game.opponent_points < 5" class="mdi mdi-crown disrespect" title="disrespectful"></span>
+					<span *ngIf="!game.won">&nbsp;</span>{{game.points}} - {{game.opponent_points}}<span *ngIf="game.won">&nbsp;</span>&nbsp;
+					<span class="game-won" *ngIf="game.won">W</span>
+					<span class="game-lost" *ngIf="!game.won">L</span>
+				</td>
+				<td>{{game.change}}</td>
+				<td>{{game.current_ranking}}</td>
+				<td>{{game.played_on}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

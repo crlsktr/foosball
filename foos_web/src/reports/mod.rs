@@ -54,3 +54,17 @@ pub fn get_team_stats(
 	let response = foos::reports::team_stats(db.connection(), player_one_id, player_two_id);
 	web::Json(response)
 }
+
+pub fn get_team_games(
+	pool: web::Data<ConnectionPool>,
+	path: web::Path<i32>,
+) -> impl Responder {
+	let db = match pool.get() {
+		Ok(db) => db,
+		Err(e) => return web::Json(Err(format!("Couldn't get the database: {}", e))),
+	};
+
+	let team_id: i32 = *path;
+	let response = foos::reports::team_games(db.connection(), team_id);
+	web::Json(response)
+}

@@ -16,7 +16,7 @@ export class NewChallengerComponent implements OnInit, IModalComponent {
   public params: any = {};
 
   public playerName = '';
-  public playerUserId;
+  public playerUserId: number;
   public users = [];
 
 
@@ -42,6 +42,10 @@ export class NewChallengerComponent implements OnInit, IModalComponent {
     } else {
 
     }
+  }
+
+  selectPlayer(event){
+    this.playerUserId = event ? event.id : 0;
   }
 
   close() {

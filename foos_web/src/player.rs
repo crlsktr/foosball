@@ -36,6 +36,7 @@ pub fn create(
 		Err(e) => return web::Json(Err(format!("Couldn't get the database: {}", e))),
 	};
 	let request = request.into_inner();
+	
 	let user_id = match crate::get_session_user_id(session) {
 		Ok(u) => u,
 		Err(e) => return web::Json(Err(e)),

@@ -1,0 +1,29 @@
+table{
+  width: 100%;
+  text-align: justify;
+}
+
+a {
+  color: white;
+}
+
+.game-won {
+  color: #1b9b20;
+}
+
+.game-lost {
+  color: #df2929;
+}
+
+.disrespect {
+  position: relative;
+  right: 17px;
+  color: #f2a003;
+  margin-right: -16px;
+}
+
+.graph {
+  width: 500px;
+  height: 300px;
+  background-color: white;
+}

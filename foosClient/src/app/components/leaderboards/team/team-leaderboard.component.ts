@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { FoosService } from 'src/services/foos.service';
 import {BehaviorSubject} from 'rxjs';
+import { Router } from '@angular/router';
 
 interface TeamLeader {
   player_one_name: string;
@@ -34,7 +35,8 @@ export class TeamLeaderboardComponent implements OnInit, OnChanges, OnDestroy {
   private sortColumn = 'position';
   private sortDesc = true;
   private sub;
-  constructor(private foosService: FoosService) { }
+  constructor(private foosService: FoosService,
+    private router: Router) { }
 
   ngOnInit() {
     this.loadLeaderboard();
@@ -94,5 +96,9 @@ export class TeamLeaderboardComponent implements OnInit, OnChanges, OnDestroy {
       }
       return 0;
     });
+  }
+
+  showTeamStats(teamId){
+    this.router.navigateByUrl(`/team-games/${teamId}`);
   }
 }

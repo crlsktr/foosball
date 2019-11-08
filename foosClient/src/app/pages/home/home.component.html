@@ -15,6 +15,9 @@
       <input [(ngModel)]="searchText" type="text" placeholder="search for challenger"/>
       <span class="mdi mdi-magnify"></span>
     </div>
+    <div>
+      <img src="http://foos-camera:8081" />
+    </div>
   </div>
   <div class="stat-table">
     <app-individual-leaderboard [reloadStats]="reloadLeaderboard" *ngIf="statSelection === 'individual'" [search]="searchText"></app-individual-leaderboard>

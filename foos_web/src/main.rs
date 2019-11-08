@@ -97,6 +97,10 @@ fn main() {
 				"report/teamstats/{player_one_id}/{player_two_id}",
 				web::get().to(reports::get_team_stats),
 			)
+			.route(
+				"report/teamgames/{team_id}",
+				web::get().to(reports::get_team_games),
+			)
 			// This service call needs to be at the end so all of the other routes get processed first.
 			.service(
 				files::Files::new("/", "./foosClient/dist/foosClient").index_file("index.html"),
@@ -111,12 +115,12 @@ fn main() {
 pub fn get_session_user_id(session: Session) -> Result<i32, String> {
 	let user_id = match session.get("user_id") {
 		Ok(id) => id,
-		Err(_e) => return Err("Couldn't get session".to_string()),
+		Err(_e) => return Err("Couldn't get session user_id".to_string()),
 	};
 
 	let user_id = match user_id {
 		Some(id) => id,
-		None => return Err("Couldn't get session".to_string()),
+		None => return Err("Couldn't match a userId".to_string()),
 	};
 
 	Ok(user_id)
