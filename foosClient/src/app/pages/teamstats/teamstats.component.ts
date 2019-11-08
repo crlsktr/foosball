@@ -37,7 +37,6 @@ export class TeamStatsComponent implements OnInit {
 	}
 
 	private loadStats() {
-
 			this.foosService.getTeamGames(this.teamId)
 			.then((stats) => {
 				this.stats = stats;
@@ -46,8 +45,8 @@ export class TeamStatsComponent implements OnInit {
 			.catch((err) => {
 				this.loadingMessage = `Couldn't find any stats for the team, ${err}`;
 			});
-
 	}
+
 	drawHistory(hist: HistoryPoint[]) {
 		let xScale = d3
 			.scaleTime()
@@ -83,7 +82,16 @@ export class TeamStatsComponent implements OnInit {
 							//.tickFormat(val => val.toString())
 					)
 					.call(g => g.select('.domain').remove());
-		let svg = d3.select("#historyplot");
+
+    let svg = d3.select("#historyplot");
+    svg.append("circle")
+    .style("stroke", "gray")
+    .style("fill", "white")
+    .attr("r", 40)
+    .attr("cx",50)
+    .attr("cy",50);
+
+    console.log("xkcd: selected", svg);
 		svg.append('g').call(xAxis);
 		svg.append('g').call(yAxis);
 
