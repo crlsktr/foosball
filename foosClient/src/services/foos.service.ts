@@ -163,4 +163,14 @@ export class FoosService {
         }
     });
   }
+
+  public getTeamDetail(teamId: number) {
+    return this.httpService.get(`/report/teamdetail/${teamId}`)
+    .then(
+      (data) => {
+        if (!!data && data.Ok)
+          return data.Ok
+      }
+    )
+  }
 }

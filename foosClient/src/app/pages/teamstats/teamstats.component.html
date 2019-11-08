@@ -4,10 +4,12 @@
 
 <div class="playerstats-container" *ngIf="!!stats">
   <h1>Team Stats!</h1>
-  <div class="graph">
+  <h2 *ngIf="!!details">{{details.player_one_name}} &amp; {{details.player_two_name}} (Ranking: {{details.ranking}})</h2>
+
+  <div *ngIf="false" class="graph">
       <svg id="historyplot"></svg>
   </div>
-	<table>
+	<table id="leaders-table">
 		<thead>
 			<tr>
 				<th>Opponents</th>
@@ -19,7 +21,7 @@
 		</thead>
 		<tbody>
 			<tr *ngFor="let game of stats">
-				<td><a href="/team-games/{{game.opposing_team_id}}">{{game.opposing_player_one}} and {{game.opposing_player_two}}</a></td>
+				<td><a [routerLink]="['/team-games/',game.opposing_team_id]">{{game.opposing_player_one}} - {{game.opposing_player_two}}</a></td>
 				<td>
 					<span *ngIf="game.won && game.opponent_points < 5" class="mdi mdi-crown disrespect" title="disrespectful"></span>
 					<span *ngIf="!game.won">&nbsp;</span>{{game.points}} - {{game.opponent_points}}<span *ngIf="game.won">&nbsp;</span>&nbsp;
@@ -31,5 +33,8 @@
 				<td>{{game.played_on}}</td>
 			</tr>
 		</tbody>
-	</table>
+  </table>
+  <div class="no-results" *ngIf="stats.length === 0">
+    No results <span class="mdi mdi-emoticon-poop"></span>
+  </div>
 </div>

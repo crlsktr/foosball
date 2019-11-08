@@ -44,6 +44,35 @@ pub struct TeamGames {
 	current_ranking: i32,
 }
 
+#[derive(Serialize, Deserialize, QueryableByName)]
+pub struct TeamDetail {
+	#[sql_type = "Integer"]
+	pub id: i32,
+	#[sql_type = "Varchar"]
+	pub player_one_name: String,
+	#[sql_type = "Integer"]
+	pub player_one_id: i32,
+	#[sql_type = "Varchar"]
+	pub player_two_name: String,
+	#[sql_type = "Integer"]
+	pub player_two_id: i32,
+	#[sql_type = "Integer"]
+	pub ranking: i32
+}
+
+
+pub fn team_details(
+	connection: &PgConnection,
+	team_id: i32
+) -> Result<TeamDetail, String> {
+	let team_detail = sql_query(TEAM_DETAIL_QUERY)
+		.bind::<Integer, _>(team_id)
+		.get_result(connection)
+		.map_err(|err| format!("Cound't load the team detail, you 🍭...{}", err))?;
+
+	Ok(team_detail)
+}
+
 pub fn team_games(
 	connection: &PgConnection,
 	team_id : i32
@@ -68,6 +97,22 @@ pub fn team_stats(
 		.map_err(|e| format!("Couldn't load the leaders. Error: {}", e))?;
 	Ok(player_stats)
 }
+
+const TEAM_DETAIL_QUERY: &'static str = r#"
+SELECT 
+	t.id, 
+	p1.name AS player_one_name, 
+	t.player_one_id, 
+	p2.name AS player_two_name, 
+	t.player_two_id, 
+	t.ranking   
+FROM teams t
+JOIN players p1
+	ON t.player_one_id = p1.id
+JOIN players p2
+	ON t.player_two_id = p2.id
+WHERE t.id = $1;
+"#;
 
 const TEAM_GAMES_QUERY: &'static str = r#"
 SELECT 
@@ -102,7 +147,7 @@ JOIN team_rankings tr
 ON
 	tr.team_id = t.id AND
 	tr.game_id = g.id
-WHERE t.id = 11
+WHERE t.id = $1
 ORDER BY s.played_on DESC;
 "#;
 

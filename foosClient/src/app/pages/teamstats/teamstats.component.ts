@@ -15,8 +15,10 @@ interface HistoryPoint {
 })
 export class TeamStatsComponent implements OnInit {
 
+
 	constructor(private route: ActivatedRoute, private foosService: FoosService, private router: Router) { }
 
+  public details: any;
 	public teamId = 0;
 	public stats : [];
 	public statsKeys;
@@ -31,10 +33,17 @@ export class TeamStatsComponent implements OnInit {
 		}
 
 		this.route.params.subscribe( params => {
-			this.teamId = +params['teamId'];
+      this.teamId = +params['teamId'];
+      this.loadTeamDetail();
 			this.loadStats();
 		});
 	}
+  loadTeamDetail() {
+    this.foosService.getTeamDetail(this.teamId)
+    .then((detail)=> {
+      this.details = detail;
+    })
+  }
 
 	private loadStats() {
 			this.foosService.getTeamGames(this.teamId)

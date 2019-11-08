@@ -3,6 +3,88 @@ table{
   text-align: justify;
 }
 
+#leaders-table {
+  width: 100%;
+  font-size: 1em;
+  text-transform: capitalize;
+  margin-right: 24px;
+}
+
+#leaders-table th {
+  color: white;
+  text-align: left;
+  font-size: 1.3em;
+}
+
+#leaders-table a {
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  color: #0095ff;
+  padding: 0px;
+  margin: 0px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+#leaders-table a:hover {
+  filter: brightness(120%);
+}
+
+.no-results {
+  font-size: 1.5em;
+  width: 100%;
+  text-align: center;
+}
+
+.no-results span {
+  color: white;
+  font-size: 1.5em;
+}
+
+
+@media only screen and (max-width: 950px) {
+  #leaders-table,
+  #leaders-table thead,
+  #leaders-table tbody,
+  #leaders-table th,
+  #leaders-table td,
+  #leaders-table tr {
+    display: block;
+  }
+
+  #leaders-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  #leaders-table tr {
+    border: 1px solid white;
+    padding: 8px 0px;
+  }
+
+  #leaders-table td {
+    position: relative;
+    padding-left: 55%;
+  }
+
+  #leaders-table td:before {
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 45%;
+    padding-right: 15px;
+    white-space: nowrap;
+  }
+
+  #leaders-table td:nth-of-type(1):before { content: "Opponents"; font-size: 1.2em; color: white; }
+  #leaders-table td:nth-of-type(2):before { content: "Score" }
+  #leaders-table td:nth-of-type(3):before { content: "Change" }
+  #leaders-table td:nth-of-type(4):before { content: "Ranking" }
+  #leaders-table td:nth-of-type(5):before { content: "Played On" }
+}
+
 a {
   color: white;
 }
