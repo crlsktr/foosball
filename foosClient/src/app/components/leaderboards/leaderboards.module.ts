@@ -4,12 +4,14 @@ import { IndividualLeaderboardComponent } from './individual/individual-leaderbo
 import { TeamLeaderboardComponent } from './team/team-leaderboard.component';
 import { CommonModule } from '@angular/common';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
         BrowserModule,
         CommonModule,
         PipesModule,
+        RouterModule,
     ],
     exports: [
       IndividualLeaderboardComponent,

@@ -12,7 +12,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let leader of sortedLeaders">
-      <td><span *ngIf="leader.position === 1" class="mdi mdi-crown first-position"></span><button (click)="showTeamStats(leader.team_id)">{{leader.player_one_name}} - {{leader.player_two_name}}</button></td>
+      <td><span *ngIf="leader.position === 1" class="mdi mdi-crown first-position"></span><a [routerLink]="['/team-games/',leader.team_id]">{{leader.player_one_name}} - {{leader.player_two_name}}</a></td>
       <td>{{leader.position}}</td>
       <td>{{leader.ranking}}</td>
       <td>{{leader.won}}</td>
