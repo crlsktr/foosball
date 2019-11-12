@@ -76,7 +76,6 @@ export class TeamStatsComponent implements OnInit {
 	}
 
 	drawHistory(hist: HistoryPoint[]) {
-		console.log("xkcd: total results", hist);
 		//get the boundaries for the graph
 		let boundary = document.getElementById('graph').getBoundingClientRect();
 		this.width = boundary.width;
@@ -119,7 +118,8 @@ export class TeamStatsComponent implements OnInit {
 						.ticks(8)
 				);
 
-		let svg = d3.select("#graph");
+    let svg = d3.select("#graph");
+    svg.selectAll("*").remove();
 
 		//Trace axis
 		svg.append('g').call(xAxis);
@@ -160,7 +160,7 @@ export class TeamStatsComponent implements OnInit {
 	hideGame(d: HistoryPoint) {
 		console.log("xkcd, game to find", d.played.toISOString(), "in", this.stats);
 		//This horrible comparison hack is necessary due to the fact that js sucks at setting a consistent standard for Time precision
-		//Also TS can't enforce type safety at runtime thus, the serialization from the server's response doesn't account for the type 
+		//Also TS can't enforce type safety at runtime thus, the serialization from the server's response doesn't account for the type
 		//definition of the field as `played_on: Date`
 		let game = this.stats.find(x => new Date(x.played_on).toLocaleString() === d.played.toLocaleString());
 		game.highlight = true;
