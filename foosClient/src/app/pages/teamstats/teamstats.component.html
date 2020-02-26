@@ -5,7 +5,8 @@
 	</div>
 	<div class="graph-container">
 		<svg id="graph"></svg>
-	</div>
+  </div>
+  <app-time-series data="mappedhistory"></app-time-series>
 	<div *ngIf="!stats">
 			{{loadingMessage}}
 	</div>

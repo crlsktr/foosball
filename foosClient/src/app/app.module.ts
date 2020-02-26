@@ -14,7 +14,7 @@ import { AuthGuardService } from 'src/services/auth-gaurd.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     HttpClientModule,
