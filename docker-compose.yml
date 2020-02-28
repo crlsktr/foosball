@@ -9,5 +9,5 @@ services:
       - 8079:12346
     environment:
       VERSION: latest
-      DB_HOST: postgres://foosball:l3tspl4yF00sb4ll@dev-docker03.cen.centeva.com:6432/foosball
+      DB_HOST: postgres://foosball:l3tspl4yF00sb4ll@localhost:6432/foosball
       BIND_URL: 0.0.0.0:12346
