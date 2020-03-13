@@ -56,24 +56,35 @@ https://malcoded.com/posts/angular-docker/
 
 ### SWARM
 This is the swarm stuff
-```
+
 to update / deploy
-docker -H devdocker:2376 stack deploy -c <file> foos
+```
+docker -H dev-docker03:2376 stack deploy -c <file> foos
+```
 
 if acting funny after update
-docker -H devdocker:2376 stack rm foos
-docker -H devdocker:2376 stack deploy -c <file> foos
+```
+docker -H dev-docker03:2376 stack rm foos
+```
+```
+docker -H dev-docker03:2376 stack deploy -c <file> foos
+```
 
 to look at the container
-docker -H devdocker:2376 service ps foos_<service name>
-
+```
+docker -H dev-docker03:2376 service ps foos_<service name>
+```
 list all services
-docker -H devdocker:2376 service ls
+```
+docker -H dev-docker03:2376 service ls
+```
 
 logs
-
-docker -H devdocker:2376 service logs <stack>_<service name>.<if replicated container number>
-docker -H devdocker:2376 service logs foos_ball
+```
+docker -H dev-docker03:2376 service logs <stack>_<service name>.<if replicated container number>
+```
+```
+docker -H dev-docker03:2376 service logs foos_ball
 ```
 
 ## Restoring the Database locally

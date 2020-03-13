@@ -6,22 +6,22 @@ import {HistoryPoint} from '../../components/time-series/history-point';
 
 
 interface TeamStat {
-	opposing_player_one: string,
-	opposing_player_two: string,
-	opposing_team_id: number,
-	won: boolean,
-	points: number,
-	opponent_points: number,
-	played_on: Date,
-	change: number,
-	current_ranking: number,
-	highlight: boolean,
+	opposing_player_one: string;
+	opposing_player_two: string;
+	opposing_team_id: number;
+	won: boolean;
+	points: number;
+	opponent_points: number;
+	played_on: Date;
+	change: number;
+	current_ranking: number;
+	highlight: boolean;
 }
 
 @Component({
 	selector: 'app-team-stats',
 	templateUrl: './teamstats.component.html',
-	styleUrls: ['./teamstats.component.scss']
+	styleUrls: ['./teamstats.component.scss'],
 })
 export class TeamStatsComponent implements OnInit {
 
@@ -34,8 +34,6 @@ export class TeamStatsComponent implements OnInit {
 	public loadingMessage = 'Loading player stats ...';
 
 	public isGraphVisible: boolean = false;
-
-
 
 	ngOnInit() {
 		if (!this.foosService.loggedIn) {
@@ -50,19 +48,19 @@ export class TeamStatsComponent implements OnInit {
 	}
 
 	loadTeamDetail() {
-		this.foosService.getTeamDetail(this.teamId)
-			.then((detail) => {
-				this.details = detail;
-			})
+		this.foosService.getTeamDetail(this.teamId).then(detail => {
+			this.details = detail;
+		});
 	}
 
 	private loadStats() {
-		this.foosService.getTeamGames(this.teamId)
+		this.foosService
+			.getTeamGames(this.teamId)
 			.then((stats: TeamStat[]) => {
 				this.stats = stats;
 				this.mappedhistory = this.stats.map<HistoryPoint>(x => ({ played: new Date(x.played_on), ranking: x.current_ranking }));
 			})
-			.catch((err) => {
+			.catch(err => {
 				this.loadingMessage = `Couldn't find any stats for the team, ${err}`;
 			});
 	}
